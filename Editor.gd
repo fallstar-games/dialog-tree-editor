@@ -487,7 +487,7 @@ func _on_file_dialog_load_file_async():
 					current_node.slot_dropdown.select(2)
 				"ALL":
 					current_node.slot_dropdown.select(3)
-				"FULL":
+				"BG":
 					current_node.slot_dropdown.select(4)
 
 		# if type: offramp

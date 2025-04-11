@@ -49,7 +49,7 @@ func update_data():
 		3: #all
 			node_data["image_slot"] = "ALL"
 		4: #full
-			node_data["image_slot"] = "FULL" #full viewport image that is shown OVER the room BG
+			node_data["image_slot"] = "BG" #full viewport image that is shown OVER the room BG
 			
 
 func _on_action_dropdown_item_selected(index:int):
