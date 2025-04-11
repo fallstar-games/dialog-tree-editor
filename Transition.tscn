@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=3 uid="uid://fu2u1ny2mjak"]
+
+[ext_resource type="Script" path="res://Transition.gd" id="1_u73tp"]
+[ext_resource type="Texture2D" uid="uid://cvv40hc5erei2" path="res://Assets/UI/location-icon.png" id="2_yqact"]
+
+[node name="Transition" type="GraphNode" groups=["TRANSITION", "graph_nodes"]]
+offset_right = 263.0
+offset_bottom = 166.0
+mouse_default_cursor_shape = 6
+theme_override_constants/separation = 10
+title = "NodeTitle"
+position_offset = Vector2(340, 291)
+show_close = true
+resizable = true
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+script = ExtResource("1_u73tp")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+texture = ExtResource("2_yqact")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Change Room/Time"
+vertical_alignment = 2
+
+[node name="LocaleContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LocaleContainer"]
+layout_mode = 2
+text = "Room_ID: "
+
+[node name="LineEdit" type="LineEdit" parent="LocaleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Advance Time "
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = " Units"
+
+[connection signal="close_request" from="." to="." method="_on_close_request"]
+[connection signal="dragged" from="." to="." method="_on_dragged"]
+[connection signal="resize_request" from="." to="." method="_on_resize_request"]

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bwofr8b533eon"]
+
+[node name="End" type="GraphNode"]
+custom_minimum_size = Vector2(20, 20)
+anchors_preset = -1
+anchor_left = 0.082
+anchor_top = 0.471
+anchor_right = 0.14
+anchor_bottom = 0.567
+offset_left = 35.56
+offset_top = -11.18
+offset_right = 40.2
+offset_bottom = 0.14003
+grow_vertical = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 6
+position_offset = Vector2(193, 497.5)
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "END"

@@ -1,0 +1,106 @@
+{
+	"APPEND_001": {
+		"go to": [],
+		"node title": "APPEND_001",
+		"offset_x": 1220,
+		"offset_y": 280,
+		"text": "Thunder echoes in the distance. Rain beats heavily against the estate's domed roof."
+	},
+	"CHOICE_001": {
+		"dice_roll": "",
+		"difficulty": 0,
+		"go to": ["EVENT_001"],
+		"node title": "CHOICE_001",
+		"offset_x": 980,
+		"offset_y": 720,
+		"text": "[Open the Slave Roster]"
+	},
+	"CHOICE_002": {
+		"dice_roll": "",
+		"difficulty": 0,
+		"go to": ["EVENT_002"],
+		"node title": "CHOICE_002",
+		"offset_x": 980,
+		"offset_y": 1000,
+		"text": "[Manage Estate]"
+	},
+	"CHOICE_003": {
+		"dice_roll": "",
+		"difficulty": 0,
+		"go to": ["EVENT_003"],
+		"node title": "CHOICE_003",
+		"offset_x": 980,
+		"offset_y": 1280,
+		"text": "[View Finances]"
+	},
+	"CHOICE_004": {
+		"dice_roll": "",
+		"difficulty": 0,
+		"go to": ["OFFRAMP_001"],
+		"node title": "CHOICE_004",
+		"offset_x": 980,
+		"offset_y": 1560,
+		"text": "[Leave]"
+	},
+	"DIALOG_001": {
+		"go to": ["LOGIC_001", "CHOICE_001", "CHOICE_002", "CHOICE_003", "CHOICE_004"],
+		"node title": "DIALOG_001",
+		"offset_x": 420,
+		"offset_y": 420,
+		"speaker": "Broadside Manor",
+		"text": "You are in your home."
+	},
+	"EVENT_001": {
+		"encounter_id": "",
+		"event_type": "MENU",
+		"go to": ["OFFRAMP_001"],
+		"menu_id": "slave_roster",
+		"node title": "EVENT_001",
+		"offset_x": 1400,
+		"offset_y": 720
+	},
+	"EVENT_002": {
+		"encounter_id": "",
+		"event_type": "MENU",
+		"go to": ["OFFRAMP_001"],
+		"menu_id": "facilities",
+		"node title": "EVENT_002",
+		"offset_x": 1400,
+		"offset_y": 1020
+	},
+	"EVENT_003": {
+		"encounter_id": "",
+		"event_type": "MENU",
+		"go to": ["OFFRAMP_001"],
+		"menu_id": "ledger",
+		"node title": "EVENT_003",
+		"offset_x": 1400,
+		"offset_y": 1300
+	},
+	"LOGIC_001": {
+		"conditionals": {
+			"is_raining": true
+		},
+		"go to": ["APPEND_001"],
+		"node title": "LOGIC_001",
+		"offset_x": 900,
+		"offset_y": 360,
+		"signals": [],
+		"variables": {}
+	},
+	"OFFRAMP_001": {
+		"dest_map": "",
+		"dest_node": "estate_home.ONRAMP_001",
+		"dest_type": "DIALOGTREE",
+		"go to": [],
+		"node title": "OFFRAMP_001",
+		"offset_x": 2060,
+		"offset_y": 1340
+	},
+	"ONRAMP_001": {
+		"go to": [],
+		"node title": "ONRAMP_001",
+		"offset_x": 140,
+		"offset_y": 420
+	}
+}

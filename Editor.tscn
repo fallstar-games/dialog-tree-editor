@@ -1,0 +1,925 @@
+[gd_scene load_steps=34 format=3 uid="uid://cxp4cacjxxr8i"]
+
+[ext_resource type="Texture2D" uid="uid://duryjo7ut32s2" path="res://Assets/UI/MenuIcon.svg" id="1_lq43a"]
+[ext_resource type="Theme" uid="uid://thbfepb48rke" path="res://Assets/UI/GeneralTheme.tres" id="1_ogbra"]
+[ext_resource type="Script" path="res://Editor.gd" id="1_tip6a"]
+[ext_resource type="FontFile" uid="uid://ngufbprst73q" path="res://Assets/Fonts/RobotoMono-VariableFont_wght.ttf" id="2_f5by8"]
+[ext_resource type="PackedScene" uid="uid://62norqof178s" path="res://Start.tscn" id="4_b5fls"]
+[ext_resource type="Theme" uid="uid://b8duqkivyk4bt" path="res://Themes/mono_default.tres" id="5_c0mj3"]
+[ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="6_uvorx"]
+[ext_resource type="Texture2D" uid="uid://dxau3ctrjv8s6" path="res://Assets/UI/BackIcon.svg" id="7_ld0r4"]
+[ext_resource type="StyleBox" uid="uid://c4ae1uw3k6x40" path="res://Assets/UI/CircularButtonStyle.tres" id="7_siqoo"]
+[ext_resource type="Texture2D" uid="uid://dqwpfhmo1eh88" path="res://Assets/UI/Divider.svg" id="8_t2j1e"]
+[ext_resource type="Script" path="res://FileDialog.gd" id="10_au6rp"]
+[ext_resource type="AudioStream" uid="uid://bvlyjtsfaas0r" path="res://Assets/Sound/Saved.wav" id="11_f7qac"]
+[ext_resource type="AudioStream" uid="uid://bovyaf6ge6jjy" path="res://Assets/Sound/Drag.wav" id="12_82ngn"]
+[ext_resource type="AudioStream" uid="uid://bh8bdi5hats3v" path="res://Assets/Sound/Error.wav" id="13_ertqb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8behx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d76bs"]
+content_margin_left = 6.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sblb7"]
+content_margin_left = 6.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cp424"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dxas"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gda6u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lrg0u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1nqca"]
+
+[sub_resource type="Animation" id="Animation_r4wbw"]
+resource_name = "MenuPeekOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect/VBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/VBoxContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(-42, 52), Vector2(19, 52)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect/Menu:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 0.521569), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5ojth"]
+_data = {
+"MenuPeekOut": SubResource("Animation_r4wbw")
+}
+
+[sub_resource type="Animation" id="Animation_foi4l"]
+resource_name = "FadeOut"
+length = 4.0
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 1.94, 3.42),
+"transitions": PackedFloat32Array(-2, -2, -2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ndff8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ej5qk"]
+_data = {
+"FadeOut": SubResource("Animation_foi4l"),
+"RESET": SubResource("Animation_ndff8")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khc4p"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.541176, 0.541176, 0.541176, 0.313726)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 500
+corner_radius_top_right = 500
+corner_radius_bottom_right = 500
+corner_radius_bottom_left = 500
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7c6c"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.541176, 0.541176, 0.541176, 0.313726)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 500
+corner_radius_top_right = 500
+corner_radius_bottom_right = 500
+corner_radius_bottom_left = 500
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xj0i7"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.541176, 0.541176, 0.541176, 0.313726)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 500
+corner_radius_top_right = 500
+corner_radius_bottom_right = 500
+corner_radius_bottom_left = 500
+
+[sub_resource type="Animation" id="Animation_hvwa5"]
+resource_name = "Jerk"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.5),
+"update": 0,
+"values": [Vector2(711, 300), Vector2(716, 300), Vector2(705, 300), Vector2(716, 300), Vector2(705, 300), Vector2(711, 300)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../NewFileDialog:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(711, 300), Vector2(716, 300), Vector2(703, 300), Vector2(716, 300), Vector2(703, 300), Vector2(711, 300)]
+}
+
+[sub_resource type="Animation" id="Animation_iwi2y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../NewFileDialog:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(716, 300)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i0kut"]
+_data = {
+"Jerk": SubResource("Animation_hvwa5"),
+"RESET": SubResource("Animation_iwi2y")
+}
+
+[node name="GraphEdit" type="GraphEdit"]
+custom_minimum_size = Vector2(1920, 1080)
+theme = ExtResource("1_ogbra")
+right_disconnects = true
+script = ExtResource("1_tip6a")
+metadata/_edit_vertical_guides_ = [962.0]
+metadata/_edit_horizontal_guides_ = [542.0]
+
+[node name="Menu" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0.521569)
+layout_mode = 1
+offset_left = 14.0
+offset_top = 53.0
+offset_right = 40.0
+offset_bottom = 75.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8behx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_d76bs")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sblb7")
+icon = ExtResource("1_lq43a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+offset_left = -42.0
+offset_top = 90.0
+offset_right = 5.0
+offset_bottom = 198.0
+
+[node name="New" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.635294, 0.635294, 0.635294, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_f5by8")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cp424")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8dxas")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gda6u")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lrg0u")
+text = "New"
+alignment = 0
+
+[node name="Open" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.635294, 0.635294, 0.635294, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_f5by8")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cp424")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8dxas")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gda6u")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lrg0u")
+text = "Open"
+alignment = 0
+
+[node name="Save" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.635294, 0.635294, 0.635294, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_f5by8")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cp424")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1nqca")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gda6u")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lrg0u")
+text = "Save"
+alignment = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5ojth")
+}
+
+[node name="Tool" type="HBoxContainer" parent="."]
+z_index = 100
+layout_mode = 0
+offset_left = 71.0
+offset_top = 56.0
+offset_right = 746.0
+offset_bottom = 96.0
+theme_override_constants/separation = 30
+
+[node name="NewOnramp" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Onramp
+"
+
+[node name="NewNode" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Dialog"
+
+[node name="NewAppend" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Append"
+
+[node name="NewFeature" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Logic"
+
+[node name="Option" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Choice"
+
+[node name="Image" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Image"
+
+[node name="Event" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Event"
+
+[node name="NewTransition" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Transition
+"
+
+[node name="Offramp" type="Button" parent="Tool"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_c0mj3")
+text = "+ Offramp"
+
+[node name="EndNode" type="Button" parent="Tool"]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "+ End"
+
+[node name="SavedNotification" type="Label" parent="Tool"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.141176, 0.698039, 0.584314, 1)
+text = "SAVED!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tool/SavedNotification"]
+autoplay = "RESET"
+libraries = {
+"": SubResource("AnimationLibrary_ej5qk")
+}
+
+[node name="Start" parent="." instance=ExtResource("4_b5fls")]
+visible = false
+layout_mode = 0
+offset_left = 200.0
+offset_top = 400.0
+offset_right = 325.0
+offset_bottom = 513.0
+mouse_filter = 1
+position_offset = Vector2(200, 400)
+draggable = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -249.0
+offset_top = -240.0
+offset_right = 251.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ogbra")
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = -711.0
+offset_top = -300.0
+offset_right = 1211.0
+offset_bottom = 783.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.0431373, 0.117647, 0.164706, 0.576471)
+metadata/_edit_lock_ = true
+
+[node name="MenuList" type="VBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -123.0
+offset_right = 56.0
+offset_bottom = 123.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/MenuList"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "MENU"
+horizontal_alignment = 1
+
+[node name="New" type="Button" parent="CanvasLayer/Panel/MenuList"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "NEW"
+
+[node name="Open" type="Button" parent="CanvasLayer/Panel/MenuList"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "OPEN"
+
+[node name="Save" type="Button" parent="CanvasLayer/Panel/MenuList"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "SAVE"
+
+[node name="SaveAs" type="Button" parent="CanvasLayer/Panel/MenuList"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "SAVE AS"
+
+[node name="Options" type="Button" parent="CanvasLayer/Panel/MenuList"]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "OPTIONS"
+
+[node name="Quit" type="Button" parent="CanvasLayer/Panel/MenuList"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "QUIT"
+
+[node name="Copyright" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -168.5
+offset_top = -31.0
+offset_right = 168.5
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.101961, 0.364706, 0.447059, 1)
+text = "© Made with love and tears by Amber"
+
+[node name="CancelButton" type="TextureButton" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 465.0
+offset_right = 505.0
+offset_bottom = 40.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("6_uvorx")
+
+[node name="BackButton" type="TextureButton" parent="CanvasLayer/Panel"]
+visible = false
+layout_mode = 2
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 232.0
+offset_bottom = 37.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("7_ld0r4")
+
+[node name="Options" type="VBoxContainer" parent="CanvasLayer/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -20.0
+offset_right = 110.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="TypeSound" type="HBoxContainer" parent="CanvasLayer/Panel/Options"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/Options/TypeSound"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Type Sound"
+
+[node name="1" type="Button" parent="CanvasLayer/Panel/Options/TypeSound"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("7_siqoo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/focus = SubResource("StyleBoxFlat_khc4p")
+text = "1"
+
+[node name="2" type="Button" parent="CanvasLayer/Panel/Options/TypeSound"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("7_siqoo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n7c6c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/focus = SubResource("StyleBoxFlat_khc4p")
+text = "2"
+
+[node name="3" type="Button" parent="CanvasLayer/Panel/Options/TypeSound"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("7_siqoo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xj0i7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/focus = SubResource("StyleBoxFlat_khc4p")
+text = "3"
+
+[node name="FontSize" type="HBoxContainer" parent="CanvasLayer/Panel/Options"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/Options/FontSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Font Size"
+
+[node name="S" type="Button" parent="CanvasLayer/Panel/Options/FontSize"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("7_siqoo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/focus = SubResource("StyleBoxFlat_khc4p")
+text = "S"
+
+[node name="M" type="Button" parent="CanvasLayer/Panel/Options/FontSize"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("7_siqoo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n7c6c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/focus = SubResource("StyleBoxFlat_khc4p")
+text = "M"
+
+[node name="L" type="Button" parent="CanvasLayer/Panel/Options/FontSize"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("7_siqoo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xj0i7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_khc4p")
+theme_override_styles/focus = SubResource("StyleBoxFlat_khc4p")
+text = "L"
+
+[node name="Divider" type="TextureRect" parent="CanvasLayer/Panel/Options"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_t2j1e")
+
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer/Panel/Options"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 37
+
+[node name="Cancel" type="Button" parent="CanvasLayer/Panel/Options/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_ogbra")
+text = "Cancel"
+
+[node name="Save" type="Button" parent="CanvasLayer/Panel/Options/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_ogbra")
+text = "Save"
+
+[node name="SaveFileDialog" type="Panel" parent="CanvasLayer" node_paths=PackedStringArray("file_name", "error_message", "file_exists", "jerk_anim", "error_sound", "notification_sound")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -249.0
+offset_top = -240.0
+offset_right = 251.001
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ogbra")
+script = ExtResource("10_au6rp")
+file_name = NodePath("VBoxContainer/HBoxContainer/LineEdit")
+error_message = NodePath("Error")
+file_exists = NodePath("FileExists")
+jerk_anim = NodePath("JerkAnimation")
+error_sound = NodePath("../../ErrorSound")
+notification_sound = NodePath("../../NotificationSound")
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/SaveFileDialog"]
+layout_mode = 0
+offset_left = -711.0
+offset_top = -300.0
+offset_right = 1211.0
+offset_bottom = 783.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.0431373, 0.117647, 0.164706, 0.682353)
+metadata/_edit_lock_ = true
+
+[node name="Error" type="Label" parent="CanvasLayer/SaveFileDialog"]
+visible = false
+layout_mode = 2
+offset_left = 99.0
+offset_top = 370.0
+offset_right = 399.0
+offset_bottom = 395.0
+theme_override_colors/font_color = Color(0.666667, 0.596078, 0.411765, 1)
+text = "ERROR: Insert a file name!"
+horizontal_alignment = 1
+
+[node name="FileExists" type="Label" parent="CanvasLayer/SaveFileDialog"]
+visible = false
+layout_mode = 2
+offset_left = 99.0
+offset_top = 370.0
+offset_right = 399.0
+offset_bottom = 395.0
+theme_override_colors/font_color = Color(0.666667, 0.596078, 0.411765, 1)
+text = "File exists already!
+Click SAVE again to 
+confirm overwrite."
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SaveFileDialog"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = -29.0
+offset_right = 111.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="CanvasLayer/SaveFileDialog/VBoxContainer"]
+layout_mode = 2
+text = "SAVE FILE AS"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SaveFileDialog/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/SaveFileDialog/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "your file name"
+
+[node name="label" type="Label" parent="CanvasLayer/SaveFileDialog/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = ".json"
+horizontal_alignment = 1
+
+[node name="Divider" type="TextureRect" parent="CanvasLayer/SaveFileDialog/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_t2j1e")
+
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer/SaveFileDialog/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 37
+
+[node name="Cancel" type="Button" parent="CanvasLayer/SaveFileDialog/VBoxContainer/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_ogbra")
+text = "Cancel"
+
+[node name="Save" type="Button" parent="CanvasLayer/SaveFileDialog/VBoxContainer/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_ogbra")
+text = "Save"
+
+[node name="BackButton2" type="TextureButton" parent="CanvasLayer/SaveFileDialog"]
+layout_mode = 2
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 232.0
+offset_bottom = 37.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("7_ld0r4")
+
+[node name="JerkAnimation" type="AnimationPlayer" parent="CanvasLayer/SaveFileDialog"]
+libraries = {
+"": SubResource("AnimationLibrary_i0kut")
+}
+
+[node name="OpenFileDialog" type="FileDialog" parent="CanvasLayer"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(500, 500)
+theme = ExtResource("1_ogbra")
+ok_button_text = "Open"
+file_mode = 0
+root_subfolder = "SaveDir"
+
+[node name="NewFileDialog" type="Panel" parent="CanvasLayer" node_paths=PackedStringArray("file_name", "error_message", "file_exists", "you_will_lose", "jerk_anim", "error_sound", "notification_sound")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -240.0
+offset_right = 256.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ogbra")
+script = ExtResource("10_au6rp")
+file_name = NodePath("VBoxContainer/HBoxContainer/LineEdit")
+error_message = NodePath("Error")
+file_exists = NodePath("FileExists")
+you_will_lose = NodePath("YouWillLose")
+jerk_anim = NodePath("../SaveFileDialog/JerkAnimation")
+error_sound = NodePath("../../ErrorSound")
+notification_sound = NodePath("../../NotificationSound")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/NewFileDialog"]
+layout_mode = 0
+offset_left = -711.0
+offset_top = -300.0
+offset_right = 1211.0
+offset_bottom = 783.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.0431373, 0.117647, 0.164706, 0.576471)
+
+[node name="FileExists" type="Label" parent="CanvasLayer/NewFileDialog"]
+visible = false
+layout_mode = 2
+offset_left = 99.0
+offset_top = 370.0
+offset_right = 399.0
+offset_bottom = 445.0
+theme_override_colors/font_color = Color(0.666667, 0.596078, 0.411765, 1)
+text = "File exists already!
+Click SAVE again to 
+confirm overwrite."
+horizontal_alignment = 1
+
+[node name="YouWillLose" type="Label" parent="CanvasLayer/NewFileDialog"]
+visible = false
+layout_mode = 2
+offset_left = 74.0
+offset_top = 363.0
+offset_right = 420.0
+offset_bottom = 477.0
+theme_override_colors/font_color = Color(0.666667, 0.596078, 0.411765, 1)
+text = "Warning! You will lose any unsaved changes in current node graph!
+
+Click 'Create' again to confirm."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Error" type="Label" parent="CanvasLayer/NewFileDialog"]
+visible = false
+layout_mode = 2
+offset_left = 99.0
+offset_top = 370.0
+offset_right = 399.0
+offset_bottom = 395.0
+theme_override_colors/font_color = Color(0.666667, 0.596078, 0.411765, 1)
+text = "ERROR: Enter a valid file name!"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/NewFileDialog"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = -29.0
+offset_right = 111.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="CanvasLayer/NewFileDialog/VBoxContainer"]
+layout_mode = 2
+text = "CREATE A NEW FILE"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/NewFileDialog/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/NewFileDialog/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "your file name"
+
+[node name="label" type="Label" parent="CanvasLayer/NewFileDialog/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = ".json"
+horizontal_alignment = 1
+
+[node name="Divider" type="TextureRect" parent="CanvasLayer/NewFileDialog/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_t2j1e")
+
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer/NewFileDialog/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 37
+
+[node name="Cancel" type="Button" parent="CanvasLayer/NewFileDialog/VBoxContainer/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_ogbra")
+text = "Cancel"
+
+[node name="Create" type="Button" parent="CanvasLayer/NewFileDialog/VBoxContainer/Buttons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_ogbra")
+text = "Create"
+
+[node name="BackButton" type="TextureButton" parent="CanvasLayer/NewFileDialog"]
+layout_mode = 2
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 232.0
+offset_bottom = 37.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("7_ld0r4")
+
+[node name="SpawnSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_82ngn")
+
+[node name="ErrorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_ertqb")
+
+[node name="NotificationSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_f7qac")
+volume_db = -5.0
+
+[connection signal="connection_request" from="." to="." method="_on_connection_request"]
+[connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]
+[connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="Tool/NewOnramp" to="." method="_on_new_onramp_pressed"]
+[connection signal="pressed" from="Tool/NewNode" to="." method="_on_new_node_pressed"]
+[connection signal="pressed" from="Tool/NewAppend" to="." method="_on_new_append_pressed"]
+[connection signal="pressed" from="Tool/NewFeature" to="." method="_on_new_feature_pressed"]
+[connection signal="pressed" from="Tool/Option" to="." method="_on_new_option_pressed"]
+[connection signal="pressed" from="Tool/Image" to="." method="_on_new_image_pressed"]
+[connection signal="pressed" from="Tool/Event" to="." method="_on_new_event_pressed"]
+[connection signal="pressed" from="Tool/NewTransition" to="." method="_on_new_transition_pressed"]
+[connection signal="pressed" from="Tool/Offramp" to="." method="_on_new_offramp_pressed"]
+[connection signal="pressed" from="Tool/EndNode" to="." method="_on_end_node_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/MenuList/New" to="." method="_on_new_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/MenuList/Open" to="." method="_on_open_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/MenuList/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/MenuList/SaveAs" to="." method="_on_save_as_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/MenuList/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/MenuList/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/BackButton" to="." method="_on_options_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/TypeSound/1" to="." method="_on_type_sound_pressed" binds= [0]]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/TypeSound/2" to="." method="_on_type_sound_pressed" binds= [1]]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/TypeSound/3" to="." method="_on_type_sound_pressed" binds= [2]]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/FontSize/S" to="." method="_on_font_size_pressed" binds= ["0"]]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/FontSize/M" to="." method="_on_font_size_pressed" binds= ["1"]]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/FontSize/L" to="." method="_on_font_size_pressed" binds= ["2"]]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/Buttons/Cancel" to="." method="_on_options_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/Options/Buttons/Save" to="." method="_on_options_save_pressed"]
+[connection signal="text_changed" from="CanvasLayer/SaveFileDialog/VBoxContainer/HBoxContainer/LineEdit" to="CanvasLayer/SaveFileDialog" method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="CanvasLayer/SaveFileDialog/VBoxContainer/Buttons/Cancel" to="CanvasLayer/SaveFileDialog" method="_on_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/SaveFileDialog/VBoxContainer/Buttons/Save" to="CanvasLayer/SaveFileDialog" method="_on_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/SaveFileDialog/BackButton2" to="CanvasLayer/SaveFileDialog" method="_on_cancel_pressed"]
+[connection signal="file_selected" from="CanvasLayer/OpenFileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="text_changed" from="CanvasLayer/NewFileDialog/VBoxContainer/HBoxContainer/LineEdit" to="CanvasLayer/NewFileDialog" method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="CanvasLayer/NewFileDialog/VBoxContainer/Buttons/Cancel" to="CanvasLayer/NewFileDialog" method="_on_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/NewFileDialog/VBoxContainer/Buttons/Create" to="CanvasLayer/NewFileDialog" method="_on_create_pressed"]
+[connection signal="pressed" from="CanvasLayer/NewFileDialog/BackButton" to="CanvasLayer/NewFileDialog" method="_on_cancel_pressed"]
+
+[editable path="Start"]

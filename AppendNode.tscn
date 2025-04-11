@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=3 uid="uid://m6ikme7gefvh"]
+
+[ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_dif83"]
+[ext_resource type="Script" path="res://AppendNode.gd" id="2_g6ldl"]
+[ext_resource type="PackedScene" uid="uid://du8buwy48dvor" path="res://CodeEdit.tscn" id="4_kng54"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_ps3aj"]
+resource_local_to_scene = true
+number_color = Color(1, 1, 1, 1)
+symbol_color = Color(1, 1, 1, 1)
+function_color = Color(1, 1, 1, 1)
+member_variable_color = Color(1, 1, 1, 1)
+color_regions = {
+"!! !!": Color(1, 0.211765, 0, 1),
+"#": Color(1, 1, 1, 0.490196),
+"(( ))": Color(0.8, 0.737255, 0.435294, 1),
+"+ +": Color(0.8, 0.737255, 0.435294, 1),
+"+( )": Color(0.486275, 0.803922, 0.980392, 1),
+"- -": Color(0.8, 0.737255, 0.435294, 1),
+"-( )": Color(0.486275, 0.803922, 0.980392, 1),
+"<< >>": Color(0.141176, 0.698039, 0.584314, 1),
+"[ ]": Color(0.972549, 0.67451, 0.905882, 1),
+"| |": Color(0.729412, 0.392157, 1, 1)
+}
+
+[node name="AppendNode" type="GraphNode" groups=["APPEND", "graph_nodes"]]
+anchors_preset = -1
+anchor_right = 0.204
+anchor_bottom = 0.235
+offset_right = 8.32001
+offset_bottom = 106.2
+mouse_default_cursor_shape = 6
+theme = ExtResource("1_dif83")
+theme_override_constants/separation = 10
+title = "NodeTitle"
+show_close = true
+resizable = true
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("2_g6ldl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Text"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_03hav")
+text = "Text"
+
+[node name="TextEdit" parent="Text" instance=ExtResource("4_kng54")]
+custom_minimum_size = Vector2(2.08165e-12, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/background_color = Color(0, 0, 0, 0)
+text = ""
+placeholder_text = "Character dialog goes here... 
+"
+syntax_highlighter = SubResource("CodeHighlighter_ps3aj")
+scroll_v_scroll_speed = 90.0
+scroll_fit_content_height = true
+
+[connection signal="close_request" from="." to="." method="_on_close_request"]
+[connection signal="dragged" from="." to="." method="_on_dragged"]
+[connection signal="resize_request" from="." to="." method="_on_resize_request"]
+
+[editable path="Text/TextEdit"]

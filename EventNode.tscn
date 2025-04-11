@@ -1,0 +1,163 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccm7ijwj3w3ec"]
+
+[ext_resource type="Script" path="res://EventNode.gd" id="1_qey05"]
+[ext_resource type="Theme" uid="uid://bcfmo1cqbenmo" path="res://Themes/event_node_theme.tres" id="1_qulwx"]
+[ext_resource type="ButtonGroup" uid="uid://6awp5n2c664a" path="res://shopmode_button_group.tres" id="2_c3aul"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aw733"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ofm37"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[node name="EventNode" type="GraphNode" groups=["EVENT", "graph_nodes"]]
+offset_right = 325.0
+offset_bottom = 166.0
+mouse_default_cursor_shape = 6
+theme = ExtResource("1_qulwx")
+theme_override_constants/separation = 10
+title = "NodeTitle"
+position_offset = Vector2(1114, 272)
+show_close = true
+resizable = true
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
+script = ExtResource("1_qey05")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Event Type"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Combat"
+popup/item_0/id = 0
+popup/item_1/text = "Open Menu"
+popup/item_1/id = 1
+popup/item_2/text = "Open Letter"
+popup/item_2/id = 2
+
+[node name="CombatInfo" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CombatInfo"]
+layout_mode = 2
+text = "Encounter_ID:"
+
+[node name="LineEdit" type="LineEdit" parent="CombatInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MenuInfo" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MenuInfo"]
+layout_mode = 2
+text = "Menu_ID:"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LetterInfo" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LetterInfo"]
+layout_mode = 2
+text = "Letter_ID:"
+
+[node name="LineEdit" type="LineEdit" parent="LetterInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ShopMode" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LeftSpacer" type="Control" parent="ShopMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Buy" type="CheckBox" parent="ShopMode"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_aw733")
+button_pressed = true
+button_group = ExtResource("2_c3aul")
+text = "Buy"
+
+[node name="Sell" type="CheckBox" parent="ShopMode"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ofm37")
+button_group = ExtResource("2_c3aul")
+text = "Sell
+"
+
+[connection signal="close_request" from="." to="." method="_on_close_request"]
+[connection signal="dragged" from="." to="." method="_on_dragged"]
+[connection signal="resize_request" from="." to="." method="_on_resize_request"]
+[connection signal="item_selected" from="OptionButton" to="." method="_on_event_dropdown_item_selected"]

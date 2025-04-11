@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuqpvbtw4j6o8"]
+
+[ext_resource type="Theme" uid="uid://bo1qbb3b60a38" path="res://Themes/onramp_theme.tres" id="1_derir"]
+[ext_resource type="Script" path="res://Onramp.gd" id="1_xkaac"]
+
+[node name="Onramp" type="GraphNode" groups=["ONRAMP", "graph_nodes"]]
+offset_right = 187.0
+offset_bottom = 105.0
+mouse_default_cursor_shape = 6
+theme = ExtResource("1_derir")
+theme_override_constants/separation = 10
+title = "NodeTitle"
+position_offset = Vector2(556, 291)
+show_close = true
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_xkaac")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "START >"
+horizontal_alignment = 1
+
+[connection signal="close_request" from="." to="." method="_on_close_request"]
+[connection signal="dragged" from="." to="." method="_on_dragged"]
+[connection signal="resize_request" from="." to="." method="_on_resize_request"]

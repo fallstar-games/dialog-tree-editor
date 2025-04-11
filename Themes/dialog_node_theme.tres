@@ -1,0 +1,38 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dhstdcnd4x62y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_imy00"]
+content_margin_left = 30.0
+content_margin_top = 50.0
+content_margin_right = 30.0
+content_margin_bottom = 30.0
+bg_color = Color(0.0862745, 0.192157, 0.258824, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.364706, 0.364706, 0.364706, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k56ar"]
+content_margin_left = 30.0
+content_margin_top = 50.0
+content_margin_right = 30.0
+content_margin_bottom = 30.0
+bg_color = Color(0.0859375, 0.191406, 0.257813, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.658824, 0.658824, 0.658824, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[resource]
+GraphNode/colors/title_color = Color(0.52549, 0.733333, 0.87451, 1)
+GraphNode/styles/frame = SubResource("StyleBoxFlat_imy00")
+GraphNode/styles/selected_frame = SubResource("StyleBoxFlat_k56ar")
