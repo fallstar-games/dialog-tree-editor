@@ -7,18 +7,19 @@ extends GraphNode
 @onready var character_opt = $SpeakerHBox/SpeakerVBox/OptionButton
 #@onready var line_asset = $LineAsset/LineEdit
 #@onready var speaker = $SpeakerHBox/SpeakerVBox/LineEdit
-@onready var image_type_opt = $LineAsset/HBoxContainer/OptionButton
-@onready var image_id = $LineAsset/HBoxContainer/LineEdit
-@onready var image_effect_opt = $LineAsset/HBoxContainer/OptionButton2
+@onready var image_type_opt = $LineAsset/HBoxContainer/ImageType
+@onready var image_id_line = $LineAsset/HBoxContainer/LineEdit
+@onready var image_effect_opt = $LineAsset/HBoxContainer/ImageEffect
 
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	#"character": "",
 	"speaker": 0, #1 = main person, 2 = other person
 	"text": "",
-	#"line asset": "",
+	"image_type": 0, #0 = none, 1 = main, 2 = popup
+	"image_id": "",
+	"image_effect": "none",
 	"node title": "",
 	"go to": []
 }
@@ -42,8 +43,13 @@ func update_data():
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
 	
-	#node_data["character"] = speaker.text
 	#node_data["speaker"] = speaker.text
 	node_data["text"] = text.text
-	#node_data["line asset"] = line_asset.text
+	node_data["image_id"] = image_id_line.text
 
+
+func _on_image_effect_item_selected(index:int):
+	node_data["image_effect"] = image_effect_opt.get_item_text(index)
+
+func _on_image_type_item_selected(index:int):
+	node_data["image_type"] = index

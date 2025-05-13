@@ -133,8 +133,9 @@ placeholder_text = "optional"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LineAsset"]
 layout_mode = 2
+theme_override_constants/separation = 12
 
-[node name="OptionButton" type="OptionButton" parent="LineAsset/HBoxContainer"]
+[node name="ImageType" type="OptionButton" parent="LineAsset/HBoxContainer"]
 layout_mode = 2
 item_count = 3
 selected = 0
@@ -149,11 +150,11 @@ popup/item_2/id = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="OptionButton2" type="OptionButton" parent="LineAsset/HBoxContainer"]
+[node name="ImageEffect" type="OptionButton" parent="LineAsset/HBoxContainer"]
 layout_mode = 2
 item_count = 3
 selected = 0
-popup/item_0/text = "-no effect-"
+popup/item_0/text = "none"
 popup/item_0/id = 0
 popup/item_1/text = "hide"
 popup/item_1/id = 1
@@ -213,5 +214,7 @@ scroll_fit_content_height = true
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
 [connection signal="item_selected" from="SpeakerHBox/SpeakerVBox/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="LineAsset/HBoxContainer/ImageType" to="." method="_on_image_type_item_selected"]
+[connection signal="item_selected" from="LineAsset/HBoxContainer/ImageEffect" to="." method="_on_image_effect_item_selected"]
 
 [editable path="Text/TextEdit"]
