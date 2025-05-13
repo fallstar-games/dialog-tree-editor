@@ -1,1 +1,1 @@
-{"LOGIC_001":{"go to":[],"if_boolean":{},"if_equal":{"love":"10"},"if_greater":{"guilt":"5","h_points":"500"},"if_less":{"lust":"30"},"node title":"LOGIC_001","offset_x":650,"offset_y":400,"set_variables":{},"signals":[]}}
+{"CHOICE_001":{"go to":[],"node title":"CHOICE_001","offset_x":650,"offset_y":400,"text":"bleebloos are boring."}}

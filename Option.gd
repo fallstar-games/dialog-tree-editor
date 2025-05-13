@@ -15,8 +15,8 @@ var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"text": "",
-	"dice_roll": "",
-	"difficulty": 0,
+	#"dice_roll": "",
+	#"difficulty": 0,
 	"go to": []
 }
 
@@ -36,7 +36,7 @@ func update_data():
 
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
-
+	"""
 	var idx = dice_roll_dropdown.selected
 	if idx > 0:
 		node_data["dice_roll"] = dice_roll_dropdown.get_item_text(idx)
@@ -44,8 +44,9 @@ func update_data():
 	else:
 		node_data["dice_roll"] = ""
 		node_data["difficulty"] = 0
+	"""
 
-
+"""
 func _on_dice_dropdown_item_selected(index:int):
 	if index == -1 || index == 0:
 		dice_roll_on(false)
@@ -59,3 +60,4 @@ func dice_roll_on(is_on:bool = true):
 	else:
 		difficulty_container.hide()
 		dice_roll_dropdown.add_theme_color_override("font_color", ignore_color)
+"""

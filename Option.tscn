@@ -112,6 +112,7 @@ script = ExtResource("3_8tdp0")
 stream = ExtResource("4_yc4y8")
 
 [node name="DiceDropdown" type="OptionButton" parent="."]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 item_count = 13

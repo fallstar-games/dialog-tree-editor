@@ -472,7 +472,7 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 			current_node.text.text = node["text"]
-
+			"""
 			# match item string to item index
 			for item in current_node.dice_roll_dropdown.get_item_count():
 					
@@ -484,6 +484,7 @@ func _on_file_dialog_load_file_async():
 					break
 
 			current_node.roll_difficulty.text = str(node["difficulty"])
+			"""
 
 		# if type: event
 		elif "EVENT" in node["node title"]:
