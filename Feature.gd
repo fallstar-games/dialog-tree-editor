@@ -9,14 +9,20 @@ signal _cancel_button_pressed(feature_type)
 var variable_count : int = 0
 var signal_count : int = 0
 var conditional_count : int = 0
+var greater_count : int = 0
+var less_count : int = 0
+var equal_count : int = 0
 
 # Data
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"variables": {},
+	"set_variables": {},
 	"signals": [],
-	"conditionals": {},
+	"if_boolean": {},
+	"if_greater": {},
+	"if_less": {},
+	"if_equal": {},
 	"node title": "",
 	"go to": []
 }
@@ -33,7 +39,7 @@ func update_data():
 				var var_active = individual_variable.get_node("CheckButton").button_pressed 
 				var var_name = individual_variable.get_node("LineEdit").text 
 				
-				node_data["variables"][var_name] = var_active
+				node_data["set_variables"][var_name] = var_active
 		
 	if signal_count != 0 :		
 		for individual_signal in emit_signal_group.get_children():	
@@ -49,23 +55,55 @@ func update_data():
 				var condition_exists = individual_conditional.get_node("CheckButton").button_pressed 
 				var condition_name = individual_conditional.get_node("LineEdit").text 
 				
-				node_data["conditionals"][condition_name] = condition_exists
+				node_data["if_boolean"][condition_name] = condition_exists
+	
+	if greater_count != 0:
+		for individual_greater in greater_group.get_children():
+			if "Greater" in individual_greater.name:
+				var greater_name = individual_greater.get_node("VarNameLine").text 
+				var greater_value = individual_greater.get_node("IntLine").text 
+				
+				node_data["if_greater"][greater_name] = greater_value
+
+	if less_count != 0:
+		for individual_less in less_group.get_children():
+			if "Less" in individual_less.name:
+				var less_name = individual_less.get_node("VarNameLine").text 
+				var less_value = individual_less.get_node("IntLine").text 
+				
+				node_data["if_less"][less_name] = less_value
+
+	if equal_count != 0:
+		for individual_equal in equal_group.get_children():
+			if "Equal" in individual_equal.name:
+				var equal_name = individual_equal.get_node("VarNameLine").text 
+				var equal_value = individual_equal.get_node("IntLine").text 
+				
+				node_data["if_equal"][equal_name] = equal_value
 
 # Nodes
 @onready var variables_group = $VariablesGroup
 @onready var emit_signal_group = $EmitSignalGroup
 @onready var conditionals_group = $ConditionalsGroup
+@onready var greater_group = $GreaterGroup
+@onready var less_group = $LessGroup
+@onready var equal_group = $EqualGroup
 
 @onready var variable = load("res://Variable.tscn")
 @onready var emit_signal = load("res://Signal.tscn")
 @onready var conditional = load("res://Conditional.tscn")
+@onready var greater = load("res://greater.tscn")
+@onready var less = load("res://less.tscn")
+@onready var equal = load("res://equal.tscn")
 
 
 func _ready():
 	variables_group.hide()
 	emit_signal_group.hide()
 	conditionals_group.hide()
-	
+	greater_group.hide()
+	less_group.hide()
+	equal_group.hide()
 
 ############### 1 | GENERAL ##############################
 
@@ -88,6 +126,24 @@ func _on_cancel_button_pressed(feature_type):
 		
 		if conditional_count == 0:
 			conditionals_group.hide()
+
+	elif "greater" in feature_type:
+		greater_count -= 1
+		
+		if greater_count == 0:
+			greater_group.hide()
+
+	elif "less" in feature_type:
+		less_count -= 1
+		
+		if less_count == 0:
+			less_group.hide()
+
+	else:
+		equal_count -= 1
+		
+		if equal_count == 0:
+			equal_group.hide()
 		
 # Add Groups
 func _on_add_button_pressed(feature_type):
@@ -111,6 +167,24 @@ func _on_add_button_pressed(feature_type):
 		new_conditional.name = "Conditional" + str(conditional_count)
 		conditionals_group.add_child(new_conditional)
 
+	elif feature_type == "greater":
+		greater_count += 1
+		var new_greater = greater.instantiate()
+		new_greater.name = "Greater" + str(greater_count)
+		greater_group.add_child(new_greater)
+
+	elif feature_type == "less":
+		less_count += 1
+		var new_less = less.instantiate()
+		new_less.name = "Less" + str(less_count)
+		less_group.add_child(new_less)
+
+	else:
+		equal_count += 1
+		var new_equal = equal.instantiate()
+		new_equal.name = "Equal" + str(equal_count)
+		equal_group.add_child(new_equal)
+
 
 func _on_option_button_item_selected(index):
 	if index == 0:
@@ -121,9 +195,21 @@ func _on_option_button_item_selected(index):
 		emit_signal_group.show()
 		_on_add_button_pressed("signal")
 		
-	else:
+	elif index == 2:
 		conditionals_group.show()
 		_on_add_button_pressed("conditional")
+
+	elif index == 3:
+		greater_group.show()
+		_on_add_button_pressed("greater")
+
+	elif index == 4:
+		less_group.show()
+		_on_add_button_pressed("less")
+
+	else:
+		equal_group.show()
+		_on_add_button_pressed("equal")
 
 
 func _on_close_request():

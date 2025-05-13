@@ -1,1 +1,1 @@
-{"EVENT_001":{"event_type":"NEGOTIATE","go to":[],"letter_id":"","menu_id":"","node title":"EVENT_001","offset_x":740,"offset_y":460,"request_id":"touch_boobs"}}
+{"LOGIC_001":{"go to":[],"if_boolean":{},"if_equal":{"love":"10"},"if_greater":{"guilt":"5","h_points":"500"},"if_less":{"lust":"30"},"node title":"LOGIC_001","offset_x":650,"offset_y":400,"set_variables":{},"signals":[]}}

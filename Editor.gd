@@ -380,18 +380,18 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 			
 			# variable
-			if not node["variables"].is_empty():
+			if not node["set_variables"].is_empty():
 				var variables_group = current_node.get_node("VariablesGroup")
 				variables_group.show()
 				
-				for variable_set in node["variables"]:
+				for variable_set in node["set_variables"]:
 					current_node._on_add_button_pressed("variable")
 					
 					var current_variable_count = current_node.variable_count
 					var variable_node_name = "Variable" + str(current_variable_count)
 					var variable_node = variables_group.get_node(variable_node_name)
-					variable_node.text.text = node["variables"].keys()[current_variable_count - 1]
-					variable_node.check_button.button_pressed = node["variables"].values()[current_variable_count - 1]
+					variable_node.text.text = node["set_variables"].keys()[current_variable_count - 1]
+					variable_node.check_button.button_pressed = node["set_variables"].values()[current_variable_count - 1]
 			
 			# signals
 			if not node["signals"].is_empty():
@@ -406,20 +406,62 @@ func _on_file_dialog_load_file_async():
 					var signal_node = emit_signal_group.get_node(signal_node_name)
 					signal_node.text.text = node["signals"][current_signal_count - 1]
 			
-			# conditionals
-			if not node["conditionals"].is_empty():
+			# boolean conditionals
+			if not node["if_boolean"].is_empty():
 
 				var conditionals_group = current_node.get_node("ConditionalsGroup")
 				conditionals_group.show()
 				
-				for conditional in node["conditionals"]:
+				for conditional in node["if_boolean"]:
 					current_node._on_add_button_pressed("conditional")
 					
 					var current_conditional_count = current_node.conditional_count
 					var conditional_node_name = "Conditional" + str(current_conditional_count)
 					var conditional_node = conditionals_group.get_node(conditional_node_name)
-					conditional_node.text.text = node["conditionals"].keys()[current_conditional_count - 1]
-					conditional_node.check_button.button_pressed = node["conditionals"].values()[current_conditional_count - 1]
+					conditional_node.text.text = node["if_boolean"].keys()[current_conditional_count - 1]
+					conditional_node.check_button.button_pressed = node["if_boolean"].values()[current_conditional_count - 1]
+
+			# greater than conditionals
+			if not node["if_greater"].is_empty():
+				var greater_group = current_node.get_node("GreaterGroup")
+				greater_group.show()
+				
+				for greater in node["if_greater"]:
+					current_node._on_add_button_pressed("greater")
+					
+					var current_greater_count = current_node.greater_count
+					var greater_node_name = "Greater" + str(current_greater_count)
+					var greater_node = greater_group.get_node(greater_node_name)
+					greater_node.var_name.text = node["if_greater"].keys()[current_greater_count - 1]
+					greater_node.var_amount.text = node["if_greater"].values()[current_greater_count - 1]
+			
+			# less than conditionals
+			if not node["if_less"].is_empty():
+				var less_group = current_node.get_node("LessGroup")
+				less_group.show()
+				
+				for less in node["if_less"]:
+					current_node._on_add_button_pressed("less")
+					
+					var current_less_count = current_node.less_count
+					var less_node_name = "Less" + str(current_less_count)
+					var less_node = less_group.get_node(less_node_name)
+					less_node.var_name.text = node["if_less"].keys()[current_less_count - 1]
+					less_node.var_amount.text = node["if_less"].values()[current_less_count - 1]
+
+			# equal to conditionals
+			if not node["if_equal"].is_empty():
+				var equal_group = current_node.get_node("EqualGroup")
+				equal_group.show()
+				
+				for equal in node["if_equal"]:
+					current_node._on_add_button_pressed("equal")
+					
+					var current_equal_count = current_node.equal_count
+					var equal_node_name = "Equal" + str(current_equal_count)
+					var equal_node = equal_group.get_node(equal_node_name)
+					equal_node.var_name.text = node["if_equal"].keys()[current_equal_count - 1]
+					equal_node.var_amount.text = node["if_equal"].values()[current_equal_count - 1]
 			
 		# if type: option
 		elif "CHOICE" in node["node title"]:

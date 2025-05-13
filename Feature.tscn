@@ -49,6 +49,33 @@ slot/3/right_type = 0
 slot/3/right_color = Color(1, 1, 1, 1)
 slot/3/right_icon = null
 slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
+slot/6/left_enabled = false
+slot/6/left_type = 0
+slot/6/left_color = Color(1, 1, 1, 1)
+slot/6/left_icon = null
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color(1, 1, 1, 1)
+slot/6/right_icon = null
+slot/6/draw_stylebox = true
 script = ExtResource("1_qesbp")
 metadata/_edit_use_anchors_ = true
 
@@ -61,13 +88,19 @@ text = "Select feature"
 
 [node name="OptionButton" type="OptionButton" parent="Feature"]
 layout_mode = 2
-item_count = 3
-popup/item_0/text = "Set variables"
+item_count = 6
+popup/item_0/text = "Set Var (T/F)"
 popup/item_0/id = 0
-popup/item_1/text = "Emit signal"
+popup/item_1/text = "Emit Signal"
 popup/item_1/id = 1
-popup/item_2/text = "Conditionals"
+popup/item_2/text = "If Bool"
 popup/item_2/id = 2
+popup/item_3/text = "If Greater"
+popup/item_3/id = 3
+popup/item_4/text = "If Less"
+popup/item_4/id = 4
+popup/item_5/text = "If Equals"
+popup/item_5/id = 5
 
 [node name="VariablesGroup" type="VBoxContainer" parent="."]
 visible = false
@@ -120,6 +153,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
 icon = ExtResource("5_upf7y")
 
 [node name="ConditionalsGroup" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="Divider" type="TextureRect" parent="ConditionalsGroup"]
@@ -135,9 +169,81 @@ theme_override_constants/separation = 2
 
 [node name="Label" type="Label" parent="ConditionalsGroup/Title"]
 layout_mode = 2
-text = "Conditionals"
+text = "IF (Boolean)"
 
 [node name="AddConditionalButton" type="Button" parent="ConditionalsGroup/Title"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
+icon = ExtResource("5_upf7y")
+
+[node name="GreaterGroup" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Divider" type="TextureRect" parent="GreaterGroup"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_ldgu0")
+stretch_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="GreaterGroup"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="GreaterGroup/Title"]
+layout_mode = 2
+text = "IF (Greater)"
+
+[node name="AddGreaterButton" type="Button" parent="GreaterGroup/Title"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
+icon = ExtResource("5_upf7y")
+
+[node name="LessGroup" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Divider" type="TextureRect" parent="LessGroup"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_ldgu0")
+stretch_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="LessGroup"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="LessGroup/Title"]
+layout_mode = 2
+text = "IF (Less)"
+
+[node name="AddLessButton" type="Button" parent="LessGroup/Title"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
+icon = ExtResource("5_upf7y")
+
+[node name="EqualGroup" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Divider" type="TextureRect" parent="EqualGroup"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_ldgu0")
+stretch_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="EqualGroup"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="EqualGroup/Title"]
+layout_mode = 2
+text = "IF (Equals)"
+
+[node name="AddEqualButton" type="Button" parent="EqualGroup/Title"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
@@ -151,3 +257,6 @@ icon = ExtResource("5_upf7y")
 [connection signal="pressed" from="VariablesGroup/Title/AddVarButton" to="." method="_on_add_button_pressed" binds= ["variable"]]
 [connection signal="pressed" from="EmitSignalGroup/Title/AddSignalButton" to="." method="_on_add_button_pressed" binds= ["signal"]]
 [connection signal="pressed" from="ConditionalsGroup/Title/AddConditionalButton" to="." method="_on_add_button_pressed" binds= ["conditional"]]
+[connection signal="pressed" from="GreaterGroup/Title/AddGreaterButton" to="." method="_on_add_button_pressed" binds= ["greater"]]
+[connection signal="pressed" from="LessGroup/Title/AddLessButton" to="." method="_on_add_button_pressed" binds= ["less"]]
+[connection signal="pressed" from="EqualGroup/Title/AddEqualButton" to="." method="_on_add_button_pressed" binds= ["equal"]]
