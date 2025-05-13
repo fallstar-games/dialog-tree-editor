@@ -90,21 +90,21 @@ text = "Event Type"
 layout_mode = 2
 item_count = 3
 selected = 0
-popup/item_0/text = "Combat"
+popup/item_0/text = "Negotiate"
 popup/item_0/id = 0
 popup/item_1/text = "Open Menu"
 popup/item_1/id = 1
 popup/item_2/text = "Open Letter"
 popup/item_2/id = 2
 
-[node name="CombatInfo" type="HBoxContainer" parent="."]
+[node name="NegotiateInfo" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CombatInfo"]
+[node name="Label" type="Label" parent="NegotiateInfo"]
 layout_mode = 2
-text = "Encounter_ID:"
+text = "Request_ID:"
 
-[node name="LineEdit" type="LineEdit" parent="CombatInfo"]
+[node name="LineEdit" type="LineEdit" parent="NegotiateInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 

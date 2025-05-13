@@ -1,11 +1,11 @@
 extends GraphNode
 
 @onready var event_dropdown:OptionButton = $OptionButton
-@onready var encounter_container = $CombatInfo
+@onready var negotiate_container = $NegotiateInfo
 @onready var menu_container = $MenuInfo
 @onready var buy_sell_container = $ShopMode
 @onready var letter_container = $LetterInfo
-@onready var encounter_line:LineEdit = $CombatInfo/LineEdit
+@onready var request_line:LineEdit = $NegotiateInfo/LineEdit
 @onready var menu_line:LineEdit = $MenuInfo/LineEdit
 @onready var letter_line:LineEdit = $LetterInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
@@ -14,8 +14,8 @@ extends GraphNode
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"event_type":"COMBAT",
-	"encounter_id": "",
+	"event_type":"NEGOTIATE",
+	"request_id": "",
 	"menu_id":"",
 	"letter_id":"",
 	"go to": []
@@ -38,8 +38,8 @@ func update_data():
 	var idx = event_dropdown.selected
 	match idx:
 		0: #combat mode
-			node_data["event_type"] = "COMBAT"
-			node_data["encounter_id"] = encounter_line.text
+			node_data["event_type"] = "NEGOTIATE"
+			node_data["request_id"] = request_line.text
 		1: #open menu mode
 			node_data["event_type"] = "MENU"
 			node_data["menu_id"] = menu_line.text
@@ -53,14 +53,14 @@ func _on_event_dropdown_item_selected(index:int):
 func change_mode(idx:int = 0):
 	match idx:
 		0: #Combat Encounter
-			encounter_container.show()
+			negotiate_container.show()
 			menu_container.hide()
 			letter_container.hide()
 		1: #Shop Interface
-			encounter_container.hide()
+			negotiate_container.hide()
 			menu_container.show()
 			letter_container.hide()
 		2: #Letter Interface
-			encounter_container.hide()
+			negotiate_container.hide()
 			menu_container.hide()
 			letter_container.show()

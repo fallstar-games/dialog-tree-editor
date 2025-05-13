@@ -451,10 +451,10 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 
 			match node["event_type"]:
-				"COMBAT":
+				"NEGOTIATE":
 					current_node.event_dropdown.select(0)
 					current_node.change_mode(0)
-					current_node.encounter_line.text = node["encounter_id"]
+					current_node.request_line.text = node["request_id"]
 				"MENU":
 					current_node.event_dropdown.select(1)
 					current_node.change_mode(1)
