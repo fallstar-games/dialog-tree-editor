@@ -353,7 +353,8 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 			
 			current_node.text.text = node["text"]
-			current_node.speaker.text = node["speaker"]
+			#current_node.speaker.text = node["speaker"]
+			current_node.character_opt.select(node["speaker"])
 
 		# if type: append
 		elif "APPEND" in node["node title"]:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c2s5ab5peh3dh"]
 
 [ext_resource type="Script" path="res://FeatureLineEdits.gd" id="1_c1odb"]
-[ext_resource type="Texture2D" uid="uid://djps6et7do5gr" path="res://Assets/UI/CancelIcon.svg" id="2_es4or"]
+[ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="2_es4or"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ca652"]
 
