@@ -532,6 +532,9 @@ func _on_file_dialog_load_file_async():
 			
 			current_node.locale_line.text = node["room_id"]
 			current_node.time_line.text = str(node["time_forward"])
+			current_node.person_line.text = node["person_id"]
+			current_node.person_opt.select(node["person_type"])
+			current_node.focus_opt.select(node["focus_change"])
 		
 		# Link Connections
 		if "End" in node["go to"]:

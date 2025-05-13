@@ -39,6 +39,24 @@ slot/2/right_type = 0
 slot/2/right_color = Color(1, 1, 1, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
 script = ExtResource("1_u73tp")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
@@ -53,7 +71,7 @@ stretch_mode = 4
 
 [node name="Label" type="Label" parent="HBoxContainer2"]
 layout_mode = 2
-text = "Change Room/Time"
+text = "Change Room/Time/Person"
 vertical_alignment = 2
 
 [node name="LocaleContainer" type="HBoxContainer" parent="."]
@@ -82,6 +100,39 @@ text = "0"
 layout_mode = 2
 text = " Units"
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PersonOption" type="OptionButton" parent="HBoxContainer3"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "person 1"
+popup/item_0/id = 0
+popup/item_1/text = "person 2"
+popup/item_1/id = 1
+
+[node name="PersonID" type="LineEdit" parent="HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="FocusOption" type="OptionButton" parent="HBoxContainer4"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "-dont change focus-"
+popup/item_0/id = 0
+popup/item_1/text = "focus ON"
+popup/item_1/id = 1
+popup/item_2/text = "focus OFF"
+popup/item_2/id = 2
+
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
+[connection signal="item_selected" from="HBoxContainer3/PersonOption" to="." method="_on_person_option_item_selected"]
+[connection signal="item_selected" from="HBoxContainer4/FocusOption" to="." method="_on_focus_option_item_selected"]

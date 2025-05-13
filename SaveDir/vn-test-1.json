@@ -1,1 +1,1 @@
-{"DIALOG_001":{"go to":[],"image_effect":"quake","image_id":"exp_happy","image_type":1,"node title":"DIALOG_001","offset_x":650,"offset_y":400,"speaker":1,"text":"At night, I think of you.\nI want to be your lady baby!"}}
+{"TRANSITION_001":{"focus_change":1,"go to":[],"node title":"TRANSITION_001","offset_x":580,"offset_y":360,"person_id":"janice","person_type":1,"room_id":"","time_forward":0}}
