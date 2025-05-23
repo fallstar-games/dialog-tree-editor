@@ -15,7 +15,8 @@ extends GraphNode
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"speaker": 0, #1 = main person, 2 = other person
+	"speaker": 0, #0 = narrator, 1 = main person, 2 = other person, 3 = SMS, 4 = App
+	"expression": 0, #0 = none
 	"text": "",
 	"image_type": 0, #0 = none, 1 = main, 2 = popup
 	"image_id": "",
@@ -53,3 +54,7 @@ func _on_image_effect_item_selected(index:int):
 
 func _on_image_type_item_selected(index:int):
 	node_data["image_type"] = index
+
+
+func _on_expression_item_selected(index:int):
+	node_data["expression"] = index

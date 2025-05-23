@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_e6bqs"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_5eawh"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -107,7 +107,7 @@ tooltip_text = "You can add or change character names
 by going to the inspector in GraphNode.tscn 
 (Character > Character > OptionButton).
 "
-item_count = 3
+item_count = 5
 selected = 0
 popup/item_0/text = "Narrator"
 popup/item_0/id = 0
@@ -115,6 +115,60 @@ popup/item_1/text = "Main Person"
 popup/item_1/id = 1
 popup/item_2/text = "Second Person"
 popup/item_2/id = 2
+popup/item_3/text = "SMS"
+popup/item_3/id = 3
+popup/item_4/text = "App"
+popup/item_4/id = 4
+
+[node name="Divider" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_okvfh")
+stretch_mode = 2
+
+[node name="Expression" type="OptionButton" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
+item_count = 4
+selected = 0
+popup/item_0/text = "Expression (Optional)"
+popup/item_0/id = 0
+popup/item_1/text = "1-Confident"
+popup/item_1/id = 1
+popup/item_2/text = "2-Serious"
+popup/item_2/id = 2
+popup/item_3/text = "3-Cheerful"
+popup/item_3/id = 3
+
+[node name="Text" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Divider" type="TextureRect" parent="Text"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_okvfh")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Text"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_03hav")
+text = "Text"
+
+[node name="TextEdit" parent="Text" instance=ExtResource("2_53o6y")]
+custom_minimum_size = Vector2(2.08165e-12, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/background_color = Color(0, 0, 0, 0)
+text = ""
+placeholder_text = "Character dialog goes here... 
+"
+syntax_highlighter = SubResource("CodeHighlighter_5eawh")
+scroll_v_scroll_speed = 90.0
+scroll_fit_content_height = true
 
 [node name="LineAsset" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -161,59 +215,11 @@ popup/item_1/id = 1
 popup/item_2/text = "quake"
 popup/item_2/id = 2
 
-[node name="Divider" type="TextureRect" parent="."]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("2_okvfh")
-stretch_mode = 2
-
-[node name="OptionButton" type="OptionButton" parent="."]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 3
-selected = 0
-popup/item_0/text = "Success/Fail (Optional)"
-popup/item_0/id = 0
-popup/item_1/text = "SUCCESS"
-popup/item_1/id = 1
-popup/item_2/text = "FAILURE"
-popup/item_2/id = 2
-
-[node name="Text" type="VBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="Divider" type="TextureRect" parent="Text"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("2_okvfh")
-stretch_mode = 2
-
-[node name="Label" type="Label" parent="Text"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_03hav")
-text = "Text"
-
-[node name="TextEdit" parent="Text" instance=ExtResource("2_53o6y")]
-custom_minimum_size = Vector2(2.08165e-12, 200)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/background_color = Color(0, 0, 0, 0)
-text = ""
-placeholder_text = "Character dialog goes here... 
-"
-syntax_highlighter = SubResource("CodeHighlighter_e6bqs")
-scroll_v_scroll_speed = 90.0
-scroll_fit_content_height = true
-
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
 [connection signal="item_selected" from="SpeakerHBox/SpeakerVBox/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="Expression" to="." method="_on_expression_item_selected"]
 [connection signal="item_selected" from="LineAsset/HBoxContainer/ImageType" to="." method="_on_image_type_item_selected"]
 [connection signal="item_selected" from="LineAsset/HBoxContainer/ImageEffect" to="." method="_on_image_effect_item_selected"]
 

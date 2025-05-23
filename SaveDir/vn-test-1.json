@@ -1,1 +1,1 @@
-{"CHOICE_001":{"go to":[],"node title":"CHOICE_001","offset_x":650,"offset_y":400,"text":"bleebloos are boring."}}
+{"CHOICE_001":{"go to":["LOGIC_001"],"node title":"CHOICE_001","offset_x":280,"offset_y":400,"text":"Swap over to <<char_2>>"},"LOGIC_001":{"go to":[],"if_boolean":{},"if_equal":{},"if_greater":{},"if_less":{},"node title":"LOGIC_001","offset_x":730,"offset_y":400,"set_variables":{},"signals":["swap_to_second_person"]}}

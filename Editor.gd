@@ -357,6 +357,7 @@ func _on_file_dialog_load_file_async():
 			current_node.character_opt.select(node["speaker"])
 			current_node.image_type_opt.select(node["image_type"])
 			current_node.image_id_line.text = node["image_id"]
+			current_node.expression_opt.select(node["expression"])
 
 			for item in current_node.image_effect_opt.get_item_count():
 				if current_node.image_effect_opt.get_item_text(item) == node["image_effect"]:
