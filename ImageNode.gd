@@ -8,8 +8,8 @@ extends GraphNode
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"image_slot":"CENTER",
-	"image_action":"SET",
+	"image_slot":"MAIN",
+	"image_action":"NONE",
 	"image_id": "",
 	"go to": []
 }
@@ -27,42 +27,45 @@ func update_data():
 	
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
-
+	"""
 	var idx = action_dropdown.selected
 	match idx:
-		0: #set
-			node_data["image_action"] = "SET"
-			node_data["image_id"] = image_line.text
-		1: #show
-			node_data["image_action"] = "SHOW"
-		2: #hide
+		0: #none, just set iumage
+			node_data["image_action"] = "NONE"
+		1: #hide
 			node_data["image_action"] = "HIDE"
+		2: #show and do quake effect
+			node_data["image_action"] = "QUAKE"
+	"""
+
+	node_data["image_id"] = image_line.text
 
 	var idx2 = slot_dropdown.selected
 	match idx2:
-		0: #left
+		0: #main
+			node_data["image_slot"] = "MAIN"
+		1: #left popup
 			node_data["image_slot"] = "LEFT"
-		1: #center
-			node_data["image_slot"] = "CENTER"
-		2: #right
+		2: #right popup
 			node_data["image_slot"] = "RIGHT"
-		3: #all
-			node_data["image_slot"] = "ALL"
-		4: #full
-			node_data["image_slot"] = "BG" #full viewport image that is shown OVER the room BG
+		3: #background
+			node_data["image_slot"] = "BG"
+		#4: #full
+		#	node_data["image_slot"] = "BG" #full viewport image that is shown OVER the room BG
 			
 
 func _on_action_dropdown_item_selected(index:int):
-	change_mode(index)
+	node_data["image_action"] = action_dropdown.get_item_text(index)
+	#change_mode(index)
 
-func change_mode(idx:int = 0):
+"""func change_mode(idx:int = 0):
 	match idx:
 		0: #Set (and show) Image
 			image_id_container.show()
 
 		_: #Show or Hide Image
 			image_id_container.hide()
-
+"""
 
 
 

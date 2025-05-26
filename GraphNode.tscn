@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_5eawh"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_tm50m"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -83,6 +83,15 @@ slot/4/right_type = 0
 slot/4/right_color = Color(1, 1, 1, 1)
 slot/4/right_icon = null
 slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
 script = ExtResource("2_5cqbw")
 metadata/_edit_use_anchors_ = true
 
@@ -131,16 +140,48 @@ stretch_mode = 2
 [node name="Expression" type="OptionButton" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 4
+theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
+item_count = 8
 selected = 0
 popup/item_0/text = "Expression (Optional)"
 popup/item_0/id = 0
-popup/item_1/text = "1-Confident"
+popup/item_1/text = "1-Eyes_Open"
 popup/item_1/id = 1
-popup/item_2/text = "2-Serious"
+popup/item_2/text = "2-Eyes_Half"
 popup/item_2/id = 2
-popup/item_3/text = "3-Cheerful"
+popup/item_3/text = "3-Eyes_Scared"
 popup/item_3/id = 3
+popup/item_4/text = "4-Eyes_Angry"
+popup/item_4/id = 4
+popup/item_5/text = "5-Eyes_Angry"
+popup/item_5/id = 5
+popup/item_6/text = "6-Eyes_Wide"
+popup/item_6/id = 6
+popup/item_7/text = "7-Eyes_Rolling"
+popup/item_7/id = 7
+
+[node name="LowerExpression" type="OptionButton" parent="."]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
+theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
+item_count = 7
+selected = 0
+fit_to_longest_item = false
+popup/item_0/text = "Lower (Select One)"
+popup/item_0/id = 0
+popup/item_1/text = "1-Mouth_Smile"
+popup/item_1/id = 1
+popup/item_2/text = "2-Mouth_Parted"
+popup/item_2/id = 2
+popup/item_3/text = "3-Mouth_Agape"
+popup/item_3/id = 3
+popup/item_4/text = "4-Mouth_Frown"
+popup/item_4/id = 4
+popup/item_5/text = "5-Mouth_Clenched"
+popup/item_5/id = 5
+popup/item_6/text = "6-Mouth_Bitelip"
+popup/item_6/id = 6
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -166,11 +207,12 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_5eawh")
+syntax_highlighter = SubResource("CodeHighlighter_tm50m")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 
 [node name="LineAsset" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="Line Asset" type="Label" parent="LineAsset"]
@@ -220,6 +262,7 @@ popup/item_2/id = 2
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
 [connection signal="item_selected" from="SpeakerHBox/SpeakerVBox/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="item_selected" from="Expression" to="." method="_on_expression_item_selected"]
+[connection signal="item_selected" from="LowerExpression" to="." method="_on_lower_expression_item_selected"]
 [connection signal="item_selected" from="LineAsset/HBoxContainer/ImageType" to="." method="_on_image_type_item_selected"]
 [connection signal="item_selected" from="LineAsset/HBoxContainer/ImageEffect" to="." method="_on_image_effect_item_selected"]
 

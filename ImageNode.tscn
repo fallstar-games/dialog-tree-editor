@@ -78,32 +78,30 @@ vertical_alignment = 2
 
 [node name="SlotDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 5
-selected = 1
-popup/item_0/text = "Left"
+item_count = 4
+selected = 0
+popup/item_0/text = "Main"
 popup/item_0/id = 0
-popup/item_1/text = "Center"
+popup/item_1/text = "Left Popup"
 popup/item_1/id = 1
-popup/item_2/text = "Right"
+popup/item_2/text = "Right Popup"
 popup/item_2/id = 2
-popup/item_3/text = "All"
+popup/item_3/text = "Background"
 popup/item_3/id = 3
-popup/item_4/text = "Background"
-popup/item_4/id = 4
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 2
-text = "Operation"
+text = "Effect"
 
 [node name="ActionDropdown" type="OptionButton" parent="."]
 layout_mode = 2
 item_count = 3
 selected = 0
-popup/item_0/text = "Set"
+popup/item_0/text = "NONE"
 popup/item_0/id = 0
-popup/item_1/text = "Show"
+popup/item_1/text = "HIDE"
 popup/item_1/id = 1
-popup/item_2/text = "Hide"
+popup/item_2/text = "QUAKE"
 popup/item_2/id = 2
 
 [node name="ImageInfo" type="HBoxContainer" parent="."]
@@ -116,7 +114,6 @@ text = "image_id:"
 [node name="LineEdit" type="LineEdit" parent="ImageInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "(blank to clear)"
 
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]

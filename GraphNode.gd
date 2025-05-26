@@ -7,20 +7,23 @@ extends GraphNode
 @onready var character_opt = $SpeakerHBox/SpeakerVBox/OptionButton
 #@onready var line_asset = $LineAsset/LineEdit
 #@onready var speaker = $SpeakerHBox/SpeakerVBox/LineEdit
-@onready var image_type_opt = $LineAsset/HBoxContainer/ImageType
-@onready var image_id_line = $LineAsset/HBoxContainer/LineEdit
-@onready var image_effect_opt = $LineAsset/HBoxContainer/ImageEffect
+#@onready var image_type_opt = $LineAsset/HBoxContainer/ImageType
+#@onready var image_id_line = $LineAsset/HBoxContainer/LineEdit
+#@onready var image_effect_opt = $LineAsset/HBoxContainer/ImageEffect
+@onready var eyes_opt = $Expression
+@onready var mouth_opt = $LowerExpression
 
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"speaker": 0, #0 = narrator, 1 = main person, 2 = other person, 3 = SMS, 4 = App
-	"expression": 0, #0 = none
+	"eyes": 0, #0 = none
+	"mouth": 0, #0 = none
 	"text": "",
-	"image_type": 0, #0 = none, 1 = main, 2 = popup
-	"image_id": "",
-	"image_effect": "none",
+	#"image_type": 0, #0 = none, 1 = main, 2 = popup
+	#"image_id": "",
+	#"image_effect": "none",
 	"node title": "",
 	"go to": []
 }
@@ -46,15 +49,23 @@ func update_data():
 	
 	#node_data["speaker"] = speaker.text
 	node_data["text"] = text.text
-	node_data["image_id"] = image_id_line.text
+	#node_data["image_id"] = image_id_line.text
 
 
-func _on_image_effect_item_selected(index:int):
-	node_data["image_effect"] = image_effect_opt.get_item_text(index)
+#func _on_image_effect_item_selected(index:int):
+#	node_data["image_effect"] = image_effect_opt.get_item_text(index)
 
-func _on_image_type_item_selected(index:int):
-	node_data["image_type"] = index
+#func _on_image_type_item_selected(index:int):
+#	node_data["image_type"] = index
 
 
 func _on_expression_item_selected(index:int):
-	node_data["expression"] = index
+	node_data["eyes"] = index
+	if index == 0:
+		mouth_opt.hide()
+	else:
+		mouth_opt.show()
+
+
+func _on_lower_expression_item_selected(index:int):
+	node_data["mouth"] = index

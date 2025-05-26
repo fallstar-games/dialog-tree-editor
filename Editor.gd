@@ -355,14 +355,19 @@ func _on_file_dialog_load_file_async():
 			current_node.text.text = node["text"]
 			#current_node.speaker.text = node["speaker"]
 			current_node.character_opt.select(node["speaker"])
-			current_node.image_type_opt.select(node["image_type"])
-			current_node.image_id_line.text = node["image_id"]
-			current_node.expression_opt.select(node["expression"])
+			#current_node.image_type_opt.select(node["image_type"])
+			#current_node.image_id_line.text = node["image_id"]
+			current_node.eyes_opt.select(node["eyes"])
+			current_node.mouth_opt.select(node["mouth"])
+			if node["eyes"] == 0:
+				current_node.mouth_opt.hide()
+			else:
+				current_node.mouth_opt.show()
 
-			for item in current_node.image_effect_opt.get_item_count():
-				if current_node.image_effect_opt.get_item_text(item) == node["image_effect"]:
-					current_node.image_effect_opt.select(item)
-					break
+			#for item in current_node.image_effect_opt.get_item_count():
+			#	if current_node.image_effect_opt.get_item_text(item) == node["image_effect"]:
+			#		current_node.image_effect_opt.select(item)
+			#		break
 
 		# if type: append
 		elif "APPEND" in node["node title"]:
@@ -518,29 +523,39 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 
+			"""
 			match node["image_action"]:
-				"SET":
+				"NONE":
 					current_node.action_dropdown.select(0)
-					current_node.change_mode(0)
-					current_node.image_line.text = node["image_id"]
-				"SHOW":
-					current_node.action_dropdown.select(1)
-					current_node.change_mode(1)
+					#current_node.change_mode(0)
 				"HIDE":
+					current_node.action_dropdown.select(1)
+					#current_node.change_mode(1)
+				"QUAKE":
 					current_node.action_dropdown.select(2)
-					current_node.change_mode(2)
+					#current_node.change_mode(2)
+			"""
+			#Set action_dropdown to the index with the same name as node["image_action"]
+			var found = false
+			for i in range(current_node.action_dropdown.get_item_count()):
+				if current_node.action_dropdown.get_item_text(i) == node["image_action"]:
+					current_node.action_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image action not found: " + node["image_action"])
+
+			current_node.image_line.text = node["image_id"]
 
 			match node["image_slot"]:
-				"LEFT":
+				"MAIN":
 					current_node.slot_dropdown.select(0)
-				"CENTER":
+				"LEFT":
 					current_node.slot_dropdown.select(1)
 				"RIGHT":
 					current_node.slot_dropdown.select(2)
-				"ALL":
-					current_node.slot_dropdown.select(3)
 				"BG":
-					current_node.slot_dropdown.select(4)
+					current_node.slot_dropdown.select(3)
 
 		# if type: offramp
 		elif "OFFRAMP" in node["node title"]:
