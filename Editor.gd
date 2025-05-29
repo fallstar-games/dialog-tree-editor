@@ -468,6 +468,20 @@ func _on_file_dialog_load_file_async():
 					var equal_node = equal_group.get_node(equal_node_name)
 					equal_node.var_name.text = node["if_equal"].keys()[current_equal_count - 1]
 					equal_node.var_amount.text = node["if_equal"].values()[current_equal_count - 1]
+
+			# has garment conditionals
+			if not node["has_garment"].is_empty():
+				var has_garment_group = current_node.get_node("HasGarmentGroup")
+				has_garment_group.show()
+				
+				for garment in node["has_garment"]:
+					current_node._on_add_button_pressed("has_garment")
+					
+					var current_has_garment_count = current_node.has_garment_count
+					var has_garment_node_name = "HasGarment" + str(current_has_garment_count)
+					var has_garment_node = has_garment_group.get_node(has_garment_node_name)
+					has_garment_node.text.text = node["has_garment"].keys()[current_has_garment_count - 1]
+					has_garment_node.check_button.button_pressed = node["has_garment"].values()[current_has_garment_count - 1]
 			
 		# if type: option
 		elif "CHOICE" in node["node title"]:

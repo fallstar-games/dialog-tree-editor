@@ -12,6 +12,7 @@ var conditional_count : int = 0
 var greater_count : int = 0
 var less_count : int = 0
 var equal_count : int = 0
+var has_garment_count : int = 0
 
 # Data
 var node_data = {
@@ -23,6 +24,7 @@ var node_data = {
 	"if_greater": {},
 	"if_less": {},
 	"if_equal": {},
+	"has_garment": {},
 	"node title": "",
 	"go to": []
 }
@@ -81,6 +83,14 @@ func update_data():
 				
 				node_data["if_equal"][equal_name] = equal_value
 
+	if has_garment_count != 0:
+		for individual_garment in has_garment_group.get_children():
+			if "HasGarment" in individual_garment.name:
+				var garment_name = individual_garment.get_node("LineEdit").text 
+				var garment_active = individual_garment.get_node("CheckButton").button_pressed 
+				
+				node_data["has_garment"][garment_name] = garment_active
+
 # Nodes
 @onready var variables_group = $VariablesGroup
 @onready var emit_signal_group = $EmitSignalGroup
@@ -88,6 +98,7 @@ func update_data():
 @onready var greater_group = $GreaterGroup
 @onready var less_group = $LessGroup
 @onready var equal_group = $EqualGroup
+@onready var has_garment_group = $HasGarmentGroup
 
 @onready var variable = load("res://Variable.tscn")
 @onready var emit_signal = load("res://Signal.tscn")
@@ -95,6 +106,7 @@ func update_data():
 @onready var greater = load("res://greater.tscn")
 @onready var less = load("res://less.tscn")
 @onready var equal = load("res://equal.tscn")
+@onready var has_garment = load("res://has_garment.tscn")
 
 
 func _ready():
@@ -104,11 +116,13 @@ func _ready():
 	greater_group.hide()
 	less_group.hide()
 	equal_group.hide()
+	has_garment_group.hide()
 
 ############### 1 | GENERAL ##############################
 
 # Cancelling features
 func _on_cancel_button_pressed(feature_type):
+	#print("Cancel pressed for feature type: " + feature_type)
 	if "variable" in feature_type:
 		variable_count -= 1
 		
@@ -139,11 +153,17 @@ func _on_cancel_button_pressed(feature_type):
 		if less_count == 0:
 			less_group.hide()
 
-	else:
+	elif "equal" in feature_type:
 		equal_count -= 1
 		
 		if equal_count == 0:
 			equal_group.hide()
+
+	elif "hasgarment" in feature_type:
+		has_garment_count -= 1
+		
+		if has_garment_count == 0:
+			has_garment_group.hide()
 		
 # Add Groups
 func _on_add_button_pressed(feature_type):
@@ -179,11 +199,17 @@ func _on_add_button_pressed(feature_type):
 		new_less.name = "Less" + str(less_count)
 		less_group.add_child(new_less)
 
-	else:
+	elif feature_type == "equal":
 		equal_count += 1
 		var new_equal = equal.instantiate()
 		new_equal.name = "Equal" + str(equal_count)
 		equal_group.add_child(new_equal)
+
+	elif feature_type == "has_garment":
+		has_garment_count += 1
+		var new_has_garment = has_garment.instantiate()
+		new_has_garment.name = "HasGarment" + str(has_garment_count)
+		has_garment_group.add_child(new_has_garment)
 
 
 func _on_option_button_item_selected(index):
@@ -207,9 +233,13 @@ func _on_option_button_item_selected(index):
 		less_group.show()
 		_on_add_button_pressed("less")
 
-	else:
+	elif index == 5:
 		equal_group.show()
 		_on_add_button_pressed("equal")
+
+	elif index == 6:
+		has_garment_group.show()
+		_on_add_button_pressed("has_garment")
 
 
 func _on_close_request():
