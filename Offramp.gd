@@ -3,17 +3,17 @@ extends GraphNode
 @onready var destination_dropdown:OptionButton = $OptionButton
 @onready var filename_container = $FileLineHBox
 @onready var nodename_container = $TitleLineHBox
-@onready var mapname_container = $MapLineHBox
+@onready var outcome_name_container = $OutcomeLineHBox
 @onready var file_line:LineEdit = $FileLineHBox/LineEdit
 @onready var title_line:LineEdit = $TitleLineHBox/LineEdit
-@onready var map_line:LineEdit = $MapLineHBox/LineEdit
+@onready var outcome_line:LineEdit = $OutcomeLineHBox/LineEdit
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"dest_type": "DIALOGTREE",
 	"dest_node": "",
-	"dest_map": "",
+	"dest_outcome": "",
 	"go to": []
 }
 
@@ -36,9 +36,9 @@ func update_data():
 		0: #target dialog node
 			node_data["dest_type"] = "DIALOGTREE"
 			node_data["dest_node"] = file_line.text + "." + title_line.text
-		1: #target travel map
-			node_data["dest_type"] = "TRAVELMAP"
-			node_data["dest_map"] = map_line.text
+		1: #terminate subtree
+			node_data["dest_type"] = "TERMINATE"
+			node_data["dest_outcome"] = outcome_line.text
 
 func _on_dest_dropdown_item_selected(index:int):
 	change_mode(index)
@@ -49,9 +49,9 @@ func change_mode(idx:int = 0):
 		0: #Dialogue Tree
 			filename_container.show()
 			nodename_container.show()
-			mapname_container.hide()
+			outcome_name_container.hide()
 
 		1: #Travel Map
 			filename_container.hide()
 			nodename_container.hide()
-			mapname_container.show()
+			outcome_name_container.show()

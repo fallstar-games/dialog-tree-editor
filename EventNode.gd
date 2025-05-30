@@ -1,23 +1,68 @@
 extends GraphNode
 
 @onready var event_dropdown:OptionButton = $OptionButton
-@onready var negotiate_container = $NegotiateInfo
-@onready var menu_container = $MenuInfo
-@onready var buy_sell_container = $ShopMode
-@onready var letter_container = $LetterInfo
-@onready var request_line:LineEdit = $NegotiateInfo/LineEdit
+@onready var check_type_dropdown:OptionButton = $CheckInfo/CheckType
+#@onready var buy_sell_container = $ShopMode
 @onready var menu_line:LineEdit = $MenuInfo/LineEdit
-@onready var letter_line:LineEdit = $LetterInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
 #@onready var sell_btn:CheckBox = $ShopMode/Sell
+@onready var event_containers:Dictionary = {
+	"CHECK": $CheckInfo,
+	"SUBTREE": $SubTreeInfo,
+	"CYCLER": $CyclerInfo,
+	"RANDOM": $RandomInfo,
+	"WARDROBE": $WardrobeInfo,
+	"MENU": $MenuInfo
+}
+
+@onready var check_containers:Dictionary = {
+	"REQUEST": $CheckInfo/RequestCheck,
+	"COERCE": $CheckInfo/CoerceCheck,
+	"FORCE": $CheckInfo/ForceCheck
+}
+
+@onready var line_edits:Dictionary = {
+	"request_id": $CheckInfo/RequestCheck/RequestID/LineEdit,
+	"request_pass": $CheckInfo/RequestCheck/Pass/LineEdit,
+	"request_fail": $CheckInfo/RequestCheck/Fail/LineEdit,
+	"request_unsure": $CheckInfo/RequestCheck/Unsure/LineEdit,
+	"lever_id": $CheckInfo/CoerceCheck/LeverID/LineEdit,
+	"coerce_pass": $CheckInfo/CoerceCheck/Pass/LineEdit,
+	"coerce_fail": $CheckInfo/CoerceCheck/Fail/LineEdit,
+	"force_pass": $CheckInfo/ForceCheck/Pass/LineEdit,
+	"force_fail": $CheckInfo/ForceCheck/Fail/LineEdit,
+	"subtree_id": $SubTreeInfo/TreeName/LineEdit,
+	"subtree_start": $SubTreeInfo/NodeName/LineEdit
+}
+
+@onready var output_subtree = load("res://output_subtree.tscn")
+@onready var output_cycler = load("res://output_cycler.tscn")
+@onready var output_random = load("res://output_random.tscn")
+
+signal _cancel_button_pressed(output_type)
+
+var output_subtree_count: int = 0
+var output_cycler_count: int = 0
+var output_random_count: int = 0
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"event_type":"NEGOTIATE",
+	"event_type":"CHECK",
+	"check_type": "REQUEST",
 	"request_id": "",
+	"lever_id": "",
+	"outcome_pass": "",
+	"outcome_fail": "",
+	"outcome_unsure": "",
+	"subtree_id": "",
+	"subtree_start": "",
+	"subtree_outputs": {},
+	"cycle_id": "",
+	"cycler_outputs": {},
+	"random_outputs": {},
 	"menu_id":"",
-	"letter_id":"",
+	#"letter_id":"",
 	"go to": []
 }
 
@@ -35,32 +80,82 @@ func update_data():
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
 
-	var idx = event_dropdown.selected
-	match idx:
-		0: #combat mode
-			node_data["event_type"] = "NEGOTIATE"
-			node_data["request_id"] = request_line.text
-		1: #open menu mode
-			node_data["event_type"] = "MENU"
-			node_data["menu_id"] = menu_line.text
-		2: #open letter mode
-			node_data["event_type"] = "LETTER"
-			node_data["letter_id"] = letter_line.text
+	#var idx = event_dropdown.selected
+	#node_data["event_type"] = event_dropdown.get_item_text(idx)
+	
+	match node_data["event_type"]:
+		"CHECK":
+			match node_data["check_type"]:
+				"REQUEST":
+					node_data["request_id"] = line_edits["request_id"].text
+					node_data["outcome_pass"] = line_edits["request_pass"].text
+					node_data["outcome_fail"] = line_edits["request_fail"].text
+					node_data["outcome_unsure"] = line_edits["request_unsure"].text
+				"COERCE":
+					node_data["lever_id"] = line_edits["lever_id"].text
+					node_data["outcome_pass"] = line_edits["coerce_pass"].text
+					node_data["outcome_fail"] = line_edits["coerce_fail"].text
+				"FORCE":
+					node_data["outcome_pass"] = line_edits["force_pass"].text
+					node_data["outcome_fail"] = line_edits["force_fail"].text
+		"SUBTREE":
+			node_data["subtree_id"] = line_edits["subtree_id"].text
+			node_data["subtree_start"] = line_edits["subtree_start"].text
+			if output_subtree_count > 0:
+				node_data["subtree_outputs"] = {}
+				for output in event_containers["SUBTREE"].get_children():
+					if "OutputSubtree" in output.name:
+						var outcome_name = output.get_node("OutcomeLine").text
+						var target_node = output.get_node("TargetLine").text
+						node_data["subtree_outputs"][outcome_name] = target_node
 
-func _on_event_dropdown_item_selected(index:int):
-	change_mode(index)
 
 func change_mode(idx:int = 0):
-	match idx:
-		0: #Combat Encounter
-			negotiate_container.show()
-			menu_container.hide()
-			letter_container.hide()
-		1: #Shop Interface
-			negotiate_container.hide()
-			menu_container.show()
-			letter_container.hide()
-		2: #Letter Interface
-			negotiate_container.hide()
-			menu_container.hide()
-			letter_container.show()
+	# Hide all containers first
+	for container in event_containers.values():
+		container.hide()
+
+	event_containers[event_dropdown.get_item_text(idx)].show()
+
+func change_check_mode(idx:int = 0):
+	# Hide all check containers first
+	for container in check_containers.values():
+		container.hide()
+
+	check_containers[check_type_dropdown.get_item_text(idx)].show()
+
+func _on_event_dropdown_item_selected(index:int):
+	node_data["event_type"] = event_dropdown.get_item_text(index)
+	change_mode(index)
+
+func _on_check_type_item_selected(index:int):
+	node_data["check_type"] = check_type_dropdown.get_item_text(index)
+	change_check_mode(index)
+
+func _on_add_output_button_pressed(output_type):
+	if output_type == "subtree":
+		output_subtree_count += 1
+		var new_output = output_subtree.instantiate()
+		new_output.name = "OutputSubtree" + str(output_subtree_count)
+		print("adding new output node named: " + new_output.name)
+		event_containers["SUBTREE"].add_child(new_output)
+	elif output_type == "cycler":
+		output_cycler_count += 1
+		var new_output = output_cycler.instantiate()
+		new_output.name = "OutputCycler" + str(output_cycler_count)
+		event_containers["CYCLER"].add_child(new_output)
+	elif output_type == "random":
+		output_random_count += 1
+		var new_output = output_random.instantiate()
+		new_output.name = "OutputRandom" + str(output_random_count)
+		event_containers["RANDOM"].add_child(new_output)
+	else:
+		push_error("Unknown output type: " + output_type)
+
+func _on_cancel_button_pressed(output_type):
+	if "subtree" in output_type:
+		output_subtree_count -= 1
+	elif "cycler" in output_type:
+		output_cycler_count -= 1
+	elif "random" in output_type:
+		output_random_count -= 1

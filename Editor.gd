@@ -513,22 +513,57 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 
+			var found = false
+			for i in range(current_node.event_dropdown.get_item_count()):
+				if current_node.event_dropdown.get_item_text(i) == node["event_type"]:
+					current_node.event_dropdown.select(i)
+					current_node.change_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Event type not found: " + node["event_type"])
+
+			found = false
+			for i in range(current_node.check_type_dropdown.get_item_count()):
+				if current_node.check_type_dropdown.get_item_text(i) == node["check_type"]:
+					current_node.check_type_dropdown.select(i)
+					current_node.change_check_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Check type not found: " + node["check_type"])
+
 			match node["event_type"]:
-				"NEGOTIATE":
-					current_node.event_dropdown.select(0)
-					current_node.change_mode(0)
-					current_node.request_line.text = node["request_id"]
-				"MENU":
-					current_node.event_dropdown.select(1)
-					current_node.change_mode(1)
-					current_node.menu_line.text = node["menu_id"]
-					#if node["sell_mode"]:
-						#current_node.sell_btn.button_pressed = true
-						#current_node.buy_btn.button_pressed = false
-				"LETTER":
-					current_node.event_dropdown.select(2)
-					current_node.change_mode(2)
-					current_node.letter_line.text = node["letter_id"]
+				"CHECK":
+					match node["check_type"]:
+						"REQUEST":
+							current_node.line_edits["request_id"].text = node["request_id"]
+							current_node.line_edits["request_pass"].text = node["outcome_pass"]
+							current_node.line_edits["request_fail"].text = node["outcome_fail"]
+							current_node.line_edits["request_unsure"].text = node["outcome_unsure"]
+						"COERCE":
+							current_node.line_edits["lever_id"].text = node["lever_id"]
+							current_node.line_edits["coerce_pass"].text = node["outcome_pass"]
+							current_node.line_edits["coerce_fail"].text = node["outcome_fail"]
+						"FORCE":
+							current_node.line_edits["force_pass"].text = node["outcome_pass"]
+							current_node.line_edits["force_fail"].text = node["outcome_fail"]
+				"SUBTREE":
+					current_node.line_edits["subtree_id"].text = node["subtree_id"]
+					current_node.line_edits["subtree_start"].text = node["subtree_start"]
+					if not node["subtree_outputs"].is_empty():
+						for output_name in node["subtree_outputs"]:
+							current_node._on_add_output_button_pressed("subtree")
+							var current_output_count = current_node.output_subtree_count
+							var output_node_name = "OutputSubtree" + str(current_output_count)
+							#var output_node = current_node.get_node(output_node_name) #returns null for some reason
+							var output_node = current_node.event_containers["SUBTREE"].get_node(output_node_name)
+							if output_node == null:
+								print("Output node not found: " + output_node_name)
+								continue
+							output_node.outcome_name.text = node["subtree_outputs"].keys()[current_output_count - 1]
+							output_node.target_node.text = node["subtree_outputs"].values()[current_output_count - 1]
+
 
 		# if type: image
 		elif "IMAGE" in node["node title"]:
@@ -537,18 +572,6 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 
-			"""
-			match node["image_action"]:
-				"NONE":
-					current_node.action_dropdown.select(0)
-					#current_node.change_mode(0)
-				"HIDE":
-					current_node.action_dropdown.select(1)
-					#current_node.change_mode(1)
-				"QUAKE":
-					current_node.action_dropdown.select(2)
-					#current_node.change_mode(2)
-			"""
 			#Set action_dropdown to the index with the same name as node["image_action"]
 			var found = false
 			for i in range(current_node.action_dropdown.get_item_count()):
@@ -584,10 +607,10 @@ func _on_file_dialog_load_file_async():
 					current_node.change_mode(0)
 					current_node.file_line.text = node["dest_node"].split(".")[0]
 					current_node.title_line.text = node["dest_node"].split(".")[1]
-				"TRAVELMAP":
+				"TERMINATE":
 					current_node.destination_dropdown.select(1)
 					current_node.change_mode(1)
-					current_node.map_line.text = node["dest_map"]
+					current_node.outcome_line.text = node["dest_outcome"]
 
 		# if type: onramp
 		elif "ONRAMP" in node["node title"]:

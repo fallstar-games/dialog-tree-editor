@@ -189,7 +189,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
 icon = ExtResource("5_upf7y")
 
 [node name="GreaterGroup" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 2
 
 [node name="Divider" type="TextureRect" parent="GreaterGroup"]

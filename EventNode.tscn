@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccm7ijwj3w3ec"]
+[gd_scene load_steps=8 format=3 uid="uid://ccm7ijwj3w3ec"]
 
 [ext_resource type="Script" path="res://EventNode.gd" id="1_qey05"]
 [ext_resource type="Theme" uid="uid://bcfmo1cqbenmo" path="res://Themes/event_node_theme.tres" id="1_qulwx"]
 [ext_resource type="ButtonGroup" uid="uid://6awp5n2c664a" path="res://shopmode_button_group.tres" id="2_c3aul"]
+[ext_resource type="Texture2D" uid="uid://dctd3qs435f6c" path="res://Assets/UI/PlusIcon.svg" id="3_h7t40"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_twcxw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aw733"]
 content_margin_left = 4.0
@@ -80,6 +83,33 @@ slot/5/right_type = 0
 slot/5/right_color = Color(1, 1, 1, 1)
 slot/5/right_icon = null
 slot/5/draw_stylebox = true
+slot/6/left_enabled = false
+slot/6/left_type = 0
+slot/6/left_color = Color(1, 1, 1, 1)
+slot/6/left_icon = null
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color(1, 1, 1, 1)
+slot/6/right_icon = null
+slot/6/draw_stylebox = true
+slot/7/left_enabled = false
+slot/7/left_type = 0
+slot/7/left_color = Color(1, 1, 1, 1)
+slot/7/left_icon = null
+slot/7/right_enabled = false
+slot/7/right_type = 0
+slot/7/right_color = Color(1, 1, 1, 1)
+slot/7/right_icon = null
+slot/7/draw_stylebox = true
+slot/8/left_enabled = false
+slot/8/left_type = 0
+slot/8/left_color = Color(1, 1, 1, 1)
+slot/8/left_icon = null
+slot/8/right_enabled = false
+slot/8/right_type = 0
+slot/8/right_color = Color(1, 1, 1, 1)
+slot/8/right_icon = null
+slot/8/draw_stylebox = true
 script = ExtResource("1_qey05")
 
 [node name="Label" type="Label" parent="."]
@@ -88,23 +118,321 @@ text = "Event Type"
 
 [node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 3
+item_count = 6
 selected = 0
-popup/item_0/text = "Negotiate"
+popup/item_0/text = "CHECK"
 popup/item_0/id = 0
-popup/item_1/text = "Open Menu"
+popup/item_1/text = "SUBTREE"
 popup/item_1/id = 1
-popup/item_2/text = "Open Letter"
+popup/item_2/text = "CYCLER"
 popup/item_2/id = 2
+popup/item_3/text = "RANDOM"
+popup/item_3/id = 3
+popup/item_4/text = "WARDROBE"
+popup/item_4/id = 4
+popup/item_5/text = "MENU"
+popup/item_5/id = 5
 
-[node name="NegotiateInfo" type="HBoxContainer" parent="."]
+[node name="CheckInfo" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="NegotiateInfo"]
+[node name="CheckType" type="OptionButton" parent="CheckInfo"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "REQUEST"
+popup/item_0/id = 0
+popup/item_1/text = "COERCE"
+popup/item_1/id = 1
+popup/item_2/text = "FORCE"
+popup/item_2/id = 2
+
+[node name="RequestCheck" type="VBoxContainer" parent="CheckInfo"]
+layout_mode = 2
+
+[node name="RequestID" type="HBoxContainer" parent="CheckInfo/RequestCheck"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/RequestCheck/RequestID"]
 layout_mode = 2
 text = "Request_ID:"
 
-[node name="LineEdit" type="LineEdit" parent="NegotiateInfo"]
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/RequestCheck/RequestID"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TargetLabel" type="Label" parent="CheckInfo/RequestCheck"]
+layout_mode = 2
+text = "Target Nodes:"
+
+[node name="Pass" type="HBoxContainer" parent="CheckInfo/RequestCheck"]
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="CheckInfo/RequestCheck/Pass"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/RequestCheck/Pass"]
+layout_mode = 2
+text = "Pass:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/RequestCheck/Pass"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Unsure" type="HBoxContainer" parent="CheckInfo/RequestCheck"]
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="CheckInfo/RequestCheck/Unsure"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/RequestCheck/Unsure"]
+layout_mode = 2
+text = "Unsure:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/RequestCheck/Unsure"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fail" type="HBoxContainer" parent="CheckInfo/RequestCheck"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="CheckInfo/RequestCheck/Fail"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/RequestCheck/Fail"]
+layout_mode = 2
+text = "Fail:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/RequestCheck/Fail"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CoerceCheck" type="VBoxContainer" parent="CheckInfo"]
+visible = false
+layout_mode = 2
+
+[node name="LeverID" type="HBoxContainer" parent="CheckInfo/CoerceCheck"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/CoerceCheck/LeverID"]
+layout_mode = 2
+text = "Lever_ID:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/CoerceCheck/LeverID"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TargetLabel" type="Label" parent="CheckInfo/CoerceCheck"]
+layout_mode = 2
+text = "Target Nodes:"
+
+[node name="Pass" type="HBoxContainer" parent="CheckInfo/CoerceCheck"]
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="CheckInfo/CoerceCheck/Pass"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/CoerceCheck/Pass"]
+layout_mode = 2
+text = "Pass:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/CoerceCheck/Pass"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fail" type="HBoxContainer" parent="CheckInfo/CoerceCheck"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="CheckInfo/CoerceCheck/Fail"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/CoerceCheck/Fail"]
+layout_mode = 2
+text = "Fail:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/CoerceCheck/Fail"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ForceCheck" type="VBoxContainer" parent="CheckInfo"]
+visible = false
+layout_mode = 2
+
+[node name="TargetLabel" type="Label" parent="CheckInfo/ForceCheck"]
+layout_mode = 2
+text = "Target Nodes:"
+
+[node name="Pass" type="HBoxContainer" parent="CheckInfo/ForceCheck"]
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="CheckInfo/ForceCheck/Pass"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/ForceCheck/Pass"]
+layout_mode = 2
+text = "Pass:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/ForceCheck/Pass"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fail" type="HBoxContainer" parent="CheckInfo/ForceCheck"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="CheckInfo/ForceCheck/Fail"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CheckInfo/ForceCheck/Fail"]
+layout_mode = 2
+text = "Fail:"
+
+[node name="LineEdit" type="LineEdit" parent="CheckInfo/ForceCheck/Fail"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SubTreeInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="TreeName" type="HBoxContainer" parent="SubTreeInfo"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubTreeInfo/TreeName"]
+layout_mode = 2
+text = "Filename:"
+
+[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/TreeName"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NodeName" type="HBoxContainer" parent="SubTreeInfo"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubTreeInfo/NodeName"]
+layout_mode = 2
+text = "Start Node:"
+
+[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NodeName"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Outcomes" type="HBoxContainer" parent="SubTreeInfo"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="SubTreeInfo/Outcomes"]
+layout_mode = 2
+text = "Add Output"
+
+[node name="AddOutputButton" type="Button" parent="SubTreeInfo/Outcomes"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_twcxw")
+icon = ExtResource("3_h7t40")
+
+[node name="CyclerInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="CycleID" type="HBoxContainer" parent="CyclerInfo"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CyclerInfo/CycleID"]
+layout_mode = 2
+text = "Cycle ID:"
+
+[node name="LineEdit" type="LineEdit" parent="CyclerInfo/CycleID"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Outcomes" type="HBoxContainer" parent="CyclerInfo"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="CyclerInfo/Outcomes"]
+layout_mode = 2
+text = "Add Output"
+
+[node name="AddOutputButton" type="Button" parent="CyclerInfo/Outcomes"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_twcxw")
+icon = ExtResource("3_h7t40")
+
+[node name="RandomInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Outcomes" type="HBoxContainer" parent="RandomInfo"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="RandomInfo/Outcomes"]
+layout_mode = 2
+text = "Add Weighted Output"
+
+[node name="AddOutputButton" type="Button" parent="RandomInfo/Outcomes"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_twcxw")
+icon = ExtResource("3_h7t40")
+
+[node name="WardrobeInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="WardrobeInfo"]
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "Wear Garment"
+popup/item_0/id = 0
+popup/item_1/text = "Remove Garment"
+popup/item_1/id = 1
+popup/item_2/text = "Wear Outfit"
+popup/item_2/id = 2
+popup/item_3/text = "Save Outfit"
+popup/item_3/id = 3
+
+[node name="OutfitID" type="HBoxContainer" parent="WardrobeInfo"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WardrobeInfo/OutfitID"]
+layout_mode = 2
+text = "Outfit ID:"
+
+[node name="LineEdit" type="LineEdit" parent="WardrobeInfo/OutfitID"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GarmentID" type="HBoxContainer" parent="WardrobeInfo"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WardrobeInfo/GarmentID"]
+layout_mode = 2
+text = "Garment ID:"
+
+[node name="LineEdit" type="LineEdit" parent="WardrobeInfo/GarmentID"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SlotID" type="HBoxContainer" parent="WardrobeInfo"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WardrobeInfo/SlotID"]
+layout_mode = 2
+text = "Slot ID:"
+
+[node name="LineEdit" type="LineEdit" parent="WardrobeInfo/SlotID"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -117,18 +445,6 @@ layout_mode = 2
 text = "Menu_ID:"
 
 [node name="LineEdit" type="LineEdit" parent="MenuInfo"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="LetterInfo" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="LetterInfo"]
-layout_mode = 2
-text = "Letter_ID:"
-
-[node name="LineEdit" type="LineEdit" parent="LetterInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -161,3 +477,7 @@ text = "Sell
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
 [connection signal="item_selected" from="OptionButton" to="." method="_on_event_dropdown_item_selected"]
+[connection signal="item_selected" from="CheckInfo/CheckType" to="." method="_on_check_type_item_selected"]
+[connection signal="pressed" from="SubTreeInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["subtree"]]
+[connection signal="pressed" from="CyclerInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["cycler"]]
+[connection signal="pressed" from="RandomInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["random"]]

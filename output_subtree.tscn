@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://c80qjey2lso0d"]
+
+[ext_resource type="Script" path="res://outcome_line_edits.gd" id="1_m2cqk"]
+[ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="2_gxyes"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hxjpg"]
+
+[node name="OutputSubtree" type="HBoxContainer" node_paths=PackedStringArray("outcome_name", "target_node")]
+theme_override_constants/separation = 12
+script = ExtResource("1_m2cqk")
+outcome_name = NodePath("OutcomeLine")
+target_node = NodePath("TargetLine")
+
+[node name="OutcomeLine" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "->"
+
+[node name="TargetLine" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CancelButton" type="Button" parent="."]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hxjpg")
+icon = ExtResource("2_gxyes")
+
+[connection signal="pressed" from="CancelButton" to="." method="_on_cancel_button_pressed"]
