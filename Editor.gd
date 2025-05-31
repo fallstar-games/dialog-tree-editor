@@ -533,6 +533,16 @@ func _on_file_dialog_load_file_async():
 			if not found:
 				push_error("Check type not found: " + node["check_type"])
 
+			found = false
+			for i in range(current_node.wardrobe_action_dropdown.get_item_count()):
+				if current_node.wardrobe_action_dropdown.get_item_text(i) == node["wardrobe_action"]:
+					current_node.wardrobe_action_dropdown.select(i)
+					current_node.change_wardrobe_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Wardrobe action not found: " + node["wardrobe_action"])
+
 			match node["event_type"]:
 				"CHECK":
 					match node["check_type"]:
@@ -583,6 +593,16 @@ func _on_file_dialog_load_file_async():
 
 							output_node.var_amount.text = str(node["random_outputs"][target_node])
 							output_node.var_name.text = target_node
+				"WARDROBE":
+					match node["wardrobe_action"]:
+						"WEAR_GARMENT":
+							current_node.line_edits["garment_id"].text = node["garment_id"]
+						"REMOVE_GARMENT":
+							current_node.line_edits["garment_slot_id"].text = node["garment_slot_id"]
+						"WEAR_OUTFIT":
+							current_node.line_edits["outfit_id"].text = node["outfit_id"]
+						"SAVE_OUTFIT":
+							current_node.line_edits["outfit_id"].text = node["outfit_id"]
 
 
 		# if type: image

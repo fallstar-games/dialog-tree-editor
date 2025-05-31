@@ -2,6 +2,7 @@ extends GraphNode
 
 @onready var event_dropdown:OptionButton = $OptionButton
 @onready var check_type_dropdown:OptionButton = $CheckInfo/CheckType
+@onready var wardrobe_action_dropdown:OptionButton = $WardrobeInfo/WardrobeAction
 #@onready var buy_sell_container = $ShopMode
 @onready var menu_line:LineEdit = $MenuInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
@@ -21,6 +22,13 @@ extends GraphNode
 	"FORCE": $CheckInfo/ForceCheck
 }
 
+@onready var wardrobe_containers:Dictionary = {
+	"WEAR_GARMENT": $WardrobeInfo/GarmentID,
+	"REMOVE_GARMENT": $WardrobeInfo/SlotID,
+	"WEAR_OUTFIT": $WardrobeInfo/OutfitID,
+	"SAVE_OUTFIT": $WardrobeInfo/OutfitID
+}
+
 @onready var line_edits:Dictionary = {
 	"request_id": $CheckInfo/RequestCheck/RequestID/LineEdit,
 	"request_pass": $CheckInfo/RequestCheck/Pass/LineEdit,
@@ -34,6 +42,9 @@ extends GraphNode
 	"subtree_id": $SubTreeInfo/TreeName/LineEdit,
 	"subtree_start": $SubTreeInfo/NodeName/LineEdit,
 	"cycle_id": $CyclerInfo/CycleID/LineEdit,
+	"outfit_id": $WardrobeInfo/OutfitID/LineEdit,
+	"garment_id": $WardrobeInfo/GarmentID/LineEdit,
+	"garment_slot_id": $WardrobeInfo/SlotID/LineEdit
 }
 
 @onready var output_subtree = load("res://output_subtree.tscn")
@@ -62,6 +73,10 @@ var node_data = {
 	"cycle_id": "",
 	"cycler_outputs": {},
 	"random_outputs": {},
+	"wardrobe_action": "WEAR_GARMENT",
+	"outfit_id": "",
+	"garment_id": "",
+	"garment_slot_id": "",
 	"menu_id":"",
 	#"letter_id":"",
 	"go to": []
@@ -127,6 +142,17 @@ func update_data():
 						var target_node = output.get_node("TargetLine").text
 						node_data["random_outputs"][target_node] = target_weight
 
+		"WARDROBE":
+			match node_data["wardrobe_action"]:
+				"WEAR_GARMENT":
+					node_data["garment_id"] = line_edits["garment_id"].text
+				"REMOVE_GARMENT":
+					node_data["garment_slot_id"] = line_edits["garment_slot_id"].text
+				"WEAR_OUTFIT":
+					node_data["outfit_id"] = line_edits["outfit_id"].text
+				"SAVE_OUTFIT":
+					node_data["outfit_id"] = line_edits["outfit_id"].text
+
 
 func change_mode(idx:int = 0):
 	# Hide all containers first
@@ -142,6 +168,13 @@ func change_check_mode(idx:int = 0):
 
 	check_containers[check_type_dropdown.get_item_text(idx)].show()
 
+func change_wardrobe_mode(idx:int = 0):
+	# Hide all wardrobe containers first
+	for container in wardrobe_containers.values():
+		container.hide()
+
+	wardrobe_containers[wardrobe_action_dropdown.get_item_text(idx)].show()
+
 func _on_event_dropdown_item_selected(index:int):
 	node_data["event_type"] = event_dropdown.get_item_text(index)
 	change_mode(index)
@@ -149,6 +182,10 @@ func _on_event_dropdown_item_selected(index:int):
 func _on_check_type_item_selected(index:int):
 	node_data["check_type"] = check_type_dropdown.get_item_text(index)
 	change_check_mode(index)
+
+func _on_wardrobe_action_item_selected(index:int):
+	node_data["wardrobe_action"] = wardrobe_action_dropdown.get_item_text(index)
+	change_wardrobe_mode(index)
 
 func _on_add_output_button_pressed(output_type):
 	if output_type == "subtree":
