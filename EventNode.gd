@@ -32,7 +32,8 @@ extends GraphNode
 	"force_pass": $CheckInfo/ForceCheck/Pass/LineEdit,
 	"force_fail": $CheckInfo/ForceCheck/Fail/LineEdit,
 	"subtree_id": $SubTreeInfo/TreeName/LineEdit,
-	"subtree_start": $SubTreeInfo/NodeName/LineEdit
+	"subtree_start": $SubTreeInfo/NodeName/LineEdit,
+	"cycle_id": $CyclerInfo/CycleID/LineEdit,
 }
 
 @onready var output_subtree = load("res://output_subtree.tscn")
@@ -108,6 +109,23 @@ func update_data():
 						var outcome_name = output.get_node("OutcomeLine").text
 						var target_node = output.get_node("TargetLine").text
 						node_data["subtree_outputs"][outcome_name] = target_node
+		"CYCLER":
+			node_data["cycle_id"] = line_edits["cycle_id"].text
+			if output_cycler_count > 0:
+				node_data["cycler_outputs"] = {}
+				for output in event_containers["CYCLER"].get_children():
+					if "OutputCycler" in output.name:
+						var cycle_index = output.get_node("IntLine").text
+						var target_node = output.get_node("TargetLine").text
+						node_data["cycler_outputs"][cycle_index] = target_node
+		"RANDOM":
+			if output_random_count > 0:
+				node_data["random_outputs"] = {}
+				for output in event_containers["RANDOM"].get_children():
+					if "OutputRandom" in output.name:
+						var target_weight = output.get_node("IntLine").text
+						var target_node = output.get_node("TargetLine").text
+						node_data["random_outputs"][target_node] = target_weight
 
 
 func change_mode(idx:int = 0):

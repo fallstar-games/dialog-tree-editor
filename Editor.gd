@@ -556,13 +556,33 @@ func _on_file_dialog_load_file_async():
 							current_node._on_add_output_button_pressed("subtree")
 							var current_output_count = current_node.output_subtree_count
 							var output_node_name = "OutputSubtree" + str(current_output_count)
-							#var output_node = current_node.get_node(output_node_name) #returns null for some reason
 							var output_node = current_node.event_containers["SUBTREE"].get_node(output_node_name)
 							if output_node == null:
 								print("Output node not found: " + output_node_name)
 								continue
 							output_node.outcome_name.text = node["subtree_outputs"].keys()[current_output_count - 1]
 							output_node.target_node.text = node["subtree_outputs"].values()[current_output_count - 1]
+				"CYCLER":
+					current_node.line_edits["cycle_id"].text = node["cycle_id"]
+					if not node["cycler_outputs"].is_empty():
+						for cycle_index in node["cycler_outputs"]:
+							current_node._on_add_output_button_pressed("cycler")
+							var current_output_count = current_node.output_cycler_count
+							var output_node_name = "OutputCycler" + str(current_output_count)
+							var output_node = current_node.event_containers["CYCLER"].get_node(output_node_name)
+
+							output_node.var_amount.text = cycle_index
+							output_node.var_name.text = node["cycler_outputs"][cycle_index]
+				"RANDOM":
+					if not node["random_outputs"].is_empty():
+						for target_node in node["random_outputs"]:
+							current_node._on_add_output_button_pressed("random")
+							var current_output_count = current_node.output_random_count
+							var output_node_name = "OutputRandom" + str(current_output_count)
+							var output_node = current_node.event_containers["RANDOM"].get_node(output_node_name)
+
+							output_node.var_amount.text = str(node["random_outputs"][target_node])
+							output_node.var_name.text = target_node
 
 
 		# if type: image
