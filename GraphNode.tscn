@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_5vr0d"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_pv5j2"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -153,7 +153,7 @@ popup/item_3/text = "3-Eyes_Scared"
 popup/item_3/id = 3
 popup/item_4/text = "4-Eyes_Angry"
 popup/item_4/id = 4
-popup/item_5/text = "5-Eyes_Angry"
+popup/item_5/text = "5-Eyes_Closed"
 popup/item_5/id = 5
 popup/item_6/text = "6-Eyes_Wide"
 popup/item_6/id = 6
@@ -207,7 +207,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_5vr0d")
+syntax_highlighter = SubResource("CodeHighlighter_pv5j2")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 
