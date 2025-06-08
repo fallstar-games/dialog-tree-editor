@@ -57,6 +57,15 @@ slot/4/right_type = 0
 slot/4/right_color = Color(1, 1, 1, 1)
 slot/4/right_icon = null
 slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
 script = ExtResource("1_u73tp")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
@@ -71,7 +80,7 @@ stretch_mode = 4
 
 [node name="Label" type="Label" parent="HBoxContainer2"]
 layout_mode = 2
-text = "Change Room/Time/Person"
+text = "Change Room/Timeskip"
 vertical_alignment = 2
 
 [node name="LocaleContainer" type="HBoxContainer" parent="."]
@@ -105,6 +114,7 @@ layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="PersonOption" type="OptionButton" parent="HBoxContainer3"]
+visible = false
 layout_mode = 2
 item_count = 2
 selected = 0
@@ -113,11 +123,28 @@ popup/item_0/id = 0
 popup/item_1/text = "person 2"
 popup/item_1/id = 1
 
+[node name="Label" type="Label" parent="HBoxContainer3"]
+layout_mode = 2
+text = "Person 1:"
+
 [node name="PersonID" type="LineEdit" parent="HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="HBoxContainer5" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="HBoxContainer5"]
+layout_mode = 2
+text = "Person 2:"
+
+[node name="PersonID" type="LineEdit" parent="HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="HBoxContainer4" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="FocusOption" type="OptionButton" parent="HBoxContainer4"]

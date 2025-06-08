@@ -85,6 +85,15 @@ slot/7/right_type = 0
 slot/7/right_color = Color(1, 1, 1, 1)
 slot/7/right_icon = null
 slot/7/draw_stylebox = true
+slot/8/left_enabled = false
+slot/8/left_type = 0
+slot/8/left_color = Color(1, 1, 1, 1)
+slot/8/left_icon = null
+slot/8/right_enabled = false
+slot/8/right_type = 0
+slot/8/right_color = Color(1, 1, 1, 1)
+slot/8/right_icon = null
+slot/8/draw_stylebox = true
 script = ExtResource("1_qesbp")
 metadata/_edit_use_anchors_ = true
 
@@ -97,7 +106,7 @@ text = "Select feature"
 
 [node name="OptionButton" type="OptionButton" parent="Feature"]
 layout_mode = 2
-item_count = 7
+item_count = 8
 popup/item_0/text = "Set Var (T/F)"
 popup/item_0/id = 0
 popup/item_1/text = "Emit Signal"
@@ -110,8 +119,10 @@ popup/item_4/text = "If Less"
 popup/item_4/id = 4
 popup/item_5/text = "If Equals"
 popup/item_5/id = 5
-popup/item_6/text = "has_garment"
+popup/item_6/text = "Has Garment"
 popup/item_6/id = 6
+popup/item_7/text = "Set Person"
+popup/item_7/id = 7
 
 [node name="VariablesGroup" type="VBoxContainer" parent="."]
 visible = false
@@ -189,6 +200,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
 icon = ExtResource("5_upf7y")
 
 [node name="GreaterGroup" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="Divider" type="TextureRect" parent="GreaterGroup"]
@@ -286,6 +298,31 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_p5ccu")
 icon = ExtResource("5_upf7y")
+
+[node name="SetPersonGroup" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Divider" type="TextureRect" parent="SetPersonGroup"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_ldgu0")
+stretch_mode = 2
+
+[node name="Person1Label" type="Label" parent="SetPersonGroup"]
+layout_mode = 2
+text = "'Main' Person:"
+
+[node name="MainPersonID" type="LineEdit" parent="SetPersonGroup"]
+layout_mode = 2
+
+[node name="Person2Label" type="Label" parent="SetPersonGroup"]
+layout_mode = 2
+text = "'Second' Person:"
+
+[node name="SecondPersonID" type="LineEdit" parent="SetPersonGroup"]
+layout_mode = 2
 
 [connection signal="_cancel_button_pressed" from="." to="." method="_on_cancel_button_pressed"]
 [connection signal="close_request" from="." to="." method="_on_close_request"]

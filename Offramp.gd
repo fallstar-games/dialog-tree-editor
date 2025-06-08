@@ -11,7 +11,7 @@ extends GraphNode
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"dest_type": "DIALOGTREE",
+	"dest_type": "SAMETREE",
 	"dest_node": "",
 	"dest_outcome": "",
 	"go to": []
@@ -33,10 +33,14 @@ func update_data():
 
 	var idx = destination_dropdown.selected
 	match idx:
-		0: #target dialog node
-			node_data["dest_type"] = "DIALOGTREE"
-			node_data["dest_node"] = file_line.text + "." + title_line.text
-		1: #terminate subtree
+		0: #node in this tree
+			node_data["dest_type"] = "SAMETREE"
+			node_data["dest_node"] = title_line.text
+		1: #directory
+			node_data["dest_type"] = "DIRECTORY"
+			node_data["dest_node"] = file_line.text
+			node_data["dest_outcome"] = outcome_line.text
+		2: #terminate
 			node_data["dest_type"] = "TERMINATE"
 			node_data["dest_outcome"] = outcome_line.text
 
@@ -46,12 +50,17 @@ func _on_dest_dropdown_item_selected(index:int):
 func change_mode(idx:int = 0):
 
 	match idx:
-		0: #Dialogue Tree
-			filename_container.show()
+		0: #This Tree
+			filename_container.hide()
 			nodename_container.show()
 			outcome_name_container.hide()
 
-		1: #Travel Map
+		1: #Directory
+			filename_container.show()
+			nodename_container.hide()
+			outcome_name_container.show()
+
+		2: #Terminate
 			filename_container.hide()
 			nodename_container.hide()
 			outcome_name_container.show()

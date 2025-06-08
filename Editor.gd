@@ -384,6 +384,11 @@ func _on_file_dialog_load_file_async():
 			
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
+
+			current_node.main_person_line.text = node["main_person_id"]
+			current_node.second_person_line.text = node["second_person_id"]
+			current_node.option_button.select(node["opt_index"])
+			current_node._on_option_button_item_selected(node["opt_index"])
 			
 			# variable
 			if not node["set_variables"].is_empty():
@@ -612,27 +617,105 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 
-			#Set action_dropdown to the index with the same name as node["image_action"]
+			#set slot_dropdown to the index with the same name as node["image_slot"]
 			var found = false
-			for i in range(current_node.action_dropdown.get_item_count()):
-				if current_node.action_dropdown.get_item_text(i) == node["image_action"]:
-					current_node.action_dropdown.select(i)
+			for i in range(current_node.slot_dropdown.get_item_count()):
+				if current_node.slot_dropdown.get_item_text(i) == node["image_slot"]:
+					current_node.slot_dropdown.select(i)
+					current_node.change_slot_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Image slot not found: " + node["image_slot"])
+
+			#Set set_hide_dropdown to the index with the same name as node["image_action"]
+			found = false
+			for i in range(current_node.set_hide_dropdown.get_item_count()):
+				if current_node.set_hide_dropdown.get_item_text(i) == node["image_action"]:
+					current_node.set_hide_dropdown.select(i)
+					current_node.change_set_hide_mode(i)
 					found = true
 					break
 			if not found:
 				push_error("Image action not found: " + node["image_action"])
 
-			current_node.image_line.text = node["image_id"]
+			#Set target_dropdown to the index with the same name as node["image_target"]
+			found = false
+			for i in range(current_node.target_dropdown.get_item_count()):
+				if current_node.target_dropdown.get_item_text(i) == node["image_target"]:
+					current_node.target_dropdown.select(i)
+					current_node.change_target_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Image target not found: " + node["image_target"])
 
-			match node["image_slot"]:
-				"MAIN":
-					current_node.slot_dropdown.select(0)
-				"LEFT":
-					current_node.slot_dropdown.select(1)
-				"RIGHT":
-					current_node.slot_dropdown.select(2)
-				"BG":
-					current_node.slot_dropdown.select(3)
+			#Set person_main_mode_dropdown to the index with the same name as node["image_person_main_mode"]
+			found = false
+			for i in range(current_node.person_main_mode_dropdown.get_item_count()):
+				if current_node.person_main_mode_dropdown.get_item_text(i) == node["image_person_main_mode"]:
+					current_node.person_main_mode_dropdown.select(i)
+					current_node.change_person_main_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Image person main mode not found: " + node["image_person_main_mode"])
+
+			current_node.expression_eyes_dropdown.select(node["expression_eyes"])
+			current_node.expression_mouth_dropdown.select(node["expression_mouth"])
+
+			#Set pose_dropdown to the index with the same name as node["pose"]
+			found = false
+			for i in range(current_node.pose_dropdown.get_item_count()):
+				if current_node.pose_dropdown.get_item_text(i) == node["pose"]:
+					current_node.pose_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image pose not found: " + node["pose"])
+
+			#Set person_lr_mode_dropdown to the index with the same name as node["image_person_lr_mode"]
+			found = false
+			for i in range(current_node.person_lr_mode_dropdown.get_item_count()):
+				if current_node.person_lr_mode_dropdown.get_item_text(i) == node["image_person_lr_mode"]:
+					current_node.person_lr_mode_dropdown.select(i)
+					current_node.change_person_lr_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Image person LR mode not found: " + node["image_person_lr_mode"])
+
+			#Set lr_action_dropdown to the index with the same name as node["action"]
+			found = false
+			for i in range(current_node.lr_action_dropdown.get_item_count()):
+				if current_node.lr_action_dropdown.get_item_text(i) == node["action"]:
+					current_node.lr_action_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image action not found: " + node["action"])
+
+			#set lr_reaction_dropdown to the index with the same name as node["reaction"]
+			found = false
+			for i in range(current_node.lr_reaction_dropdown.get_item_count()):
+				if current_node.lr_reaction_dropdown.get_item_text(i) == node["reaction"]:
+					current_node.lr_reaction_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image reaction not found: " + node["reaction"])
+
+			current_node.image_id_line.text = node["image_id"]
+
+			#set tween_dropdown to the index with the same name as node["tween"]
+			found = false
+			for i in range(current_node.tween_dropdown.get_item_count()):
+				if current_node.tween_dropdown.get_item_text(i) == node["tween"]:
+					current_node.tween_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image tween not found: " + node["tween"])
 
 		# if type: offramp
 		elif "OFFRAMP" in node["node title"]:
@@ -642,14 +725,18 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 
 			match node["dest_type"]:
-				"DIALOGTREE":
+				"SAMETREE":
 					current_node.destination_dropdown.select(0)
 					current_node.change_mode(0)
-					current_node.file_line.text = node["dest_node"].split(".")[0]
-					current_node.title_line.text = node["dest_node"].split(".")[1]
-				"TERMINATE":
+					current_node.title_line.text = node["dest_node"]
+				"DIRECTORY":
 					current_node.destination_dropdown.select(1)
 					current_node.change_mode(1)
+					current_node.file_line.text = node["dest_node"]
+					current_node.outcome_line.text = node["dest_outcome"]
+				"TERMINATE":
+					current_node.destination_dropdown.select(2)
+					current_node.change_mode(2)
 					current_node.outcome_line.text = node["dest_outcome"]
 
 		# if type: onramp
@@ -668,9 +755,10 @@ func _on_file_dialog_load_file_async():
 			
 			current_node.locale_line.text = node["room_id"]
 			current_node.time_line.text = str(node["time_forward"])
-			current_node.person_line.text = node["person_id"]
-			current_node.person_opt.select(node["person_type"])
-			current_node.focus_opt.select(node["focus_change"])
+			current_node.main_person_line.text = node["main_person_id"]
+			current_node.second_person_line.text = node["second_person_id"]
+			#current_node.person_opt.select(node["person_type"])
+			#current_node.focus_opt.select(node["focus_change"])
 		
 		# Link Connections
 		if "End" in node["go to"]:

@@ -18,6 +18,7 @@ var has_garment_count : int = 0
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
+	"opt_index": 0,
 	"set_variables": {},
 	"signals": [],
 	"if_boolean": {},
@@ -25,6 +26,8 @@ var node_data = {
 	"if_less": {},
 	"if_equal": {},
 	"has_garment": {},
+	"main_person_id": "",
+	"second_person_id": "",
 	"node title": "",
 	"go to": []
 }
@@ -34,6 +37,9 @@ func update_data():
 	node_data["offset_y"] = self.position_offset.y
 
 	print("var count = " + str(variable_count) + ", signal count = " + str(signal_count) + ", conditional count = " + str(conditional_count))
+
+	node_data["main_person_id"] = main_person_line.text
+	node_data["second_person_id"] = second_person_line.text
 	
 	if variable_count != 0:
 		for individual_variable in variables_group.get_children():
@@ -99,6 +105,10 @@ func update_data():
 @onready var less_group = $LessGroup
 @onready var equal_group = $EqualGroup
 @onready var has_garment_group = $HasGarmentGroup
+@onready var set_person_group = $SetPersonGroup
+@onready var main_person_line = $SetPersonGroup/MainPersonID
+@onready var second_person_line = $SetPersonGroup/SecondPersonID
+@onready var option_button = $Feature/OptionButton
 
 @onready var variable = load("res://Variable.tscn")
 @onready var emit_signal = load("res://Signal.tscn")
@@ -213,6 +223,8 @@ func _on_add_button_pressed(feature_type):
 
 
 func _on_option_button_item_selected(index):
+	set_person_group.hide()
+	node_data["opt_index"] = index
 	if index == 0:
 		variables_group.show()
 		_on_add_button_pressed("variable")
@@ -240,6 +252,9 @@ func _on_option_button_item_selected(index):
 	elif index == 6:
 		has_garment_group.show()
 		_on_add_button_pressed("has_garment")
+
+	elif index == 7:
+		set_person_group.show()
 
 
 func _on_close_request():
