@@ -361,13 +361,24 @@ func _on_file_dialog_load_file_async():
 			current_node.mouth_opt.select(node["mouth"])
 			if node["eyes"] == 0:
 				current_node.mouth_opt.hide()
+				current_node.pose_dropdown.hide()
 			else:
 				current_node.mouth_opt.show()
+				current_node.pose_dropdown.show()
 
-			#for item in current_node.image_effect_opt.get_item_count():
-			#	if current_node.image_effect_opt.get_item_text(item) == node["image_effect"]:
-			#		current_node.image_effect_opt.select(item)
-			#		break
+			#Set pose_dropdown to the index with the same name as node["pose"]
+			if "pose" in node:
+				if node["pose"] == "":
+					current_node.pose_dropdown.select(0) # Select "None" if pose is empty
+				else:
+					var found = false
+					for i in range(current_node.pose_dropdown.get_item_count()):
+						if current_node.pose_dropdown.get_item_text(i) == node["pose"]:
+							current_node.pose_dropdown.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image pose not found: " + node["pose"])
 
 		# if type: append
 		elif "APPEND" in node["node title"]:
@@ -649,7 +660,7 @@ func _on_file_dialog_load_file_async():
 					break
 			if not found:
 				push_error("Image target not found: " + node["image_target"])
-
+			"""
 			#Set person_main_mode_dropdown to the index with the same name as node["image_person_main_mode"]
 			found = false
 			for i in range(current_node.person_main_mode_dropdown.get_item_count()):
@@ -660,19 +671,22 @@ func _on_file_dialog_load_file_async():
 					break
 			if not found:
 				push_error("Image person main mode not found: " + node["image_person_main_mode"])
-
+			"""
 			current_node.expression_eyes_dropdown.select(node["expression_eyes"])
 			current_node.expression_mouth_dropdown.select(node["expression_mouth"])
 
 			#Set pose_dropdown to the index with the same name as node["pose"]
-			found = false
-			for i in range(current_node.pose_dropdown.get_item_count()):
-				if current_node.pose_dropdown.get_item_text(i) == node["pose"]:
-					current_node.pose_dropdown.select(i)
-					found = true
-					break
-			if not found:
-				push_error("Image pose not found: " + node["pose"])
+			if node["pose"] == "":
+				current_node.pose_dropdown.select(0) # Select "None" if pose is empty
+			else:
+				found = false
+				for i in range(current_node.pose_dropdown.get_item_count()):
+					if current_node.pose_dropdown.get_item_text(i) == node["pose"]:
+						current_node.pose_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image pose not found: " + node["pose"])
 
 			#Set person_lr_mode_dropdown to the index with the same name as node["image_person_lr_mode"]
 			found = false
@@ -725,11 +739,12 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 
 			match node["dest_type"]:
-				"SAMETREE":
+				"SAME_TREE":
 					current_node.destination_dropdown.select(0)
 					current_node.change_mode(0)
-					current_node.title_line.text = node["dest_node"]
-				"DIRECTORY":
+					#current_node.title_line.text = node["dest_node"]
+					current_node.outcome_line.text = node["dest_outcome"]
+				"OUTSIDE_TREE":
 					current_node.destination_dropdown.select(1)
 					current_node.change_mode(1)
 					current_node.file_line.text = node["dest_node"]
@@ -745,6 +760,8 @@ func _on_file_dialog_load_file_async():
 
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
+
+			current_node.key_line.text = node["string_key"]
 
 		# if type: transition
 		elif "TRANSITION" in node["node title"]:
