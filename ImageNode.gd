@@ -31,7 +31,7 @@ var node_data = {
 	"image_person_main_mode": "EXPRESSION",
 	"expression_eyes":0, #0 = no change, 1 = open, etc.
 	"expression_mouth":0, #0 = no change, 1 = smile, etc.
-	"pose": "FROM_BEHIND",
+	"pose": "",
 	"image_person_lr_mode": "ACTION",
 	"action": "KISS_TONGUE",
 	"reaction": "SHOCKED",
@@ -113,7 +113,10 @@ func _on_mouth_dropdown_item_selected(index:int):
 	node_data["expression_mouth"] = index
 
 func _on_pose_dropdown_item_selected(index:int):
-	node_data["pose"] = pose_dropdown.get_item_text(index)
+	if index != 0:
+		node_data["pose"] = pose_dropdown.get_item_text(index)
+	else:
+		node_data["pose"] = ""  # Reset pose if "None" is selected
 
 func _on_lr_mode_dropdown_item_selected(index:int):
 	node_data["image_person_lr_mode"] = person_lr_mode_dropdown.get_item_text(index)

@@ -94,26 +94,31 @@ text = "Room_ID: "
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="TransitionTimeContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 6
 
-[node name="Label2" type="Label" parent="HBoxContainer"]
+[node name="Label2" type="Label" parent="TransitionTimeContainer"]
 layout_mode = 2
-text = "Fade Time "
+text = "Fade"
 
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+[node name="FadeLine" type="LineEdit" parent="TransitionTimeContainer"]
 layout_mode = 2
-text = "0"
+text = "0.3"
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="TransitionTimeContainer"]
 layout_mode = 2
-text = " Units"
+text = " Wait"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+[node name="WaitLine" type="LineEdit" parent="TransitionTimeContainer"]
+layout_mode = 2
+text = "0.3"
+
+[node name="Person1Container" type="HBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PersonOption" type="OptionButton" parent="HBoxContainer3"]
+[node name="PersonOption" type="OptionButton" parent="Person1Container"]
 visible = false
 layout_mode = 2
 item_count = 2
@@ -123,23 +128,24 @@ popup/item_0/id = 0
 popup/item_1/text = "person 2"
 popup/item_1/id = 1
 
-[node name="Label" type="Label" parent="HBoxContainer3"]
+[node name="Label" type="Label" parent="Person1Container"]
 layout_mode = 2
 text = "Person 1:"
 
-[node name="PersonID" type="LineEdit" parent="HBoxContainer3"]
+[node name="PersonID" type="LineEdit" parent="Person1Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="."]
+[node name="Person2Container" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Label" type="Label" parent="HBoxContainer5"]
+[node name="Label" type="Label" parent="Person2Container"]
 layout_mode = 2
 text = "Person 2:"
 
-[node name="PersonID" type="LineEdit" parent="HBoxContainer5"]
+[node name="PersonID" type="LineEdit" parent="Person2Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -161,5 +167,6 @@ popup/item_2/id = 2
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
-[connection signal="item_selected" from="HBoxContainer3/PersonOption" to="." method="_on_person_option_item_selected"]
+[connection signal="item_selected" from="Person1Container/PersonOption" to="." method="_on_person_option_item_selected"]
+[connection signal="text_changed" from="Person1Container/PersonID" to="." method="_on_person_id_text_changed"]
 [connection signal="item_selected" from="HBoxContainer4/FocusOption" to="." method="_on_focus_option_item_selected"]

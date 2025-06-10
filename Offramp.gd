@@ -11,7 +11,7 @@ extends GraphNode
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"dest_type": "SAMETREE",
+	"dest_type": "SAME_TREE",
 	"dest_node": "",
 	"dest_outcome": "",
 	"go to": []
@@ -34,10 +34,11 @@ func update_data():
 	var idx = destination_dropdown.selected
 	match idx:
 		0: #node in this tree
-			node_data["dest_type"] = "SAMETREE"
-			node_data["dest_node"] = title_line.text
-		1: #directory
-			node_data["dest_type"] = "DIRECTORY"
+			node_data["dest_type"] = "SAME_TREE"
+			#node_data["dest_node"] = title_line.text
+			node_data["dest_outcome"] = outcome_line.text
+		1: #another tree
+			node_data["dest_type"] = "OUTSIDE_TREE"
 			node_data["dest_node"] = file_line.text
 			node_data["dest_outcome"] = outcome_line.text
 		2: #terminate
@@ -52,10 +53,10 @@ func change_mode(idx:int = 0):
 	match idx:
 		0: #This Tree
 			filename_container.hide()
-			nodename_container.show()
-			outcome_name_container.hide()
+			nodename_container.hide()
+			outcome_name_container.show()
 
-		1: #Directory
+		1: #Outside Tree
 			filename_container.show()
 			nodename_container.hide()
 			outcome_name_container.show()

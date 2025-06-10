@@ -70,7 +70,7 @@ item_count = 3
 selected = 0
 popup/item_0/text = "This Tree"
 popup/item_0/id = 0
-popup/item_1/text = "Directory"
+popup/item_1/text = "Outside Tree"
 popup/item_1/id = 1
 popup/item_2/text = "Terminate"
 popup/item_2/id = 2
@@ -88,6 +88,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="TitleLineHBox" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="TitleLineHBox"]
@@ -99,12 +100,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="OutcomeLineHBox" type="HBoxContainer" parent="."]
-visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="OutcomeLineHBox"]
 layout_mode = 2
-text = "Outcome_key:"
+text = "String Key:"
 
 [node name="LineEdit" type="LineEdit" parent="OutcomeLineHBox"]
 layout_mode = 2

@@ -358,14 +358,16 @@ func _on_file_dialog_load_file_async():
 			#current_node.image_type_opt.select(node["image_type"])
 			#current_node.image_id_line.text = node["image_id"]
 			current_node.eyes_opt.select(node["eyes"])
+			current_node.change_speaker_mode(int(node["speaker"]))
 			current_node.mouth_opt.select(node["mouth"])
+			"""
 			if node["eyes"] == 0:
 				current_node.mouth_opt.hide()
 				current_node.pose_dropdown.hide()
 			else:
 				current_node.mouth_opt.show()
 				current_node.pose_dropdown.show()
-
+			"""
 			#Set pose_dropdown to the index with the same name as node["pose"]
 			if "pose" in node:
 				if node["pose"] == "":
@@ -590,15 +592,17 @@ func _on_file_dialog_load_file_async():
 							output_node.target_node.text = node["subtree_outputs"].values()[current_output_count - 1]
 				"CYCLER":
 					current_node.line_edits["cycle_id"].text = node["cycle_id"]
+					
 					if not node["cycler_outputs"].is_empty():
-						for cycle_index in node["cycler_outputs"]:
+						for target_key in node["cycler_outputs"]:
 							current_node._on_add_output_button_pressed("cycler")
 							var current_output_count = current_node.output_cycler_count
 							var output_node_name = "OutputCycler" + str(current_output_count)
 							var output_node = current_node.event_containers["CYCLER"].get_node(output_node_name)
 
-							output_node.var_amount.text = cycle_index
-							output_node.var_name.text = node["cycler_outputs"][cycle_index]
+							#output_node.var_amount.text = cycle_index
+							output_node.var_name.text = target_key
+					
 				"RANDOM":
 					if not node["random_outputs"].is_empty():
 						for target_node in node["random_outputs"]:
@@ -771,9 +775,13 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 			
 			current_node.locale_line.text = node["room_id"]
-			current_node.time_line.text = str(node["time_forward"])
+			if "fade_time" in node:
+				current_node.fade_line.text = str(node["fade_time"])
+			if "wait_time" in node:
+				current_node.wait_line.text = str(node["wait_time"])
 			current_node.main_person_line.text = node["main_person_id"]
 			current_node.second_person_line.text = node["second_person_id"]
+			current_node.show_hide_person_2()
 			#current_node.person_opt.select(node["person_type"])
 			#current_node.focus_opt.select(node["focus_change"])
 		

@@ -71,7 +71,7 @@ var node_data = {
 	"subtree_start": "",
 	"subtree_outputs": {},
 	"cycle_id": "",
-	"cycler_outputs": {},
+	"cycler_outputs": [],
 	"random_outputs": {},
 	"wardrobe_action": "WEAR_GARMENT",
 	"outfit_id": "",
@@ -127,12 +127,12 @@ func update_data():
 		"CYCLER":
 			node_data["cycle_id"] = line_edits["cycle_id"].text
 			if output_cycler_count > 0:
-				node_data["cycler_outputs"] = {}
+				node_data["cycler_outputs"] = []
 				for output in event_containers["CYCLER"].get_children():
 					if "OutputCycler" in output.name:
-						var cycle_index = output.get_node("IntLine").text
-						var target_node = output.get_node("TargetLine").text
-						node_data["cycler_outputs"][cycle_index] = target_node
+						#var cycle_index = output.get_node("IntLine").text
+						var target_key = output.get_node("TargetLine").text
+						node_data["cycler_outputs"].append(target_key)
 		"RANDOM":
 			if output_random_count > 0:
 				node_data["random_outputs"] = {}

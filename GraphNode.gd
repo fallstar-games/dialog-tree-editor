@@ -12,6 +12,7 @@ extends GraphNode
 #@onready var image_effect_opt = $LineAsset/HBoxContainer/ImageEffect
 @onready var eyes_opt = $Expression
 @onready var mouth_opt = $LowerExpression
+@onready var pose_dropdown = $Pose
 
 
 var node_data = {
@@ -20,6 +21,7 @@ var node_data = {
 	"speaker": 0, #0 = narrator, 1 = main person, 2 = other person, 3 = SMS, 4 = App
 	"eyes": 0, #0 = none
 	"mouth": 0, #0 = none
+	"pose": "", #"" = none
 	"text": "",
 	#"image_type": 0, #0 = none, 1 = main, 2 = popup
 	#"image_id": "",
@@ -63,9 +65,18 @@ func _on_expression_item_selected(index:int):
 	node_data["eyes"] = index
 	if index == 0:
 		mouth_opt.hide()
+		pose_dropdown.hide()
 	else:
 		mouth_opt.show()
+		pose_dropdown.show()
 
 
 func _on_lower_expression_item_selected(index:int):
 	node_data["mouth"] = index
+
+
+func _on_pose_item_selected(index:int):
+	if index != 0:
+		node_data["pose"] = pose_dropdown.get_item_text(index)
+	else:
+		node_data["pose"] = ""  # Reset pose if "None" is selected
