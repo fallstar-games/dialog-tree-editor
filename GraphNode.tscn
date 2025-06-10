@@ -147,6 +147,7 @@ texture = ExtResource("2_okvfh")
 stretch_mode = 2
 
 [node name="Expression" type="OptionButton" parent="."]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)

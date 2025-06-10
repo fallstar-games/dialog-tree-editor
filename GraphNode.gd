@@ -44,6 +44,23 @@ func _on_resize_request(new_minsize):
 	
 func _on_option_button_item_selected(index):
 	node_data["speaker"] = index
+	change_speaker_mode(index)
+
+func change_speaker_mode(index):
+	match index:
+		1, 2: # Main person or other person
+			eyes_opt.show()
+			if eyes_opt.selected == 0:
+				mouth_opt.hide()
+				pose_dropdown.hide()
+			else:
+				mouth_opt.show()
+				pose_dropdown.show()
+		_: # Narrator or SMS or App
+			print("hiding eyes and mouth options")
+			eyes_opt.hide()
+			mouth_opt.hide()
+			pose_dropdown.hide()
 
 func update_data():
 	node_data["offset_x"] = position_offset.x

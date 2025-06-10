@@ -1,1 +1,1 @@
-{"EVENT_001":{"check_type":"REQUEST","cycle_id":"","cycler_outputs":["bedtime","breakfast"],"event_type":"CYCLER","garment_id":"","garment_slot_id":"","go to":[],"lever_id":"","menu_id":"","node title":"EVENT_001","offset_x":560,"offset_y":280,"outcome_fail":"","outcome_pass":"","outcome_unsure":"","outfit_id":"","random_outputs":{},"request_id":"","subtree_id":"","subtree_outputs":{},"subtree_start":"","wardrobe_action":"WEAR_GARMENT"}}
+{"DIALOG_001":{"eyes":0,"go to":[],"mouth":0,"node title":"DIALOG_001","offset_x":650,"offset_y":400,"pose":"","speaker":1,"text":"hello"}}
