@@ -1,7 +1,7 @@
 extends GraphNode
 
 @onready var text = $Text/TextEdit
-@onready var speaker = $SpeakerHBox/SpeakerVBox/LineEdit
+#@onready var speaker = $SpeakerHBox/SpeakerVBox/LineEdit
 	
 
 var node_data = {

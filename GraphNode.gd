@@ -10,10 +10,12 @@ extends GraphNode
 #@onready var image_type_opt = $LineAsset/HBoxContainer/ImageType
 #@onready var image_id_line = $LineAsset/HBoxContainer/LineEdit
 #@onready var image_effect_opt = $LineAsset/HBoxContainer/ImageEffect
-@onready var eyes_opt = $Expression
-@onready var mouth_opt = $LowerExpression
-@onready var pose_dropdown = $Pose
-@onready var framing_dropdown = $Framing
+@onready var eyes_opt = $ExpressionHBox/Expression
+@onready var mouth_opt = $ExpressionHBox/LowerExpression
+@onready var pose_dropdown = $PoseFrameHBox/Pose
+@onready var framing_dropdown = $PoseFrameHBox/Framing
+@onready var pose_framing_parent = $PoseFrameHBox
+@onready var expression_parent = $ExpressionHBox
 
 
 var node_data = {
@@ -51,21 +53,18 @@ func _on_option_button_item_selected(index):
 func change_speaker_mode(index):
 	match index:
 		1, 2: # Main person or other person
-			eyes_opt.show()
+			expression_parent.show()
 			if eyes_opt.selected == 0:
 				mouth_opt.hide()
-				pose_dropdown.hide()
-				framing_dropdown.hide()
+				pose_framing_parent.hide()
 			else:
 				mouth_opt.show()
-				pose_dropdown.show()
-				framing_dropdown.show()
+				pose_framing_parent.show()
 		_: # Narrator or SMS or App
 			print("hiding eyes and mouth options")
-			eyes_opt.hide()
+			expression_parent.hide()
 			mouth_opt.hide()
-			pose_dropdown.hide()
-			framing_dropdown.hide()
+			pose_framing_parent.hide()
 
 func update_data():
 	node_data["offset_x"] = position_offset.x
@@ -87,12 +86,10 @@ func _on_expression_item_selected(index:int):
 	node_data["eyes"] = index
 	if index == 0:
 		mouth_opt.hide()
-		pose_dropdown.hide()
-		framing_dropdown.hide()
+		pose_framing_parent.hide()
 	else:
 		mouth_opt.show()
-		pose_dropdown.show()
-		framing_dropdown.show()
+		pose_framing_parent.show()
 
 
 func _on_lower_expression_item_selected(index:int):
