@@ -360,14 +360,7 @@ func _on_file_dialog_load_file_async():
 			current_node.eyes_opt.select(node["eyes"])
 			current_node.change_speaker_mode(int(node["speaker"]))
 			current_node.mouth_opt.select(node["mouth"])
-			"""
-			if node["eyes"] == 0:
-				current_node.mouth_opt.hide()
-				current_node.pose_dropdown.hide()
-			else:
-				current_node.mouth_opt.show()
-				current_node.pose_dropdown.show()
-			"""
+
 			#Set pose_dropdown to the index with the same name as node["pose"]
 			if "pose" in node:
 				if node["pose"] == "":
@@ -381,6 +374,20 @@ func _on_file_dialog_load_file_async():
 							break
 					if not found:
 						push_error("Image pose not found: " + node["pose"])
+
+			if node.has("framing"):
+				# Set framing_dropdown to the index with the same name as node["framing"]
+				if node["framing"] == "":
+					current_node.framing_dropdown.select(0) # Select "None" if framing is empty
+				else:
+					var found = false
+					for i in range(current_node.framing_dropdown.get_item_count()):
+						if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
+							current_node.framing_dropdown.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image framing not found: " + node["framing"])
 
 		# if type: append
 		elif "APPEND" in node["node title"]:
@@ -691,6 +698,20 @@ func _on_file_dialog_load_file_async():
 						break
 				if not found:
 					push_error("Image pose not found: " + node["pose"])
+
+			#Set framing_dropdown to the index with the same name as node["framing"]
+			if node.has("framing"):
+				if node["framing"] == "":
+					current_node.framing_dropdown.select(0) # Select "no change" if framing is empty
+				else:
+					found = false
+					for i in range(current_node.framing_dropdown.get_item_count()):
+						if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
+							current_node.framing_dropdown.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image framing not found: " + node["framing"])
 
 			#Set person_lr_mode_dropdown to the index with the same name as node["image_person_lr_mode"]
 			found = false

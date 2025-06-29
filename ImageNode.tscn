@@ -216,6 +216,26 @@ popup/item_4/id = 4
 popup/item_5/text = "BENT_OVER"
 popup/item_5/id = 5
 
+[node name="FramingInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonMain"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonMain/FramingInfo"]
+layout_mode = 2
+text = "Framing: "
+
+[node name="FramingDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonMain/FramingInfo"]
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "(no change)"
+popup/item_0/id = 0
+popup/item_1/text = "FACE"
+popup/item_1/id = 1
+popup/item_2/text = "BUST"
+popup/item_2/id = 2
+popup/item_3/text = "FULL"
+popup/item_3/id = 3
+
 [node name="SetPersonLR" type="VBoxContainer" parent="SetImageInfo/SetPerson"]
 visible = false
 layout_mode = 2
@@ -288,6 +308,7 @@ popup/item_1/id = 1
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/EyesHBox/EyesDropdown" to="." method="_on_eyes_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/MouthHBox/MouthDropdown" to="." method="_on_mouth_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/PoseInfo/PoseDropdown" to="." method="_on_pose_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/FramingInfo/FramingDropdown" to="." method="_on_framing_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonLR/ModeDropdown" to="." method="_on_lr_mode_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonLR/ActionDropdown" to="." method="_on_action_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonLR/ReactionDropdown" to="." method="_on_reaction_dropdown_item_selected"]

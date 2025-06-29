@@ -14,6 +14,7 @@ extends GraphNode
 @onready var expression_mouth_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/MouthHBox/MouthDropdown
 @onready var pose_container:Node = $SetImageInfo/SetPerson/SetPersonMain/PoseInfo
 @onready var pose_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonMain/PoseInfo/PoseDropdown
+@onready var framing_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonMain/FramingInfo/FramingDropdown
 @onready var set_person_lr_container:Node = $SetImageInfo/SetPerson/SetPersonLR
 @onready var person_lr_mode_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonLR/ModeDropdown
 @onready var lr_action_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonLR/ActionDropdown
@@ -32,6 +33,7 @@ var node_data = {
 	"expression_eyes":0, #0 = no change, 1 = open, etc.
 	"expression_mouth":0, #0 = no change, 1 = smile, etc.
 	"pose": "",
+	"framing": "",
 	"image_person_lr_mode": "ACTION",
 	"action": "KISS_TONGUE",
 	"reaction": "SHOCKED",
@@ -117,6 +119,12 @@ func _on_pose_dropdown_item_selected(index:int):
 		node_data["pose"] = pose_dropdown.get_item_text(index)
 	else:
 		node_data["pose"] = ""  # Reset pose if "None" is selected
+
+func _on_framing_dropdown_item_selected(index:int):
+	if index != 0:
+		node_data["framing"] = framing_dropdown.get_item_text(index)
+	else:
+		node_data["framing"] = ""  # Leave current framing if "no change" is selected
 
 func _on_lr_mode_dropdown_item_selected(index:int):
 	node_data["image_person_lr_mode"] = person_lr_mode_dropdown.get_item_text(index)

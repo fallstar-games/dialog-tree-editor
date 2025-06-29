@@ -13,6 +13,7 @@ extends GraphNode
 @onready var eyes_opt = $Expression
 @onready var mouth_opt = $LowerExpression
 @onready var pose_dropdown = $Pose
+@onready var framing_dropdown = $Framing
 
 
 var node_data = {
@@ -22,6 +23,7 @@ var node_data = {
 	"eyes": 0, #0 = none
 	"mouth": 0, #0 = none
 	"pose": "", #"" = none
+	"framing": "",
 	"text": "",
 	#"image_type": 0, #0 = none, 1 = main, 2 = popup
 	#"image_id": "",
@@ -53,14 +55,17 @@ func change_speaker_mode(index):
 			if eyes_opt.selected == 0:
 				mouth_opt.hide()
 				pose_dropdown.hide()
+				framing_dropdown.hide()
 			else:
 				mouth_opt.show()
 				pose_dropdown.show()
+				framing_dropdown.show()
 		_: # Narrator or SMS or App
 			print("hiding eyes and mouth options")
 			eyes_opt.hide()
 			mouth_opt.hide()
 			pose_dropdown.hide()
+			framing_dropdown.hide()
 
 func update_data():
 	node_data["offset_x"] = position_offset.x
@@ -83,9 +88,11 @@ func _on_expression_item_selected(index:int):
 	if index == 0:
 		mouth_opt.hide()
 		pose_dropdown.hide()
+		framing_dropdown.hide()
 	else:
 		mouth_opt.show()
 		pose_dropdown.show()
+		framing_dropdown.show()
 
 
 func _on_lower_expression_item_selected(index:int):
@@ -97,3 +104,10 @@ func _on_pose_item_selected(index:int):
 		node_data["pose"] = pose_dropdown.get_item_text(index)
 	else:
 		node_data["pose"] = ""  # Reset pose if "None" is selected
+
+
+func _on_framing_item_selected(index:int):
+	if index != 0:
+		node_data["framing"] = framing_dropdown.get_item_text(index)
+	else:
+		node_data["framing"] = ""  # Leave current framing if "no change" is selected
