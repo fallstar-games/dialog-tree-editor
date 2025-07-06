@@ -78,14 +78,12 @@ vertical_alignment = 2
 
 [node name="SlotDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 3
+item_count = 2
 selected = 0
-popup/item_0/text = "MAIN"
+popup/item_0/text = "BIG"
 popup/item_0/id = 0
-popup/item_1/text = "LEFT"
+popup/item_1/text = "SMALL"
 popup/item_1/id = 1
-popup/item_2/text = "RIGHT"
-popup/item_2/id = 2
 
 [node name="Label2" type="Label" parent="."]
 visible = false
@@ -110,100 +108,106 @@ theme_override_constants/separation = 9
 layout_mode = 2
 item_count = 3
 selected = 0
-popup/item_0/text = "PERSON1"
+popup/item_0/text = "PERSON_ONE"
 popup/item_0/id = 0
-popup/item_1/text = "PERSON2"
+popup/item_1/text = "PERSON_TWO"
 popup/item_1/id = 1
 popup/item_2/text = "OTHER"
 popup/item_2/id = 2
 
 [node name="SetPerson" type="VBoxContainer" parent="SetImageInfo"]
 layout_mode = 2
+theme_override_constants/separation = 9
 
-[node name="SetPersonMain" type="VBoxContainer" parent="SetImageInfo/SetPerson"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="ModeDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonMain"]
-visible = false
-layout_mode = 2
-item_count = 2
-selected = 0
-popup/item_0/text = "EXPRESSION"
-popup/item_0/id = 0
-popup/item_1/text = "POSE"
-popup/item_1/id = 1
-
-[node name="ExpressionInfo" type="VBoxContainer" parent="SetImageInfo/SetPerson/SetPersonMain"]
+[node name="SetPersonBig" type="VBoxContainer" parent="SetImageInfo/SetPerson"]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="EyesHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo"]
+[node name="ModeDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "PAPERDOLL"
+popup/item_0/id = 0
+popup/item_1/text = "SOLO"
+popup/item_1/id = 1
+popup/item_2/text = "DUO"
+popup/item_2/id = 2
+
+[node name="PaperdollInfo" type="VBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="ExpressionInfo" type="VBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EyesHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/EyesHBox"]
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/EyesHBox"]
 layout_mode = 2
 text = "Eyes: "
 
-[node name="EyesDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/EyesHBox"]
+[node name="EyesDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/EyesHBox"]
 layout_mode = 2
 item_count = 8
 selected = 0
-popup/item_0/text = "(no change)"
+popup/item_0/text = "no_change"
 popup/item_0/id = 0
-popup/item_1/text = "1-Eyes-Open"
+popup/item_1/text = "OPEN"
 popup/item_1/id = 1
-popup/item_2/text = "2-Eyes-Half"
+popup/item_2/text = "HALF"
 popup/item_2/id = 2
-popup/item_3/text = "3-Eyes-Scared"
+popup/item_3/text = "SCARED"
 popup/item_3/id = 3
-popup/item_4/text = "4-Eyes-Angry"
+popup/item_4/text = "ANGRY"
 popup/item_4/id = 4
-popup/item_5/text = "5-Eyes-Closed"
+popup/item_5/text = "CLOSED"
 popup/item_5/id = 5
-popup/item_6/text = "6-Eyes-Wide"
+popup/item_6/text = "WIDE"
 popup/item_6/id = 6
-popup/item_7/text = "7-Eyes-Rolling"
+popup/item_7/text = "ROLLING"
 popup/item_7/id = 7
 
-[node name="MouthHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo"]
+[node name="MouthHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/MouthHBox"]
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/MouthHBox"]
 layout_mode = 2
 text = "Mouth: "
 
-[node name="MouthDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/MouthHBox"]
+[node name="MouthDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/MouthHBox"]
 layout_mode = 2
 item_count = 7
 selected = 0
-popup/item_0/text = "(no change)"
+popup/item_0/text = "no_change"
 popup/item_0/id = 0
-popup/item_1/text = "1-Mouth-Smile"
+popup/item_1/text = "SMILE"
 popup/item_1/id = 1
-popup/item_2/text = "2-Mouth-Parted"
+popup/item_2/text = "PARTED"
 popup/item_2/id = 2
-popup/item_3/text = "3-Mouth-Gaping"
+popup/item_3/text = "GAPING"
 popup/item_3/id = 3
-popup/item_4/text = "4-Mouth-Frown"
+popup/item_4/text = "FROWN"
 popup/item_4/id = 4
-popup/item_5/text = "5-Mouth-Clenched"
+popup/item_5/text = "CLENCHED"
 popup/item_5/id = 5
-popup/item_6/text = "6-Mouth-Bitelip"
+popup/item_6/text = "BITELIP"
 popup/item_6/id = 6
 
-[node name="PoseInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonMain"]
+[node name="PoseInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonMain/PoseInfo"]
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseInfo"]
 layout_mode = 2
 text = "Pose: "
 
-[node name="PoseDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonMain/PoseInfo"]
+[node name="PoseDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseInfo"]
 layout_mode = 2
-item_count = 6
+item_count = 4
 selected = 0
-popup/item_0/text = "(no change)"
+popup/item_0/text = "no_change"
 popup/item_0/id = 0
 popup/item_1/text = "DEFAULT"
 popup/item_1/id = 1
@@ -211,23 +215,19 @@ popup/item_2/text = "NERVOUS"
 popup/item_2/id = 2
 popup/item_3/text = "ANGRY"
 popup/item_3/id = 3
-popup/item_4/text = "FROM_BEHIND"
-popup/item_4/id = 4
-popup/item_5/text = "BENT_OVER"
-popup/item_5/id = 5
 
-[node name="FramingInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonMain"]
+[node name="FramingInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonMain/FramingInfo"]
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/FramingInfo"]
 layout_mode = 2
 text = "Framing: "
 
-[node name="FramingDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonMain/FramingInfo"]
+[node name="FramingDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/FramingInfo"]
 layout_mode = 2
 item_count = 4
 selected = 0
-popup/item_0/text = "(no change)"
+popup/item_0/text = "no_change"
 popup/item_0/id = 0
 popup/item_1/text = "FACE"
 popup/item_1/id = 1
@@ -236,12 +236,69 @@ popup/item_2/id = 2
 popup/item_3/text = "FULL"
 popup/item_3/id = 3
 
-[node name="SetPersonLR" type="VBoxContainer" parent="SetImageInfo/SetPerson"]
+[node name="SoloInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig"]
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 8
 
-[node name="ModeDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonLR"]
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/SoloInfo"]
+layout_mode = 2
+text = "Pose: "
+
+[node name="SoloDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/SoloInfo"]
+layout_mode = 2
+item_count = 14
+selected = 0
+popup/item_0/text = "SITTING"
+popup/item_0/id = 0
+popup/item_1/text = "KNEELING"
+popup/item_1/id = 1
+popup/item_2/text = "HUG"
+popup/item_2/id = 2
+popup/item_3/text = "FROM_BEHIND"
+popup/item_3/id = 3
+popup/item_4/text = "BENT_OVER"
+popup/item_4/id = 4
+popup/item_5/text = "ALL_FOURS"
+popup/item_5/id = 5
+popup/item_6/text = "MISSIONARY"
+popup/item_6/id = 6
+popup/item_7/text = "PILEDRIVER"
+popup/item_7/id = 7
+popup/item_8/text = "WALKING_AWAY"
+popup/item_8/id = 8
+popup/item_9/text = "ASSJOB"
+popup/item_9/id = 9
+popup/item_10/text = "COWGIRL"
+popup/item_10/id = 10
+popup/item_11/text = "FACE_SITTING"
+popup/item_11/id = 11
+popup/item_12/text = "PAIZURI"
+popup/item_12/id = 12
+popup/item_13/text = "SLEEPING"
+popup/item_13/id = 13
+
+[node name="DuoInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/DuoInfo"]
+layout_mode = 2
+text = "Pose: "
+
+[node name="DuoDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/DuoInfo"]
+layout_mode = 2
+item_count = 1
+selected = 0
+popup/item_0/text = "HOLDING_HANDS"
+popup/item_0/id = 0
+
+[node name="SetPersonSmall" type="VBoxContainer" parent="SetImageInfo/SetPerson"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="ModeDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonSmall"]
+visible = false
 layout_mode = 2
 item_count = 2
 selected = 0
@@ -250,14 +307,15 @@ popup/item_0/id = 0
 popup/item_1/text = "REACTION"
 popup/item_1/id = 1
 
-[node name="ActionDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonLR"]
+[node name="ActionDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonSmall"]
+visible = false
 layout_mode = 2
 item_count = 1
 selected = 0
 popup/item_0/text = "KISS_TONGUE"
 popup/item_0/id = 0
 
-[node name="ReactionDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonLR"]
+[node name="ReactionDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonSmall"]
 visible = false
 layout_mode = 2
 item_count = 1
@@ -265,31 +323,43 @@ selected = 0
 popup/item_0/text = "SHOCKED"
 popup/item_0/id = 0
 
+[node name="PersonImageInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonSmall"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonSmall/PersonImageInfo"]
+layout_mode = 2
+text = "person_image_id:"
+
+[node name="LineEdit" type="LineEdit" parent="SetImageInfo/SetPerson/SetPersonSmall/PersonImageInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="SetOther" type="VBoxContainer" parent="SetImageInfo"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="ImageInfo" type="HBoxContainer" parent="SetImageInfo/SetOther"]
+[node name="OtherImageInfo" type="HBoxContainer" parent="SetImageInfo/SetOther"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SetImageInfo/SetOther/ImageInfo"]
+[node name="Label" type="Label" parent="SetImageInfo/SetOther/OtherImageInfo"]
 layout_mode = 2
-text = "image_id:"
+text = "other_image_id:"
 
-[node name="LineEdit" type="LineEdit" parent="SetImageInfo/SetOther/ImageInfo"]
+[node name="LineEdit" type="LineEdit" parent="SetImageInfo/SetOther/OtherImageInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TweenInfo" type="HBoxContainer" parent="SetImageInfo"]
+[node name="EffectInfo" type="HBoxContainer" parent="SetImageInfo"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="SetImageInfo/TweenInfo"]
+[node name="Label" type="Label" parent="SetImageInfo/EffectInfo"]
 layout_mode = 2
-text = "Tween Type:"
+text = "Image Effect:"
 
-[node name="TweenDropdown" type="OptionButton" parent="SetImageInfo/TweenInfo"]
+[node name="EffectDropdown" type="OptionButton" parent="SetImageInfo/EffectInfo"]
 layout_mode = 2
 item_count = 2
 selected = 0
@@ -304,12 +374,14 @@ popup/item_1/id = 1
 [connection signal="item_selected" from="SlotDropdown" to="." method="_on_slot_dropdown_item_selected"]
 [connection signal="item_selected" from="SetHideDropdown" to="." method="_on_set_hide_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/TargetDropdown" to="." method="_on_target_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/ModeDropdown" to="." method="_on_main_mode_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/EyesHBox/EyesDropdown" to="." method="_on_eyes_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/ExpressionInfo/MouthHBox/MouthDropdown" to="." method="_on_mouth_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/PoseInfo/PoseDropdown" to="." method="_on_pose_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonMain/FramingInfo/FramingDropdown" to="." method="_on_framing_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonLR/ModeDropdown" to="." method="_on_lr_mode_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonLR/ActionDropdown" to="." method="_on_action_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonLR/ReactionDropdown" to="." method="_on_reaction_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/TweenInfo/TweenDropdown" to="." method="_on_tween_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/ModeDropdown" to="." method="_on_main_mode_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/EyesHBox/EyesDropdown" to="." method="_on_eyes_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/MouthHBox/MouthDropdown" to="." method="_on_mouth_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseInfo/PoseDropdown" to="." method="_on_pose_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/FramingInfo/FramingDropdown" to="." method="_on_framing_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/SoloInfo/SoloDropdown" to="." method="_on_solo_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/DuoInfo/DuoDropdown" to="." method="_on_duo_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonSmall/ModeDropdown" to="." method="_on_lr_mode_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonSmall/ActionDropdown" to="." method="_on_action_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonSmall/ReactionDropdown" to="." method="_on_reaction_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/EffectInfo/EffectDropdown" to="." method="_on_tween_dropdown_item_selected"]

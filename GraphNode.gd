@@ -10,24 +10,33 @@ extends GraphNode
 #@onready var image_type_opt = $LineAsset/HBoxContainer/ImageType
 #@onready var image_id_line = $LineAsset/HBoxContainer/LineEdit
 #@onready var image_effect_opt = $LineAsset/HBoxContainer/ImageEffect
-@onready var eyes_opt = $ExpressionHBox/Expression
-@onready var mouth_opt = $ExpressionHBox/LowerExpression
-@onready var pose_dropdown = $PoseFrameHBox/Pose
-@onready var framing_dropdown = $PoseFrameHBox/Framing
-@onready var pose_framing_parent = $PoseFrameHBox
-@onready var expression_parent = $ExpressionHBox
+@onready var eyes_opt = $PaperDollInfo/ExpressionHBox/Expression
+@onready var mouth_opt = $PaperDollInfo/ExpressionHBox/LowerExpression
+@onready var pose_dropdown = $PaperDollInfo/PoseFrameHBox/Pose
+@onready var framing_dropdown = $PaperDollInfo/PoseFrameHBox/Framing
+#@onready var pose_framing_parent = $PaperDollInfo/PoseFrameHBox
+#@onready var expression_parent = $PaperDollInfo/ExpressionHBox
+@onready var paperdoll_parent = $PaperDollInfo
+@onready var solo_parent = $SoloInfo
+@onready var solo_dropdown = $SoloInfo/SoloDropdown
+@onready var duo_parent = $DuoInfo
+@onready var duo_dropdown = $DuoInfo/DuoDropdown
+@onready var image_type_dropdown = $ImageTypeHBox/ImageType
+@onready var image_type_parent = $ImageTypeHBox
 
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"speaker": 0, #0 = narrator, 1 = main person, 2 = other person, 3 = SMS, 4 = App
-	"eyes": 0, #0 = none
-	"mouth": 0, #0 = none
-	"pose": "", #"" = none
-	"framing": "",
+	"expression_eyes": "no_change", #0 = none
+	"expression_mouth": "no_change", #0 = none
+	"paperdoll_pose": "no_change", #"" = none
+	"framing": "no_change",
+	"solo_pose": "SITTING",
+	"duo_pose": "HOLDING_HANDS", 
 	"text": "",
-	#"image_type": 0, #0 = none, 1 = main, 2 = popup
+	"image_type": "no_change",
 	#"image_id": "",
 	#"image_effect": "none",
 	"node title": "",
@@ -53,58 +62,73 @@ func _on_option_button_item_selected(index):
 func change_speaker_mode(index):
 	match index:
 		1, 2: # Main person or other person
-			expression_parent.show()
-			if eyes_opt.selected == 0:
-				mouth_opt.hide()
-				pose_framing_parent.hide()
-			else:
-				mouth_opt.show()
-				pose_framing_parent.show()
+			image_type_parent.show()
 		_: # Narrator or SMS or App
-			print("hiding eyes and mouth options")
-			expression_parent.hide()
-			mouth_opt.hide()
-			pose_framing_parent.hide()
+			image_type_parent.hide()
 
 func update_data():
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
 	
-	#node_data["speaker"] = speaker.text
 	node_data["text"] = text.text
-	#node_data["image_id"] = image_id_line.text
 
+func _on_image_type_item_selected(index:int):
+	if index != 0:
+		node_data["image_type"] = image_type_dropdown.get_item_text(index)
+	else:
+		node_data["image_type"] = "no_change"  # Reset image type if "No Image" is selected
+	change_image_type_mode(index)
 
-#func _on_image_effect_item_selected(index:int):
-#	node_data["image_effect"] = image_effect_opt.get_item_text(index)
-
-#func _on_image_type_item_selected(index:int):
-#	node_data["image_type"] = index
-
+func change_image_type_mode(index:int):
+	match index:
+		0: # No image
+			paperdoll_parent.hide()
+			solo_parent.hide()
+			duo_parent.hide()
+		1: # Paperdoll
+			paperdoll_parent.show()
+			solo_parent.hide()
+			duo_parent.hide()
+		2: # Solo
+			paperdoll_parent.hide()
+			solo_parent.show()
+			duo_parent.hide()
+		3: # Duo
+			paperdoll_parent.hide()
+			solo_parent.hide()
+			duo_parent.show()
 
 func _on_expression_item_selected(index:int):
-	node_data["eyes"] = index
-	if index == 0:
-		mouth_opt.hide()
-		pose_framing_parent.hide()
+	if index != 0:
+		node_data["expression_eyes"] = eyes_opt.get_item_text(index)
 	else:
-		mouth_opt.show()
-		pose_framing_parent.show()
+		node_data["expression_eyes"] = "no_change"  # Reset eyes if "None" is selected
 
 
 func _on_lower_expression_item_selected(index:int):
-	node_data["mouth"] = index
+	if index != 0:
+		node_data["expression_mouth"] = mouth_opt.get_item_text(index)
+	else:
+		node_data["expression_mouth"] = "no_change"  # Reset mouth if "None" is selected
 
 
 func _on_pose_item_selected(index:int):
 	if index != 0:
-		node_data["pose"] = pose_dropdown.get_item_text(index)
+		node_data["paperdoll_pose"] = pose_dropdown.get_item_text(index)
 	else:
-		node_data["pose"] = ""  # Reset pose if "None" is selected
+		node_data["paperdoll_pose"] = "no_change"  # Reset pose if "None" is selected
 
 
 func _on_framing_item_selected(index:int):
 	if index != 0:
 		node_data["framing"] = framing_dropdown.get_item_text(index)
 	else:
-		node_data["framing"] = ""  # Leave current framing if "no change" is selected
+		node_data["framing"] = "no_change"  # Leave current framing if "no change" is selected
+
+
+
+func _on_duo_dropdown_item_selected(index:int):
+	node_data["duo_pose"] = duo_dropdown.get_item_text(index)
+
+func _on_solo_dropdown_item_selected(index:int):
+	node_data["solo_pose"] = solo_dropdown.get_item_text(index)

@@ -357,27 +357,69 @@ func _on_file_dialog_load_file_async():
 			current_node.character_opt.select(node["speaker"])
 			#current_node.image_type_opt.select(node["image_type"])
 			#current_node.image_id_line.text = node["image_id"]
-			current_node.eyes_opt.select(node["eyes"])
+			#current_node.eyes_opt.select(node["eyes"])
 			current_node.change_speaker_mode(int(node["speaker"]))
-			current_node.mouth_opt.select(node["mouth"])
+			#current_node.mouth_opt.select(node["mouth"])
+
+
+			if node.has("image_type"):
+				if node["image_type"] == "no_change":
+					current_node.image_type_dropdown.select(0) # Select "No Image" if image type is empty
+					current_node.change_image_type_mode(0)
+				else:
+					var found = false
+					for i in range(current_node.image_type_dropdown.get_item_count()):
+						if current_node.image_type_dropdown.get_item_text(i) == node["image_type"]:
+							current_node.image_type_dropdown.select(i)
+							current_node.change_image_type_mode(i)
+							found = true
+							break
+					if not found:
+						push_error("Image type not found: " + node["image_type"])
+
+			if node.has("expression_eyes"):
+				if node["expression_eyes"] == "no_change":
+					current_node.eyes_opt.select(0) # Select "None" if eyes is empty
+				else:
+					var found = false
+					for i in range(current_node.eyes_opt.get_item_count()):
+						if current_node.eyes_opt.get_item_text(i) == node["expression_eyes"]:
+							current_node.eyes_opt.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image eyes not found: " + node["expression_eyes"])
+
+			if node.has("expression_mouth"):
+				if node["expression_mouth"] == "no_change":
+					current_node.mouth_opt.select(0) # Select "None" if mouth is empty
+				else:
+					var found = false
+					for i in range(current_node.mouth_opt.get_item_count()):
+						if current_node.mouth_opt.get_item_text(i) == node["expression_mouth"]:
+							current_node.mouth_opt.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image mouth not found: " + node["expression_mouth"])
 
 			#Set pose_dropdown to the index with the same name as node["pose"]
-			if "pose" in node:
-				if node["pose"] == "":
+			if node.has("paperdoll_pose"):
+				if node["paperdoll_pose"] == "no_change":
 					current_node.pose_dropdown.select(0) # Select "None" if pose is empty
 				else:
 					var found = false
 					for i in range(current_node.pose_dropdown.get_item_count()):
-						if current_node.pose_dropdown.get_item_text(i) == node["pose"]:
+						if current_node.pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
 							current_node.pose_dropdown.select(i)
 							found = true
 							break
 					if not found:
-						push_error("Image pose not found: " + node["pose"])
+						push_error("Image pose not found: " + node["paperdoll_pose"])
 
 			if node.has("framing"):
 				# Set framing_dropdown to the index with the same name as node["framing"]
-				if node["framing"] == "":
+				if node["framing"] == "no_change":
 					current_node.framing_dropdown.select(0) # Select "None" if framing is empty
 				else:
 					var found = false
@@ -388,6 +430,26 @@ func _on_file_dialog_load_file_async():
 							break
 					if not found:
 						push_error("Image framing not found: " + node["framing"])
+
+			if node.has("solo_pose"):
+				var found = false
+				for i in range(current_node.solo_dropdown.get_item_count()):
+					if current_node.solo_dropdown.get_item_text(i) == node["solo_pose"]:
+						current_node.solo_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image solo pose not found: " + node["solo_pose"])
+
+			if node.has("duo_pose"):
+				var found = false
+				for i in range(current_node.duo_dropdown.get_item_count()):
+					if current_node.duo_dropdown.get_item_text(i) == node["duo_pose"]:
+						current_node.duo_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image duo pose not found: " + node["duo_pose"])
 
 		# if type: append
 		elif "APPEND" in node["node title"]:
@@ -671,7 +733,7 @@ func _on_file_dialog_load_file_async():
 					break
 			if not found:
 				push_error("Image target not found: " + node["image_target"])
-			"""
+			
 			#Set person_main_mode_dropdown to the index with the same name as node["image_person_main_mode"]
 			found = false
 			for i in range(current_node.person_main_mode_dropdown.get_item_count()):
@@ -682,37 +744,47 @@ func _on_file_dialog_load_file_async():
 					break
 			if not found:
 				push_error("Image person main mode not found: " + node["image_person_main_mode"])
-			"""
-			current_node.expression_eyes_dropdown.select(node["expression_eyes"])
-			current_node.expression_mouth_dropdown.select(node["expression_mouth"])
+			
+			#current_node.expression_eyes_dropdown.select(node["expression_eyes"])
+			found = false
+			for i in range(current_node.expression_eyes_dropdown.get_item_count()):
+				if current_node.expression_eyes_dropdown.get_item_text(i) == node["expression_eyes"]:
+					current_node.expression_eyes_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image expression eyes not found: " + node["expression_eyes"])
 
-			#Set pose_dropdown to the index with the same name as node["pose"]
-			if node["pose"] == "":
-				current_node.pose_dropdown.select(0) # Select "None" if pose is empty
-			else:
-				found = false
-				for i in range(current_node.pose_dropdown.get_item_count()):
-					if current_node.pose_dropdown.get_item_text(i) == node["pose"]:
-						current_node.pose_dropdown.select(i)
-						found = true
-						break
-				if not found:
-					push_error("Image pose not found: " + node["pose"])
+			#current_node.expression_mouth_dropdown.select(node["expression_mouth"])
+			found = false
+			for i in range(current_node.expression_mouth_dropdown.get_item_count()):
+				if current_node.expression_mouth_dropdown.get_item_text(i) == node["expression_mouth"]:
+					current_node.expression_mouth_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image expression mouth not found: " + node["expression_mouth"])
+
+			#Set paperdoll_pose_dropdown to the index with the same name as node["paperdoll_pose"]
+			found = false
+			for i in range(current_node.paperdoll_pose_dropdown.get_item_count()):
+				if current_node.paperdoll_pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
+					current_node.paperdoll_pose_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image pose not found: " + node["paperdoll_pose"])
 
 			#Set framing_dropdown to the index with the same name as node["framing"]
-			if node.has("framing"):
-				if node["framing"] == "":
-					current_node.framing_dropdown.select(0) # Select "no change" if framing is empty
-				else:
-					found = false
-					for i in range(current_node.framing_dropdown.get_item_count()):
-						if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
-							current_node.framing_dropdown.select(i)
-							found = true
-							break
-					if not found:
-						push_error("Image framing not found: " + node["framing"])
-
+			found = false
+			for i in range(current_node.framing_dropdown.get_item_count()):
+				if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
+					current_node.framing_dropdown.select(i)
+					found = true
+					break
+			if not found:
+				push_error("Image framing not found: " + node["framing"])
+			"""
 			#Set person_lr_mode_dropdown to the index with the same name as node["image_person_lr_mode"]
 			found = false
 			for i in range(current_node.person_lr_mode_dropdown.get_item_count()):
@@ -743,18 +815,19 @@ func _on_file_dialog_load_file_async():
 					break
 			if not found:
 				push_error("Image reaction not found: " + node["reaction"])
+			"""
+			current_node.person_image_id_line.text = node["person_image_id"]
+			current_node.other_image_id_line.text = node["other_image_id"]
 
-			current_node.image_id_line.text = node["image_id"]
-
-			#set tween_dropdown to the index with the same name as node["tween"]
+			#set effect_dropdown to the index with the same name as node["effect"]
 			found = false
-			for i in range(current_node.tween_dropdown.get_item_count()):
-				if current_node.tween_dropdown.get_item_text(i) == node["tween"]:
-					current_node.tween_dropdown.select(i)
+			for i in range(current_node.effect_dropdown.get_item_count()):
+				if current_node.effect_dropdown.get_item_text(i) == node["effect"]:
+					current_node.effect_dropdown.select(i)
 					found = true
 					break
 			if not found:
-				push_error("Image tween not found: " + node["tween"])
+				push_error("Image effect not found: " + node["effect"])
 
 		# if type: offramp
 		elif "OFFRAMP" in node["node title"]:
