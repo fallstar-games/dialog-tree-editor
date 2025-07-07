@@ -353,13 +353,8 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 			
 			current_node.text.text = node["text"]
-			#current_node.speaker.text = node["speaker"]
 			current_node.character_opt.select(node["speaker"])
-			#current_node.image_type_opt.select(node["image_type"])
-			#current_node.image_id_line.text = node["image_id"]
-			#current_node.eyes_opt.select(node["eyes"])
 			current_node.change_speaker_mode(int(node["speaker"]))
-			#current_node.mouth_opt.select(node["mouth"])
 
 
 			if node.has("image_type"):
@@ -747,33 +742,37 @@ func _on_file_dialog_load_file_async():
 			
 			#current_node.expression_eyes_dropdown.select(node["expression_eyes"])
 			found = false
-			for i in range(current_node.expression_eyes_dropdown.get_item_count()):
-				if current_node.expression_eyes_dropdown.get_item_text(i) == node["expression_eyes"]:
-					current_node.expression_eyes_dropdown.select(i)
-					found = true
+			if node.has("expression_eyes"):
+				var eyes_str = str(node["expression_eyes"])
+				for i in range(current_node.expression_eyes_dropdown.get_item_count()):
+					if current_node.expression_eyes_dropdown.get_item_text(i) == eyes_str:
+						current_node.expression_eyes_dropdown.select(i)
+						found = true
 					break
-			if not found:
-				push_error("Image expression eyes not found: " + node["expression_eyes"])
+				if not found:
+					push_error("Image expression eyes not found: " + eyes_str)
 
 			#current_node.expression_mouth_dropdown.select(node["expression_mouth"])
 			found = false
+			var mouth_str = str(node["expression_mouth"])
 			for i in range(current_node.expression_mouth_dropdown.get_item_count()):
-				if current_node.expression_mouth_dropdown.get_item_text(i) == node["expression_mouth"]:
+				if current_node.expression_mouth_dropdown.get_item_text(i) == mouth_str:
 					current_node.expression_mouth_dropdown.select(i)
 					found = true
 					break
 			if not found:
-				push_error("Image expression mouth not found: " + node["expression_mouth"])
+				push_error("Image expression mouth not found: " + mouth_str)
 
 			#Set paperdoll_pose_dropdown to the index with the same name as node["paperdoll_pose"]
 			found = false
-			for i in range(current_node.paperdoll_pose_dropdown.get_item_count()):
-				if current_node.paperdoll_pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
-					current_node.paperdoll_pose_dropdown.select(i)
-					found = true
-					break
-			if not found:
-				push_error("Image pose not found: " + node["paperdoll_pose"])
+			if node.has("paperdoll_pose"):
+				for i in range(current_node.paperdoll_pose_dropdown.get_item_count()):
+					if current_node.paperdoll_pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
+						current_node.paperdoll_pose_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image pose not found: " + node["paperdoll_pose"])
 
 			#Set framing_dropdown to the index with the same name as node["framing"]
 			found = false
@@ -784,50 +783,22 @@ func _on_file_dialog_load_file_async():
 					break
 			if not found:
 				push_error("Image framing not found: " + node["framing"])
-			"""
-			#Set person_lr_mode_dropdown to the index with the same name as node["image_person_lr_mode"]
-			found = false
-			for i in range(current_node.person_lr_mode_dropdown.get_item_count()):
-				if current_node.person_lr_mode_dropdown.get_item_text(i) == node["image_person_lr_mode"]:
-					current_node.person_lr_mode_dropdown.select(i)
-					current_node.change_person_lr_mode(i)
-					found = true
-					break
-			if not found:
-				push_error("Image person LR mode not found: " + node["image_person_lr_mode"])
 
-			#Set lr_action_dropdown to the index with the same name as node["action"]
-			found = false
-			for i in range(current_node.lr_action_dropdown.get_item_count()):
-				if current_node.lr_action_dropdown.get_item_text(i) == node["action"]:
-					current_node.lr_action_dropdown.select(i)
-					found = true
-					break
-			if not found:
-				push_error("Image action not found: " + node["action"])
-
-			#set lr_reaction_dropdown to the index with the same name as node["reaction"]
-			found = false
-			for i in range(current_node.lr_reaction_dropdown.get_item_count()):
-				if current_node.lr_reaction_dropdown.get_item_text(i) == node["reaction"]:
-					current_node.lr_reaction_dropdown.select(i)
-					found = true
-					break
-			if not found:
-				push_error("Image reaction not found: " + node["reaction"])
-			"""
-			current_node.person_image_id_line.text = node["person_image_id"]
-			current_node.other_image_id_line.text = node["other_image_id"]
+			if node.has("person_image_id"):
+				current_node.person_image_id_line.text = node["person_image_id"]
+			if node.has("other_image_id"):
+				current_node.other_image_id_line.text = node["other_image_id"]
 
 			#set effect_dropdown to the index with the same name as node["effect"]
 			found = false
-			for i in range(current_node.effect_dropdown.get_item_count()):
-				if current_node.effect_dropdown.get_item_text(i) == node["effect"]:
-					current_node.effect_dropdown.select(i)
-					found = true
-					break
-			if not found:
-				push_error("Image effect not found: " + node["effect"])
+			if node.has("effect"):
+				for i in range(current_node.effect_dropdown.get_item_count()):
+					if current_node.effect_dropdown.get_item_text(i) == node["effect"]:
+						current_node.effect_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image effect not found: " + node["effect"])
 
 		# if type: offramp
 		elif "OFFRAMP" in node["node title"]:
