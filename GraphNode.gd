@@ -29,6 +29,7 @@ var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"speaker": 0, #0 = narrator, 1 = main person, 2 = other person, 3 = SMS, 4 = App
+	"image_type": "no_change", #"" = no image, "PAPERDOLL", "SOLO", "DUO"
 	"expression_eyes": "no_change", #0 = none
 	"expression_mouth": "no_change", #0 = none
 	"paperdoll_pose": "no_change", #"" = none
@@ -36,7 +37,6 @@ var node_data = {
 	"solo_pose": "SITTING",
 	"duo_pose": "HOLDING_HANDS", 
 	"text": "",
-	"image_type": "no_change",
 	#"image_id": "",
 	#"image_effect": "none",
 	"node title": "",

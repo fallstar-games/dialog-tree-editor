@@ -774,6 +774,28 @@ func _on_file_dialog_load_file_async():
 				if not found:
 					push_error("Image pose not found: " + node["paperdoll_pose"])
 
+			#Set solo_pose_dropdown to the index with the same name as node["solo_pose"]
+			found = false
+			if node.has("solo_pose"):
+				for i in range(current_node.solo_pose_dropdown.get_item_count()):
+					if current_node.solo_pose_dropdown.get_item_text(i) == node["solo_pose"]:
+						current_node.solo_pose_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image solo pose not found: " + node["solo_pose"])
+
+			#Set duo_pose_dropdown to the index with the same name as node["duo_pose"]
+			found = false
+			if node.has("duo_pose"):
+				for i in range(current_node.duo_pose_dropdown.get_item_count()):
+					if current_node.duo_pose_dropdown.get_item_text(i) == node["duo_pose"]:
+						current_node.duo_pose_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image duo pose not found: " + node["duo_pose"])
+
 			#Set framing_dropdown to the index with the same name as node["framing"]
 			found = false
 			for i in range(current_node.framing_dropdown.get_item_count()):
