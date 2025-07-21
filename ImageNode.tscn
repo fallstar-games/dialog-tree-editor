@@ -138,22 +138,16 @@ popup/item_2/id = 2
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="ExpressionInfo" type="VBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
+[node name="ExpressionHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 18
 
-[node name="EyesHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo"]
+[node name="EyesDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/EyesHBox"]
-layout_mode = 2
-text = "Eyes: "
-
-[node name="EyesDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/EyesHBox"]
-layout_mode = 2
+size_flags_horizontal = 3
 item_count = 8
 selected = 0
-popup/item_0/text = "no_change"
+popup/item_0/text = "Eyes"
 popup/item_0/id = 0
 popup/item_1/text = "OPEN"
 popup/item_1/id = 1
@@ -170,18 +164,12 @@ popup/item_6/id = 6
 popup/item_7/text = "ROLLING"
 popup/item_7/id = 7
 
-[node name="MouthHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo"]
+[node name="MouthDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/MouthHBox"]
-layout_mode = 2
-text = "Mouth: "
-
-[node name="MouthDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/MouthHBox"]
-layout_mode = 2
+size_flags_horizontal = 3
 item_count = 7
 selected = 0
-popup/item_0/text = "no_change"
+popup/item_0/text = "Mouth"
 popup/item_0/id = 0
 popup/item_1/text = "SMILE"
 popup/item_1/id = 1
@@ -196,18 +184,16 @@ popup/item_5/id = 5
 popup/item_6/text = "BITELIP"
 popup/item_6/id = 6
 
-[node name="PoseInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
+[node name="PoseFramingHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
 layout_mode = 2
+theme_override_constants/separation = 18
 
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseInfo"]
+[node name="PoseDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox"]
 layout_mode = 2
-text = "Pose: "
-
-[node name="PoseDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseInfo"]
-layout_mode = 2
+size_flags_horizontal = 3
 item_count = 4
 selected = 0
-popup/item_0/text = "no_change"
+popup/item_0/text = "Pose"
 popup/item_0/id = 0
 popup/item_1/text = "DEFAULT"
 popup/item_1/id = 1
@@ -216,18 +202,12 @@ popup/item_2/id = 2
 popup/item_3/text = "ANGRY"
 popup/item_3/id = 3
 
-[node name="FramingInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
+[node name="FramingDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/FramingInfo"]
-layout_mode = 2
-text = "Framing: "
-
-[node name="FramingDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/FramingInfo"]
-layout_mode = 2
+size_flags_horizontal = 3
 item_count = 4
 selected = 0
-popup/item_0/text = "no_change"
+popup/item_0/text = "Framing"
 popup/item_0/id = 0
 popup/item_1/text = "FACE"
 popup/item_1/id = 1
@@ -375,10 +355,10 @@ popup/item_1/id = 1
 [connection signal="item_selected" from="SetHideDropdown" to="." method="_on_set_hide_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/TargetDropdown" to="." method="_on_target_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/ModeDropdown" to="." method="_on_main_mode_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/EyesHBox/EyesDropdown" to="." method="_on_eyes_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/MouthHBox/MouthDropdown" to="." method="_on_mouth_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseInfo/PoseDropdown" to="." method="_on_pose_dropdown_item_selected"]
-[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/FramingInfo/FramingDropdown" to="." method="_on_framing_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox/EyesDropdown" to="." method="_on_eyes_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox/MouthDropdown" to="." method="_on_mouth_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/PoseDropdown" to="." method="_on_pose_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/FramingDropdown" to="." method="_on_framing_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/SoloInfo/SoloDropdown" to="." method="_on_solo_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/DuoInfo/DuoDropdown" to="." method="_on_duo_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonSmall/ModeDropdown" to="." method="_on_lr_mode_dropdown_item_selected"]

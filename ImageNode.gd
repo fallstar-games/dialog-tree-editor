@@ -10,10 +10,10 @@ extends GraphNode
 @onready var set_person_big_container:Node = $SetImageInfo/SetPerson/SetPersonBig
 @onready var person_main_mode_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/ModeDropdown
 @onready var paperdoll_container:Node = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo
-@onready var expression_eyes_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/EyesHBox/EyesDropdown
-@onready var expression_mouth_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionInfo/MouthHBox/MouthDropdown
-@onready var paperdoll_pose_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseInfo/PoseDropdown
-@onready var framing_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/FramingInfo/FramingDropdown
+@onready var expression_eyes_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox/EyesDropdown
+@onready var expression_mouth_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox/MouthDropdown
+@onready var paperdoll_pose_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/PoseDropdown
+@onready var framing_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/FramingDropdown
 @onready var solo_container:Node = $SetImageInfo/SetPerson/SetPersonBig/SoloInfo
 @onready var solo_pose_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/SoloInfo/SoloDropdown
 @onready var duo_container:Node = $SetImageInfo/SetPerson/SetPersonBig/DuoInfo
@@ -123,22 +123,28 @@ func change_person_main_mode(index:int): #modes: PAPERDOLL, SOLO, DUO
 			duo_container.show()
 
 func _on_eyes_dropdown_item_selected(index:int):
-	node_data["expression_eyes"] = expression_eyes_dropdown.get_item_text(index)
+	if index != 0:
+		node_data["expression_eyes"] = expression_eyes_dropdown.get_item_text(index)
+	else:
+		node_data["expression_eyes"] = "no_change"  # Reset eyes if "None" is selected
 
 func _on_mouth_dropdown_item_selected(index:int):
-	node_data["expression_mouth"] = expression_mouth_dropdown.get_item_text(index)
+	if index != 0:
+		node_data["expression_mouth"] = expression_mouth_dropdown.get_item_text(index)
+	else:
+		node_data["expression_mouth"] = "no_change"  # Reset mouth if "None" is selected
 
 func _on_pose_dropdown_item_selected(index:int):
 	if index != 0:
 		node_data["paperdoll_pose"] = paperdoll_pose_dropdown.get_item_text(index)
 	else:
-		node_data["paperdoll_pose"] = ""  # Reset pose if "None" is selected
+		node_data["paperdoll_pose"] = "no_change"  # Reset pose if "None" is selected
 
 func _on_framing_dropdown_item_selected(index:int):
 	if index != 0:
 		node_data["framing"] = framing_dropdown.get_item_text(index)
 	else:
-		node_data["framing"] = ""  # Leave current framing if "no change" is selected
+		node_data["framing"] = "no_change"  # Leave current framing if "no change" is selected
 
 func _on_lr_mode_dropdown_item_selected(index:int):
 	pass

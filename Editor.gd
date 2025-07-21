@@ -730,49 +730,58 @@ func _on_file_dialog_load_file_async():
 				push_error("Image target not found: " + node["image_target"])
 			
 			#Set person_main_mode_dropdown to the index with the same name as node["image_person_main_mode"]
-			found = false
-			for i in range(current_node.person_main_mode_dropdown.get_item_count()):
-				if current_node.person_main_mode_dropdown.get_item_text(i) == node["image_person_main_mode"]:
-					current_node.person_main_mode_dropdown.select(i)
-					current_node.change_person_main_mode(i)
-					found = true
-					break
-			if not found:
-				push_error("Image person main mode not found: " + node["image_person_main_mode"])
+			if node.has("image_person_main_mode"):
+				found = false
+				for i in range(current_node.person_main_mode_dropdown.get_item_count()):
+					if current_node.person_main_mode_dropdown.get_item_text(i) == node["image_person_main_mode"]:
+						current_node.person_main_mode_dropdown.select(i)
+						current_node.change_person_main_mode(i)
+						found = true
+						break
+				if not found:
+					push_error("Image person main mode not found: " + node["image_person_main_mode"])
 			
 			#current_node.expression_eyes_dropdown.select(node["expression_eyes"])
-			found = false
-			if node.has("expression_eyes"):
+			if node["expression_eyes"] == "no_change":
+				current_node.expression_eyes_dropdown.select(0) # Select "None" if eyes is empty
+			else:
+				found = false
 				var eyes_str = str(node["expression_eyes"])
 				for i in range(current_node.expression_eyes_dropdown.get_item_count()):
 					if current_node.expression_eyes_dropdown.get_item_text(i) == eyes_str:
 						current_node.expression_eyes_dropdown.select(i)
 						found = true
-					break
+						break
 				if not found:
 					push_error("Image expression eyes not found: " + eyes_str)
 
 			#current_node.expression_mouth_dropdown.select(node["expression_mouth"])
-			found = false
-			var mouth_str = str(node["expression_mouth"])
-			for i in range(current_node.expression_mouth_dropdown.get_item_count()):
-				if current_node.expression_mouth_dropdown.get_item_text(i) == mouth_str:
-					current_node.expression_mouth_dropdown.select(i)
-					found = true
-					break
-			if not found:
-				push_error("Image expression mouth not found: " + mouth_str)
-
-			#Set paperdoll_pose_dropdown to the index with the same name as node["paperdoll_pose"]
-			found = false
-			if node.has("paperdoll_pose"):
-				for i in range(current_node.paperdoll_pose_dropdown.get_item_count()):
-					if current_node.paperdoll_pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
-						current_node.paperdoll_pose_dropdown.select(i)
+			if node["expression_mouth"] == "no_change":
+				current_node.expression_mouth_dropdown.select(0) # Select "None" if mouth is empty
+			else:
+				found = false
+				var mouth_str = str(node["expression_mouth"])
+				for i in range(current_node.expression_mouth_dropdown.get_item_count()):
+					if current_node.expression_mouth_dropdown.get_item_text(i) == mouth_str:
+						current_node.expression_mouth_dropdown.select(i)
 						found = true
 						break
 				if not found:
-					push_error("Image pose not found: " + node["paperdoll_pose"])
+					push_error("Image expression mouth not found: " + mouth_str)
+
+			#Set paperdoll_pose_dropdown to the index with the same name as node["paperdoll_pose"]
+			if node["paperdoll_pose"] == "no_change":
+				current_node.paperdoll_pose_dropdown.select(0) # Select "None" if pose is empty
+			else:
+				found = false
+				if node.has("paperdoll_pose"):
+					for i in range(current_node.paperdoll_pose_dropdown.get_item_count()):
+						if current_node.paperdoll_pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
+							current_node.paperdoll_pose_dropdown.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image pose not found: " + node["paperdoll_pose"])
 
 			#Set solo_pose_dropdown to the index with the same name as node["solo_pose"]
 			found = false
@@ -797,14 +806,17 @@ func _on_file_dialog_load_file_async():
 					push_error("Image duo pose not found: " + node["duo_pose"])
 
 			#Set framing_dropdown to the index with the same name as node["framing"]
-			found = false
-			for i in range(current_node.framing_dropdown.get_item_count()):
-				if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
-					current_node.framing_dropdown.select(i)
-					found = true
-					break
-			if not found:
-				push_error("Image framing not found: " + node["framing"])
+			if node["framing"] == "no_change":
+				current_node.framing_dropdown.select(0) # Select "None" if framing is empty
+			else:
+				found = false
+				for i in range(current_node.framing_dropdown.get_item_count()):
+					if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
+						current_node.framing_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image framing not found: " + node["framing"])
 
 			if node.has("person_image_id"):
 				current_node.person_image_id_line.text = node["person_image_id"]
@@ -1019,3 +1031,8 @@ func _close_menu():
 
 #func auto_connect_start(node):
 	#connect_node("Start", 0, node, 0)
+
+var utilities_path = "C:\\Users\\John\\Alexis' Team Dropbox\\Alexis Austin\\Bespoke\\working\\Godot\\Projects\\HaremHeavenExcel\\json2xl-utilities-5-18"
+
+func _on_open_utilities_pressed():
+	OS.shell_open(utilities_path)

@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_k5jyc"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_p5cbk"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -359,7 +359,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_k5jyc")
+syntax_highlighter = SubResource("CodeHighlighter_p5cbk")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 
