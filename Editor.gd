@@ -472,27 +472,35 @@ func _on_file_dialog_load_file_async():
 				var variables_group = current_node.get_node("VariablesGroup")
 				variables_group.show()
 				
+				var variable_index = 0
 				for variable_set in node["set_variables"]:
-					current_node._on_add_button_pressed("variable")
+					# Skip first iteration since _on_option_button_item_selected already added one
+					if variable_index > 0:
+						current_node._on_add_button_pressed("variable")
 					
 					var current_variable_count = current_node.variable_count
-					var variable_node_name = "Variable" + str(current_variable_count)
+					var variable_node_name = "Variable" + str(current_variable_count - variable_index)
 					var variable_node = variables_group.get_node(variable_node_name)
-					variable_node.text.text = node["set_variables"].keys()[current_variable_count - 1]
-					variable_node.check_button.button_pressed = node["set_variables"].values()[current_variable_count - 1]
+					variable_node.text.text = node["set_variables"].keys()[variable_index]
+					variable_node.check_button.button_pressed = node["set_variables"].values()[variable_index]
+					variable_index += 1
 			
 			# signals
 			if not node["signals"].is_empty():
 				var emit_signal_group = current_node.get_node("EmitSignalGroup")
 				emit_signal_group.show()
 				
+				var signal_index = 0
 				for single_signal in node["signals"]:
-					current_node._on_add_button_pressed("signal")
+					# Skip first iteration since _on_option_button_item_selected already added one
+					if signal_index > 0:
+						current_node._on_add_button_pressed("signal")
 					
 					var current_signal_count = current_node.signal_count
-					var signal_node_name = "Signal" + str(current_signal_count)
+					var signal_node_name = "Signal" + str(current_signal_count - signal_index)
 					var signal_node = emit_signal_group.get_node(signal_node_name)
-					signal_node.text.text = node["signals"][current_signal_count - 1]
+					signal_node.text.text = node["signals"][signal_index]
+					signal_index += 1
 			
 			# boolean conditionals
 			if not node["if_boolean"].is_empty():
@@ -500,70 +508,91 @@ func _on_file_dialog_load_file_async():
 				var conditionals_group = current_node.get_node("ConditionalsGroup")
 				conditionals_group.show()
 				
+				var conditional_index = 0
 				for conditional in node["if_boolean"]:
-					current_node._on_add_button_pressed("conditional")
+					# Skip first iteration since _on_option_button_item_selected already added one
+					if conditional_index > 0:
+						current_node._on_add_button_pressed("conditional")
 					
 					var current_conditional_count = current_node.conditional_count
-					var conditional_node_name = "Conditional" + str(current_conditional_count)
+					var conditional_node_name = "Conditional" + str(current_conditional_count - conditional_index)
 					var conditional_node = conditionals_group.get_node(conditional_node_name)
-					conditional_node.text.text = node["if_boolean"].keys()[current_conditional_count - 1]
-					conditional_node.check_button.button_pressed = node["if_boolean"].values()[current_conditional_count - 1]
+					print("Conditional node name: " + conditional_node_name + ". Conditional Count: " + str(current_conditional_count))
+					conditional_node.text.text = node["if_boolean"].keys()[conditional_index]
+					conditional_node.check_button.button_pressed = node["if_boolean"].values()[conditional_index]
+					conditional_index += 1
 
 			# greater than conditionals
 			if not node["if_greater"].is_empty():
 				var greater_group = current_node.get_node("GreaterGroup")
 				greater_group.show()
 				
+				var greater_index = 0
 				for greater in node["if_greater"]:
-					current_node._on_add_button_pressed("greater")
+					# Skip first iteration since _on_option_button_item_selected already added one
+					if greater_index > 0:
+						current_node._on_add_button_pressed("greater")
 					
 					var current_greater_count = current_node.greater_count
-					var greater_node_name = "Greater" + str(current_greater_count)
+					var greater_node_name = "Greater" + str(current_greater_count - greater_index)
 					var greater_node = greater_group.get_node(greater_node_name)
-					greater_node.var_name.text = node["if_greater"].keys()[current_greater_count - 1]
-					greater_node.var_amount.text = node["if_greater"].values()[current_greater_count - 1]
+					greater_node.var_name.text = node["if_greater"].keys()[greater_index]
+					greater_node.var_amount.text = node["if_greater"].values()[greater_index]
+					greater_index += 1
 			
 			# less than conditionals
 			if not node["if_less"].is_empty():
 				var less_group = current_node.get_node("LessGroup")
 				less_group.show()
 				
+				var less_index = 0
 				for less in node["if_less"]:
-					current_node._on_add_button_pressed("less")
+					# Skip first iteration since _on_option_button_item_selected already added one
+					if less_index > 0:
+						current_node._on_add_button_pressed("less")
 					
 					var current_less_count = current_node.less_count
-					var less_node_name = "Less" + str(current_less_count)
+					var less_node_name = "Less" + str(current_less_count - less_index)
 					var less_node = less_group.get_node(less_node_name)
-					less_node.var_name.text = node["if_less"].keys()[current_less_count - 1]
-					less_node.var_amount.text = node["if_less"].values()[current_less_count - 1]
+					less_node.var_name.text = node["if_less"].keys()[less_index]
+					less_node.var_amount.text = node["if_less"].values()[less_index]
+					less_index += 1
 
 			# equal to conditionals
 			if not node["if_equal"].is_empty():
 				var equal_group = current_node.get_node("EqualGroup")
 				equal_group.show()
 				
+				var equal_index = 0
 				for equal in node["if_equal"]:
-					current_node._on_add_button_pressed("equal")
+					# Skip first iteration since _on_option_button_item_selected already added one
+					if equal_index > 0:
+						current_node._on_add_button_pressed("equal")
 					
 					var current_equal_count = current_node.equal_count
-					var equal_node_name = "Equal" + str(current_equal_count)
+					var equal_node_name = "Equal" + str(current_equal_count - equal_index)
 					var equal_node = equal_group.get_node(equal_node_name)
-					equal_node.var_name.text = node["if_equal"].keys()[current_equal_count - 1]
-					equal_node.var_amount.text = node["if_equal"].values()[current_equal_count - 1]
+					equal_node.var_name.text = node["if_equal"].keys()[equal_index]
+					equal_node.var_amount.text = node["if_equal"].values()[equal_index]
+					equal_index += 1
 
 			# has garment conditionals
 			if not node["has_garment"].is_empty():
 				var has_garment_group = current_node.get_node("HasGarmentGroup")
 				has_garment_group.show()
 				
+				var garment_index = 0
 				for garment in node["has_garment"]:
-					current_node._on_add_button_pressed("has_garment")
+					# Skip first iteration since _on_option_button_item_selected already added one
+					if garment_index > 0:
+						current_node._on_add_button_pressed("has_garment")
 					
 					var current_has_garment_count = current_node.has_garment_count
-					var has_garment_node_name = "HasGarment" + str(current_has_garment_count)
+					var has_garment_node_name = "HasGarment" + str(current_has_garment_count - garment_index)
 					var has_garment_node = has_garment_group.get_node(has_garment_node_name)
-					has_garment_node.text.text = node["has_garment"].keys()[current_has_garment_count - 1]
-					has_garment_node.check_button.button_pressed = node["has_garment"].values()[current_has_garment_count - 1]
+					has_garment_node.text.text = node["has_garment"].keys()[garment_index]
+					has_garment_node.check_button.button_pressed = node["has_garment"].values()[garment_index]
+					garment_index += 1
 			
 		# if type: option
 		elif "CHOICE" in node["node title"]:
