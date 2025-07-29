@@ -603,19 +603,6 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 			current_node.text.text = node["text"]
-			"""
-			# match item string to item index
-			for item in current_node.dice_roll_dropdown.get_item_count():
-					
-				if current_node.dice_roll_dropdown.get_item_text(item) == node["dice_roll"]:
-
-					current_node.dice_roll_dropdown.select(item)
-					current_node.dice_roll_on()
-					
-					break
-
-			current_node.roll_difficulty.text = str(node["difficulty"])
-			"""
 
 		# if type: event
 		elif "EVENT" in node["node title"]:
@@ -711,7 +698,15 @@ func _on_file_dialog_load_file_async():
 						"WEAR_GARMENT":
 							current_node.line_edits["garment_id"].text = node["garment_id"]
 						"REMOVE_GARMENT":
-							current_node.line_edits["garment_slot_id"].text = node["garment_slot_id"]
+							found = false
+							for i in range(current_node.garment_slot_dropdown.get_item_count()):
+								if current_node.garment_slot_dropdown.get_item_text(i) == node["garment_slot_id"]:
+									current_node.garment_slot_dropdown.select(i)
+									#current_node.change_garment_slot_mode(i)
+									found = true
+									break
+							if not found:
+								push_error("Garment slot not found: " + node["garment_slot_id"])
 						"WEAR_OUTFIT":
 							current_node.line_edits["outfit_id"].text = node["outfit_id"]
 						"SAVE_OUTFIT":

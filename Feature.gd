@@ -32,6 +32,15 @@ var node_data = {
 	"go to": []
 }
 
+func clear_dicts_and_arrays():
+	node_data["set_variables"].clear()
+	node_data["signals"].clear()
+	node_data["if_boolean"].clear()
+	node_data["if_greater"].clear()
+	node_data["if_less"].clear()
+	node_data["if_equal"].clear()
+	node_data["has_garment"].clear()
+
 func update_data():
 	node_data["offset_x"] = self.position_offset.x
 	node_data["offset_y"] = self.position_offset.y
@@ -40,11 +49,13 @@ func update_data():
 
 	node_data["main_person_id"] = main_person_line.text
 	node_data["second_person_id"] = second_person_line.text
+
+	clear_dicts_and_arrays()
 	
 	if variable_count != 0:
 		for individual_variable in variables_group.get_children():
 			if "Variable" in individual_variable.name:
-				var var_active = individual_variable.get_node("CheckButton").button_pressed 
+				var var_active: bool = individual_variable.get_node("CheckButton").button_pressed 
 				var var_name = individual_variable.get_node("LineEdit").text 
 				
 				node_data["set_variables"][var_name] = var_active
@@ -60,7 +71,7 @@ func update_data():
 	if conditional_count != 0:
 		for individual_conditional in conditionals_group.get_children():
 			if "Conditional" in individual_conditional.name:
-				var condition_exists = individual_conditional.get_node("CheckButton").button_pressed 
+				var condition_exists: bool = individual_conditional.get_node("CheckButton").button_pressed 
 				var condition_name = individual_conditional.get_node("LineEdit").text 
 				
 				node_data["if_boolean"][condition_name] = condition_exists
@@ -93,7 +104,7 @@ func update_data():
 		for individual_garment in has_garment_group.get_children():
 			if "HasGarment" in individual_garment.name:
 				var garment_name = individual_garment.get_node("LineEdit").text 
-				var garment_active = individual_garment.get_node("CheckButton").button_pressed 
+				var garment_active: bool = individual_garment.get_node("CheckButton").button_pressed 
 				
 				node_data["has_garment"][garment_name] = garment_active
 

@@ -3,6 +3,7 @@ extends GraphNode
 @onready var event_dropdown:OptionButton = $OptionButton
 @onready var check_type_dropdown:OptionButton = $CheckInfo/CheckType
 @onready var wardrobe_action_dropdown:OptionButton = $WardrobeInfo/WardrobeAction
+@onready var garment_slot_dropdown:OptionButton = $WardrobeInfo/SlotID/GarmentSlot
 #@onready var buy_sell_container = $ShopMode
 @onready var menu_line:LineEdit = $MenuInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
@@ -19,7 +20,8 @@ extends GraphNode
 @onready var check_containers:Dictionary = {
 	"REQUEST": $CheckInfo/RequestCheck,
 	"COERCE": $CheckInfo/CoerceCheck,
-	"FORCE": $CheckInfo/ForceCheck
+	"FORCE": $CheckInfo/ForceCheck,
+	"VIGOR": $CheckInfo/VigorCheck,
 }
 
 @onready var wardrobe_containers:Dictionary = {
@@ -76,7 +78,7 @@ var node_data = {
 	"wardrobe_action": "WEAR_GARMENT",
 	"outfit_id": "",
 	"garment_id": "",
-	"garment_slot_id": "",
+	"garment_slot_id": "PANTIES",
 	"menu_id":"",
 	#"letter_id":"",
 	"go to": []
@@ -146,8 +148,8 @@ func update_data():
 			match node_data["wardrobe_action"]:
 				"WEAR_GARMENT":
 					node_data["garment_id"] = line_edits["garment_id"].text
-				"REMOVE_GARMENT":
-					node_data["garment_slot_id"] = line_edits["garment_slot_id"].text
+				#"REMOVE_GARMENT":
+				#	node_data["garment_slot_id"] = line_edits["garment_slot_id"].text
 				"WEAR_OUTFIT":
 					node_data["outfit_id"] = line_edits["outfit_id"].text
 				"SAVE_OUTFIT":
@@ -214,3 +216,6 @@ func _on_cancel_button_pressed(output_type):
 		output_cycler_count -= 1
 	elif "random" in output_type:
 		output_random_count -= 1
+
+func _on_garment_slot_item_selected(index:int):
+	node_data["garment_slot_id"] = garment_slot_dropdown.get_item_text(index)

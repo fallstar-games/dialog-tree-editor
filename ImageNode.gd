@@ -104,7 +104,7 @@ func change_target_mode(index:int):
 			set_other_container.show()
 
 func _on_main_mode_dropdown_item_selected(index:int):
-	node_data["image_person_main_mode"] = person_main_mode_dropdown.get_item_text(index)
+	node_data["image_person_big_mode"] = person_main_mode_dropdown.get_item_text(index)
 	change_person_main_mode(index)
 
 func change_person_main_mode(index:int): #modes: PAPERDOLL, SOLO, DUO
