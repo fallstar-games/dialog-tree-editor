@@ -357,6 +357,7 @@ text = "+ End"
 
 [node name="OpenUtilities" type="Button" parent="Tool"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Utilities Dir"
 
 [node name="SavedNotification" type="Label" parent="Tool"]

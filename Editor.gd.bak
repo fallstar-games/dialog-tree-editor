@@ -33,18 +33,6 @@ signal graph_cleared
 signal node_closed
 
 var selected_file_path:String
-
-# Helper function to set option button selection by matching text
-func set_option_button_by_text(option_button: OptionButton, target_value: String, error_prefix: String = "Option") -> bool:
-	var found = false
-	for i in range(option_button.get_item_count()):
-		if option_button.get_item_text(i) == target_value:
-			option_button.select(i)
-			found = true
-			break
-	if not found:
-		push_error(error_prefix + " not found: " + target_value)
-	return found
 func _ready():
 	if get_node("CanvasLayer/OpenFileDialog").is_connected("file_selected", _on_file_dialog_file_selected):
 #		get_node("CanvasLayer/OpenFileDialog").disconnect("file_selected", _on_file_dialog_file_selected)
@@ -54,7 +42,7 @@ func _ready():
 
 ################## Shortcut Keys ####################################
 	
-func _input(_event):
+func _input(event):
 	# Get actaul position = (mouse position in window + moved canvas position) scaled 
 	var mouse_position_in_canvas = (get_global_mouse_position() + scroll_offset)/zoom
 	if Input.is_action_just_released("New Node"):
@@ -374,40 +362,89 @@ func _on_file_dialog_load_file_async():
 					current_node.image_type_dropdown.select(0) # Select "No Image" if image type is empty
 					current_node.change_image_type_mode(0)
 				else:
-					if set_option_button_by_text(current_node.image_type_dropdown, node["image_type"], "Image type"):
-						current_node.change_image_type_mode(current_node.image_type_dropdown.selected)
+					var found = false
+					for i in range(current_node.image_type_dropdown.get_item_count()):
+						if current_node.image_type_dropdown.get_item_text(i) == node["image_type"]:
+							current_node.image_type_dropdown.select(i)
+							current_node.change_image_type_mode(i)
+							found = true
+							break
+					if not found:
+						push_error("Image type not found: " + node["image_type"])
 
 			if node.has("expression_eyes"):
 				if node["expression_eyes"] == "no_change":
 					current_node.eyes_opt.select(0) # Select "None" if eyes is empty
 				else:
-					set_option_button_by_text(current_node.eyes_opt, node["expression_eyes"], "Image eyes")
+					var found = false
+					for i in range(current_node.eyes_opt.get_item_count()):
+						if current_node.eyes_opt.get_item_text(i) == node["expression_eyes"]:
+							current_node.eyes_opt.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image eyes not found: " + node["expression_eyes"])
 
 			if node.has("expression_mouth"):
 				if node["expression_mouth"] == "no_change":
 					current_node.mouth_opt.select(0) # Select "None" if mouth is empty
 				else:
-					set_option_button_by_text(current_node.mouth_opt, node["expression_mouth"], "Image mouth")
+					var found = false
+					for i in range(current_node.mouth_opt.get_item_count()):
+						if current_node.mouth_opt.get_item_text(i) == node["expression_mouth"]:
+							current_node.mouth_opt.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image mouth not found: " + node["expression_mouth"])
 
 			#Set pose_dropdown to the index with the same name as node["pose"]
 			if node.has("paperdoll_pose"):
 				if node["paperdoll_pose"] == "no_change":
 					current_node.pose_dropdown.select(0) # Select "None" if pose is empty
 				else:
-					set_option_button_by_text(current_node.pose_dropdown, node["paperdoll_pose"], "Image pose")
+					var found = false
+					for i in range(current_node.pose_dropdown.get_item_count()):
+						if current_node.pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
+							current_node.pose_dropdown.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image pose not found: " + node["paperdoll_pose"])
 
 			if node.has("framing"):
 				# Set framing_dropdown to the index with the same name as node["framing"]
 				if node["framing"] == "no_change":
 					current_node.framing_dropdown.select(0) # Select "None" if framing is empty
 				else:
-					set_option_button_by_text(current_node.framing_dropdown, node["framing"], "Image framing")
+					var found = false
+					for i in range(current_node.framing_dropdown.get_item_count()):
+						if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
+							current_node.framing_dropdown.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image framing not found: " + node["framing"])
 
 			if node.has("solo_pose"):
-				set_option_button_by_text(current_node.solo_dropdown, node["solo_pose"], "Image solo pose")
+				var found = false
+				for i in range(current_node.solo_dropdown.get_item_count()):
+					if current_node.solo_dropdown.get_item_text(i) == node["solo_pose"]:
+						current_node.solo_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image solo pose not found: " + node["solo_pose"])
 
 			if node.has("duo_pose"):
-				set_option_button_by_text(current_node.duo_dropdown, node["duo_pose"], "Image duo pose")
+				var found = false
+				for i in range(current_node.duo_dropdown.get_item_count()):
+					if current_node.duo_dropdown.get_item_text(i) == node["duo_pose"]:
+						current_node.duo_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image duo pose not found: " + node["duo_pose"])
 
 		# if type: append
 		elif "APPEND" in node["node title"]:
@@ -574,61 +611,51 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 
-			if set_option_button_by_text(current_node.event_dropdown, node["event_type"], "Event type"):
-				current_node.change_mode(current_node.event_dropdown.selected)
+			var found = false
+			for i in range(current_node.event_dropdown.get_item_count()):
+				if current_node.event_dropdown.get_item_text(i) == node["event_type"]:
+					current_node.event_dropdown.select(i)
+					current_node.change_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Event type not found: " + node["event_type"])
 
-			#if set_option_button_by_text(current_node.check_type_dropdown, node["check_type"], "Check type"):
-			#	current_node.change_check_mode(current_node.check_type_dropdown.selected)
+			found = false
+			for i in range(current_node.check_type_dropdown.get_item_count()):
+				if current_node.check_type_dropdown.get_item_text(i) == node["check_type"]:
+					current_node.check_type_dropdown.select(i)
+					current_node.change_check_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Check type not found: " + node["check_type"])
 
-			if set_option_button_by_text(current_node.split_type_dropdown, node["split_type"], "Split type"):
-				current_node.change_split_mode(current_node.split_type_dropdown.selected)
-
-			if set_option_button_by_text(current_node.wardrobe_action_dropdown, node["wardrobe_action"], "Wardrobe action"):
-				current_node.change_wardrobe_mode(current_node.wardrobe_action_dropdown.selected)
+			found = false
+			for i in range(current_node.wardrobe_action_dropdown.get_item_count()):
+				if current_node.wardrobe_action_dropdown.get_item_text(i) == node["wardrobe_action"]:
+					current_node.wardrobe_action_dropdown.select(i)
+					current_node.change_wardrobe_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Wardrobe action not found: " + node["wardrobe_action"])
 
 			match node["event_type"]:
-				#"CHECK":
-				#	match node["check_type"]:
-				#		"REQUEST":
-				#			current_node.line_edits["request_id"].text = node["request_id"]
-				#			current_node.line_edits["request_pass"].text = node["outcome_pass"]
-				#			current_node.line_edits["request_fail"].text = node["outcome_fail"]
-				#			current_node.line_edits["request_unsure"].text = node["outcome_unsure"]
-				#		"COERCE":
-				#			current_node.line_edits["lever_id"].text = node["lever_id"]
-				#			current_node.line_edits["coerce_pass"].text = node["outcome_pass"]
-				#			current_node.line_edits["coerce_fail"].text = node["outcome_fail"]
-				#		"FORCE":
-				#			current_node.line_edits["force_pass"].text = node["outcome_pass"]
-				#			current_node.line_edits["force_fail"].text = node["outcome_fail"]
-				"SPLIT":
-					match node["split_type"]:
-						"BOOL":
-							current_node.line_edits["split_bool_var_id"].text = node["split_bool_var_id"]
-							current_node.line_edits["split_true_outcome"].text = node["split_true_outcome"]
-							current_node.line_edits["split_false_outcome"].text = node["split_false_outcome"]
-						"INT":
-							current_node.line_edits["split_int_var_id"].text = node["split_int_var_id"]
-							current_node.line_edits["split_else_outcome"].text = node["split_else_outcome"]
-							if not node["split_greater_outcomes"].is_empty():
-								for target_value in node["split_greater_outcomes"]:
-									current_node._on_add_output_button_pressed("greater")
-									var current_output_count = current_node.output_greater_count
-									var output_node_name = "OutputGreater" + str(current_output_count)
-									var output_node = current_node.split_containers["INT"].get_node(output_node_name)
-
-									output_node.var_amount.text = str(target_value)
-									output_node.var_name.text = str(node["split_greater_outcomes"][target_value])
-						"RANDOM":
-							if not node["split_random_outcomes"].is_empty():
-								for target_node in node["split_random_outcomes"]:
-									current_node._on_add_output_button_pressed("random")
-									var current_output_count = current_node.output_random_count
-									var output_node_name = "OutputRandom" + str(current_output_count)
-									var output_node = current_node.split_containers["RANDOM"].get_node(output_node_name)
-
-									output_node.var_amount.text = str(node["split_random_outcomes"][target_node])
-									output_node.var_name.text = target_node
+				"CHECK":
+					match node["check_type"]:
+						"REQUEST":
+							current_node.line_edits["request_id"].text = node["request_id"]
+							current_node.line_edits["request_pass"].text = node["outcome_pass"]
+							current_node.line_edits["request_fail"].text = node["outcome_fail"]
+							current_node.line_edits["request_unsure"].text = node["outcome_unsure"]
+						"COERCE":
+							current_node.line_edits["lever_id"].text = node["lever_id"]
+							current_node.line_edits["coerce_pass"].text = node["outcome_pass"]
+							current_node.line_edits["coerce_fail"].text = node["outcome_fail"]
+						"FORCE":
+							current_node.line_edits["force_pass"].text = node["outcome_pass"]
+							current_node.line_edits["force_fail"].text = node["outcome_fail"]
 				"SUBTREE":
 					current_node.line_edits["subtree_id"].text = node["subtree_id"]
 					current_node.line_edits["subtree_start"].text = node["subtree_start"]
@@ -643,42 +670,47 @@ func _on_file_dialog_load_file_async():
 								continue
 							output_node.outcome_name.text = node["subtree_outputs"].keys()[current_output_count - 1]
 							output_node.target_node.text = node["subtree_outputs"].values()[current_output_count - 1]
-				#"CYCLER":
-				#	current_node.line_edits["cycle_id"].text = node["cycle_id"]
+				"CYCLER":
+					current_node.line_edits["cycle_id"].text = node["cycle_id"]
 					
-				#	if not node["cycler_outputs"].is_empty():
-				#		for target_key in node["cycler_outputs"]:
-				#			current_node._on_add_output_button_pressed("cycler")
-				#			var current_output_count = current_node.output_cycler_count
-				#			var output_node_name = "OutputCycler" + str(current_output_count)
-				#			var output_node = current_node.event_containers["CYCLER"].get_node(output_node_name)
+					if not node["cycler_outputs"].is_empty():
+						for target_key in node["cycler_outputs"]:
+							current_node._on_add_output_button_pressed("cycler")
+							var current_output_count = current_node.output_cycler_count
+							var output_node_name = "OutputCycler" + str(current_output_count)
+							var output_node = current_node.event_containers["CYCLER"].get_node(output_node_name)
 
 							#output_node.var_amount.text = cycle_index
-				#			output_node.var_name.text = target_key
+							output_node.var_name.text = target_key
 					
-				#"RANDOM":
-				#	if not node["random_outputs"].is_empty():
-				#		for target_node in node["random_outputs"]:
-				#			current_node._on_add_output_button_pressed("random")
-				#			var current_output_count = current_node.output_random_count
-				#			var output_node_name = "OutputRandom" + str(current_output_count)
-				#			var output_node = current_node.event_containers["RANDOM"].get_node(output_node_name)
+				"RANDOM":
+					if not node["random_outputs"].is_empty():
+						for target_node in node["random_outputs"]:
+							current_node._on_add_output_button_pressed("random")
+							var current_output_count = current_node.output_random_count
+							var output_node_name = "OutputRandom" + str(current_output_count)
+							var output_node = current_node.event_containers["RANDOM"].get_node(output_node_name)
 
-				#			output_node.var_amount.text = str(node["random_outputs"][target_node])
-				#			output_node.var_name.text = target_node
+							output_node.var_amount.text = str(node["random_outputs"][target_node])
+							output_node.var_name.text = target_node
 				"WARDROBE":
 					match node["wardrobe_action"]:
 						"WEAR_GARMENT":
 							current_node.line_edits["garment_id"].text = node["garment_id"]
 						"REMOVE_GARMENT":
-							set_option_button_by_text(current_node.garment_slot_dropdown, node["garment_slot_id"], "Garment slot")
+							found = false
+							for i in range(current_node.garment_slot_dropdown.get_item_count()):
+								if current_node.garment_slot_dropdown.get_item_text(i) == node["garment_slot_id"]:
+									current_node.garment_slot_dropdown.select(i)
+									#current_node.change_garment_slot_mode(i)
+									found = true
+									break
+							if not found:
+								push_error("Garment slot not found: " + node["garment_slot_id"])
 						"WEAR_OUTFIT":
 							current_node.line_edits["outfit_id"].text = node["outfit_id"]
 						"SAVE_OUTFIT":
 							current_node.line_edits["outfit_id"].text = node["outfit_id"]
-				"MENU":
-					current_node.line_edits["menu_id"].text = node["menu_id"]
-					
 
 
 		# if type: image
@@ -689,56 +721,126 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.y = node["offset_y"]
 
 			#set slot_dropdown to the index with the same name as node["image_slot"]
-			if set_option_button_by_text(current_node.slot_dropdown, node["image_slot"], "Image slot"):
-				current_node.change_slot_mode(current_node.slot_dropdown.selected)
+			var found = false
+			for i in range(current_node.slot_dropdown.get_item_count()):
+				if current_node.slot_dropdown.get_item_text(i) == node["image_slot"]:
+					current_node.slot_dropdown.select(i)
+					current_node.change_slot_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Image slot not found: " + node["image_slot"])
 
 			#Set set_hide_dropdown to the index with the same name as node["image_action"]
-			if set_option_button_by_text(current_node.set_hide_dropdown, node["image_action"], "Image action"):
-				current_node.change_set_hide_mode(current_node.set_hide_dropdown.selected)
+			found = false
+			for i in range(current_node.set_hide_dropdown.get_item_count()):
+				if current_node.set_hide_dropdown.get_item_text(i) == node["image_action"]:
+					current_node.set_hide_dropdown.select(i)
+					current_node.change_set_hide_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Image action not found: " + node["image_action"])
 
 			#Set target_dropdown to the index with the same name as node["image_target"]
-			if set_option_button_by_text(current_node.target_dropdown, node["image_target"], "Image target"):
-				current_node.change_target_mode(current_node.target_dropdown.selected)
+			found = false
+			for i in range(current_node.target_dropdown.get_item_count()):
+				if current_node.target_dropdown.get_item_text(i) == node["image_target"]:
+					current_node.target_dropdown.select(i)
+					current_node.change_target_mode(i)
+					found = true
+					break
+			if not found:
+				push_error("Image target not found: " + node["image_target"])
 			
 			#Set person_main_mode_dropdown to the index with the same name as node["image_person_main_mode"]
 			if node.has("image_person_main_mode"):
-				if set_option_button_by_text(current_node.person_main_mode_dropdown, node["image_person_main_mode"], "Image person main mode"):
-					current_node.change_person_main_mode(current_node.person_main_mode_dropdown.selected)
+				found = false
+				for i in range(current_node.person_main_mode_dropdown.get_item_count()):
+					if current_node.person_main_mode_dropdown.get_item_text(i) == node["image_person_main_mode"]:
+						current_node.person_main_mode_dropdown.select(i)
+						current_node.change_person_main_mode(i)
+						found = true
+						break
+				if not found:
+					push_error("Image person main mode not found: " + node["image_person_main_mode"])
 			
 			#current_node.expression_eyes_dropdown.select(node["expression_eyes"])
 			if node["expression_eyes"] == "no_change":
 				current_node.expression_eyes_dropdown.select(0) # Select "None" if eyes is empty
 			else:
+				found = false
 				var eyes_str = str(node["expression_eyes"])
-				set_option_button_by_text(current_node.expression_eyes_dropdown, eyes_str, "Image expression eyes")
+				for i in range(current_node.expression_eyes_dropdown.get_item_count()):
+					if current_node.expression_eyes_dropdown.get_item_text(i) == eyes_str:
+						current_node.expression_eyes_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image expression eyes not found: " + eyes_str)
 
 			#current_node.expression_mouth_dropdown.select(node["expression_mouth"])
 			if node["expression_mouth"] == "no_change":
 				current_node.expression_mouth_dropdown.select(0) # Select "None" if mouth is empty
 			else:
+				found = false
 				var mouth_str = str(node["expression_mouth"])
-				set_option_button_by_text(current_node.expression_mouth_dropdown, mouth_str, "Image expression mouth")
+				for i in range(current_node.expression_mouth_dropdown.get_item_count()):
+					if current_node.expression_mouth_dropdown.get_item_text(i) == mouth_str:
+						current_node.expression_mouth_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image expression mouth not found: " + mouth_str)
 
 			#Set paperdoll_pose_dropdown to the index with the same name as node["paperdoll_pose"]
 			if node["paperdoll_pose"] == "no_change":
 				current_node.paperdoll_pose_dropdown.select(0) # Select "None" if pose is empty
 			else:
+				found = false
 				if node.has("paperdoll_pose"):
-					set_option_button_by_text(current_node.paperdoll_pose_dropdown, node["paperdoll_pose"], "Image pose")
+					for i in range(current_node.paperdoll_pose_dropdown.get_item_count()):
+						if current_node.paperdoll_pose_dropdown.get_item_text(i) == node["paperdoll_pose"]:
+							current_node.paperdoll_pose_dropdown.select(i)
+							found = true
+							break
+					if not found:
+						push_error("Image pose not found: " + node["paperdoll_pose"])
 
 			#Set solo_pose_dropdown to the index with the same name as node["solo_pose"]
+			found = false
 			if node.has("solo_pose"):
-				set_option_button_by_text(current_node.solo_pose_dropdown, node["solo_pose"], "Image solo pose")
+				for i in range(current_node.solo_pose_dropdown.get_item_count()):
+					if current_node.solo_pose_dropdown.get_item_text(i) == node["solo_pose"]:
+						current_node.solo_pose_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image solo pose not found: " + node["solo_pose"])
 
 			#Set duo_pose_dropdown to the index with the same name as node["duo_pose"]
+			found = false
 			if node.has("duo_pose"):
-				set_option_button_by_text(current_node.duo_pose_dropdown, node["duo_pose"], "Image duo pose")
+				for i in range(current_node.duo_pose_dropdown.get_item_count()):
+					if current_node.duo_pose_dropdown.get_item_text(i) == node["duo_pose"]:
+						current_node.duo_pose_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image duo pose not found: " + node["duo_pose"])
 
 			#Set framing_dropdown to the index with the same name as node["framing"]
 			if node["framing"] == "no_change":
 				current_node.framing_dropdown.select(0) # Select "None" if framing is empty
 			else:
-				set_option_button_by_text(current_node.framing_dropdown, node["framing"], "Image framing")
+				found = false
+				for i in range(current_node.framing_dropdown.get_item_count()):
+					if current_node.framing_dropdown.get_item_text(i) == node["framing"]:
+						current_node.framing_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image framing not found: " + node["framing"])
 
 			if node.has("person_image_id"):
 				current_node.person_image_id_line.text = node["person_image_id"]
@@ -746,8 +848,15 @@ func _on_file_dialog_load_file_async():
 				current_node.other_image_id_line.text = node["other_image_id"]
 
 			#set effect_dropdown to the index with the same name as node["effect"]
+			found = false
 			if node.has("effect"):
-				set_option_button_by_text(current_node.effect_dropdown, node["effect"], "Image effect")
+				for i in range(current_node.effect_dropdown.get_item_count()):
+					if current_node.effect_dropdown.get_item_text(i) == node["effect"]:
+						current_node.effect_dropdown.select(i)
+						found = true
+						break
+				if not found:
+					push_error("Image effect not found: " + node["effect"])
 
 		# if type: offramp
 		elif "OFFRAMP" in node["node title"]:

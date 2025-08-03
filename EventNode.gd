@@ -2,6 +2,7 @@ extends GraphNode
 
 @onready var event_dropdown:OptionButton = $OptionButton
 @onready var check_type_dropdown:OptionButton = $CheckInfo/CheckType
+@onready var split_type_dropdown:OptionButton = $SplitInfo/SplitType
 @onready var wardrobe_action_dropdown:OptionButton = $WardrobeInfo/WardrobeAction
 @onready var garment_slot_dropdown:OptionButton = $WardrobeInfo/SlotID/GarmentSlot
 #@onready var buy_sell_container = $ShopMode
@@ -9,10 +10,11 @@ extends GraphNode
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
 #@onready var sell_btn:CheckBox = $ShopMode/Sell
 @onready var event_containers:Dictionary = {
+	"SPLIT": $SplitInfo,
 	"CHECK": $CheckInfo,
 	"SUBTREE": $SubTreeInfo,
 	"CYCLER": $CyclerInfo,
-	"RANDOM": $RandomInfo,
+	#"RANDOM": $RandomInfo,
 	"WARDROBE": $WardrobeInfo,
 	"MENU": $MenuInfo
 }
@@ -24,6 +26,12 @@ extends GraphNode
 	"VIGOR": $CheckInfo/VigorCheck,
 }
 
+@onready var split_containers:Dictionary = {
+	"BOOL": $SplitInfo/SplitBool,
+	"INT": $SplitInfo/SplitInt,
+	"RANDOM": $SplitInfo/SplitRandom
+}
+
 @onready var wardrobe_containers:Dictionary = {
 	"WEAR_GARMENT": $WardrobeInfo/GarmentID,
 	"REMOVE_GARMENT": $WardrobeInfo/SlotID,
@@ -32,49 +40,64 @@ extends GraphNode
 }
 
 @onready var line_edits:Dictionary = {
-	"request_id": $CheckInfo/RequestCheck/RequestID/LineEdit,
-	"request_pass": $CheckInfo/RequestCheck/Pass/LineEdit,
-	"request_fail": $CheckInfo/RequestCheck/Fail/LineEdit,
-	"request_unsure": $CheckInfo/RequestCheck/Unsure/LineEdit,
-	"lever_id": $CheckInfo/CoerceCheck/LeverID/LineEdit,
-	"coerce_pass": $CheckInfo/CoerceCheck/Pass/LineEdit,
-	"coerce_fail": $CheckInfo/CoerceCheck/Fail/LineEdit,
-	"force_pass": $CheckInfo/ForceCheck/Pass/LineEdit,
-	"force_fail": $CheckInfo/ForceCheck/Fail/LineEdit,
+	#"request_id": $CheckInfo/RequestCheck/RequestID/LineEdit,
+	#"request_pass": $CheckInfo/RequestCheck/Pass/LineEdit,
+	#"request_fail": $CheckInfo/RequestCheck/Fail/LineEdit,
+	#"request_unsure": $CheckInfo/RequestCheck/Unsure/LineEdit,
+	#"lever_id": $CheckInfo/CoerceCheck/LeverID/LineEdit,
+	#"coerce_pass": $CheckInfo/CoerceCheck/Pass/LineEdit,
+	#"coerce_fail": $CheckInfo/CoerceCheck/Fail/LineEdit,
+	#"force_pass": $CheckInfo/ForceCheck/Pass/LineEdit,
+	#"force_fail": $CheckInfo/ForceCheck/Fail/LineEdit,
+	"split_bool_var_id": $SplitInfo/SplitBool/VarCall/LineEdit,
+	"split_true_outcome": $SplitInfo/SplitBool/TrueOutcome/LineEdit,
+	"split_false_outcome": $SplitInfo/SplitBool/FalseOutcome/LineEdit,
+	"split_else_outcome": $SplitInfo/SplitInt/ElseOutcome/LineEdit,
+	"split_int_var_id": $SplitInfo/SplitInt/VarCall/LineEdit,
 	"subtree_id": $SubTreeInfo/TreeName/LineEdit,
 	"subtree_start": $SubTreeInfo/NodeName/LineEdit,
-	"cycle_id": $CyclerInfo/CycleID/LineEdit,
+	#"cycle_id": $CyclerInfo/CycleID/LineEdit,
 	"outfit_id": $WardrobeInfo/OutfitID/LineEdit,
 	"garment_id": $WardrobeInfo/GarmentID/LineEdit,
-	"garment_slot_id": $WardrobeInfo/SlotID/LineEdit
+	"garment_slot_id": $WardrobeInfo/SlotID/LineEdit,
+	"menu_id": $MenuInfo/LineEdit
 }
 
 @onready var output_subtree = load("res://output_subtree.tscn")
 @onready var output_cycler = load("res://output_cycler.tscn")
 @onready var output_random = load("res://output_random.tscn")
+@onready var output_greater = load("res://output_greater.tscn")
 
 signal _cancel_button_pressed(output_type)
 
 var output_subtree_count: int = 0
 var output_cycler_count: int = 0
 var output_random_count: int = 0
+var output_greater_count: int = 0
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"event_type":"CHECK",
-	"check_type": "REQUEST",
-	"request_id": "",
-	"lever_id": "",
-	"outcome_pass": "",
-	"outcome_fail": "",
-	"outcome_unsure": "",
+	"event_type":"SPLIT",
+	"split_type": "BOOL",
+	"split_var_id": "",
+	"split_true_outcome": "",
+	"split_false_outcome": "",
+	"split_greater_outcomes": {},
+	"split_else_outcome": "",
+	"split_random_outcomes": {},
+	#"check_type": "REQUEST",
+	#"request_id": "",
+	#"lever_id": "",
+	#"outcome_pass": "",
+	#"outcome_fail": "",
+	#"outcome_unsure": "",
 	"subtree_id": "",
 	"subtree_start": "",
 	"subtree_outputs": {},
-	"cycle_id": "",
-	"cycler_outputs": [],
-	"random_outputs": {},
+	#"cycle_id": "",
+	#"cycler_outputs": [],
+	#"random_outputs": {},
 	"wardrobe_action": "WEAR_GARMENT",
 	"outfit_id": "",
 	"garment_id": "",
@@ -102,20 +125,42 @@ func update_data():
 	#node_data["event_type"] = event_dropdown.get_item_text(idx)
 	
 	match node_data["event_type"]:
-		"CHECK":
-			match node_data["check_type"]:
-				"REQUEST":
-					node_data["request_id"] = line_edits["request_id"].text
-					node_data["outcome_pass"] = line_edits["request_pass"].text
-					node_data["outcome_fail"] = line_edits["request_fail"].text
-					node_data["outcome_unsure"] = line_edits["request_unsure"].text
-				"COERCE":
-					node_data["lever_id"] = line_edits["lever_id"].text
-					node_data["outcome_pass"] = line_edits["coerce_pass"].text
-					node_data["outcome_fail"] = line_edits["coerce_fail"].text
-				"FORCE":
-					node_data["outcome_pass"] = line_edits["force_pass"].text
-					node_data["outcome_fail"] = line_edits["force_fail"].text
+		#"CHECK":
+		#	match node_data["check_type"]:
+		#		"REQUEST":
+		#			#node_data["request_id"] = line_edits["request_id"].text
+		#			node_data["outcome_pass"] = line_edits["request_pass"].text
+		#			node_data["outcome_fail"] = line_edits["request_fail"].text
+		#			node_data["outcome_unsure"] = line_edits["request_unsure"].text
+		#		"COERCE":
+		#			node_data["lever_id"] = line_edits["lever_id"].text
+		#			node_data["outcome_pass"] = line_edits["coerce_pass"].text
+		#			node_data["outcome_fail"] = line_edits["coerce_fail"].text
+		#		"FORCE":
+		#			node_data["outcome_pass"] = line_edits["force_pass"].text
+		#			node_data["outcome_fail"] = line_edits["force_fail"].text
+		"SPLIT":
+			match node_data["split_type"]:
+				"BOOL":
+					node_data["split_bool_var_id"] = line_edits["split_bool_var_id"].text
+					node_data["split_true_outcome"] = line_edits["split_true_outcome"].text
+					node_data["split_false_outcome"] = line_edits["split_false_outcome"].text
+				"INT":
+					node_data["split_int_var_id"] = line_edits["split_int_var_id"].text
+					node_data["split_greater_outcomes"] = {}
+					for output in split_containers["INT"].get_children():
+						if "OutputGreater" in output.name:
+							var target_value = output.get_node("IntLine").text
+							var target_node = output.get_node("TargetLine").text
+							node_data["split_greater_outcomes"][target_value] = target_node
+					node_data["split_else_outcome"] = line_edits["split_else_outcome"].text
+				"RANDOM":
+					node_data["split_random_outcomes"] = {}
+					for output in split_containers["RANDOM"].get_children():
+						if "OutputRandom" in output.name:
+							var target_weight = output.get_node("IntLine").text
+							var target_node = output.get_node("TargetLine").text
+							node_data["split_random_outcomes"][target_node] = target_weight
 		"SUBTREE":
 			node_data["subtree_id"] = line_edits["subtree_id"].text
 			node_data["subtree_start"] = line_edits["subtree_start"].text
@@ -126,23 +171,23 @@ func update_data():
 						var outcome_name = output.get_node("OutcomeLine").text
 						var target_node = output.get_node("TargetLine").text
 						node_data["subtree_outputs"][outcome_name] = target_node
-		"CYCLER":
-			node_data["cycle_id"] = line_edits["cycle_id"].text
-			if output_cycler_count > 0:
-				node_data["cycler_outputs"] = []
-				for output in event_containers["CYCLER"].get_children():
-					if "OutputCycler" in output.name:
-						#var cycle_index = output.get_node("IntLine").text
-						var target_key = output.get_node("TargetLine").text
-						node_data["cycler_outputs"].append(target_key)
-		"RANDOM":
-			if output_random_count > 0:
-				node_data["random_outputs"] = {}
-				for output in event_containers["RANDOM"].get_children():
-					if "OutputRandom" in output.name:
-						var target_weight = output.get_node("IntLine").text
-						var target_node = output.get_node("TargetLine").text
-						node_data["random_outputs"][target_node] = target_weight
+		#"CYCLER":
+		#	node_data["cycle_id"] = line_edits["cycle_id"].text
+		#	if output_cycler_count > 0:
+		#		node_data["cycler_outputs"] = []
+		#		for output in event_containers["CYCLER"].get_children():
+		#			if "OutputCycler" in output.name:
+		#				#var cycle_index = output.get_node("IntLine").text
+		#				var target_key = output.get_node("TargetLine").text
+		#				node_data["cycler_outputs"].append(target_key)
+		#"RANDOM":
+		#	if output_random_count > 0:
+		#		node_data["random_outputs"] = {}
+		#		for output in event_containers["RANDOM"].get_children():
+		#			if "OutputRandom" in output.name:
+		#				var target_weight = output.get_node("IntLine").text
+		#				var target_node = output.get_node("TargetLine").text
+		#				node_data["random_outputs"][target_node] = target_weight
 
 		"WARDROBE":
 			match node_data["wardrobe_action"]:
@@ -154,6 +199,8 @@ func update_data():
 					node_data["outfit_id"] = line_edits["outfit_id"].text
 				"SAVE_OUTFIT":
 					node_data["outfit_id"] = line_edits["outfit_id"].text
+		"MENU":
+			node_data["menu_id"] = line_edits["menu_id"].text
 
 
 func change_mode(idx:int = 0):
@@ -170,6 +217,13 @@ func change_check_mode(idx:int = 0):
 
 	check_containers[check_type_dropdown.get_item_text(idx)].show()
 
+func change_split_mode(idx:int = 0):
+	# Hide all split containers first
+	for container in split_containers.values():
+		container.hide()
+
+	split_containers[split_type_dropdown.get_item_text(idx)].show()
+
 func change_wardrobe_mode(idx:int = 0):
 	# Hide all wardrobe containers first
 	for container in wardrobe_containers.values():
@@ -184,6 +238,10 @@ func _on_event_dropdown_item_selected(index:int):
 func _on_check_type_item_selected(index:int):
 	node_data["check_type"] = check_type_dropdown.get_item_text(index)
 	change_check_mode(index)
+
+func _on_split_type_item_selected(index:int):
+	node_data["split_type"] = split_type_dropdown.get_item_text(index)
+	change_split_mode(index)
 
 func _on_wardrobe_action_item_selected(index:int):
 	node_data["wardrobe_action"] = wardrobe_action_dropdown.get_item_text(index)
@@ -205,7 +263,12 @@ func _on_add_output_button_pressed(output_type):
 		output_random_count += 1
 		var new_output = output_random.instantiate()
 		new_output.name = "OutputRandom" + str(output_random_count)
-		event_containers["RANDOM"].add_child(new_output)
+		split_containers["RANDOM"].add_child(new_output)
+	elif output_type == "greater":
+		output_greater_count += 1
+		var new_output = output_greater.instantiate()
+		new_output.name = "OutputGreater" + str(output_greater_count)
+		split_containers["INT"].add_child(new_output)
 	else:
 		push_error("Unknown output type: " + output_type)
 
@@ -216,6 +279,8 @@ func _on_cancel_button_pressed(output_type):
 		output_cycler_count -= 1
 	elif "random" in output_type:
 		output_random_count -= 1
+	elif "greater" in output_type:
+		output_greater_count -= 1
 
 func _on_garment_slot_item_selected(index:int):
 	node_data["garment_slot_id"] = garment_slot_dropdown.get_item_text(index)
