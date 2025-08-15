@@ -409,6 +409,9 @@ func _on_file_dialog_load_file_async():
 			if node.has("duo_pose"):
 				set_option_button_by_text(current_node.duo_dropdown, node["duo_pose"], "Image duo pose")
 
+			if node.has("room_id"):
+				current_node.room_line.text = node["room_id"]
+
 		# if type: append
 		elif "APPEND" in node["node title"]:
 			var current_node = dialog[ node_name ].res
@@ -566,6 +569,8 @@ func _on_file_dialog_load_file_async():
 			current_node.position_offset.x = node["offset_x"]
 			current_node.position_offset.y = node["offset_y"]
 			current_node.text.text = node["text"]
+			if node.has("room_id"):
+				current_node.room_line.text = node["room_id"]
 
 		# if type: event
 		elif "EVENT" in node["node title"]:

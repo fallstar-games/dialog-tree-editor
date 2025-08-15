@@ -6,7 +6,7 @@ extends GraphNode
 @onready var text = $Text/TextEdit
 @onready var dice_roll_dropdown = $DiceDropdown
 @onready var difficulty_container = $HBoxContainer
-@onready var roll_difficulty: LineEdit = $HBoxContainer/LineEdit
+@onready var room_line: LineEdit = $HBoxContainer/LineEdit
 
 @export var ignore_color: Color = Color.hex(0x7f7f7fff)
 @export var active_color: Color = Color.hex(0x7f7f7fff)
@@ -15,8 +15,7 @@ var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"text": "",
-	#"dice_roll": "",
-	#"difficulty": 0,
+	"room_id": "",
 	"go to": []
 }
 
@@ -36,6 +35,8 @@ func update_data():
 
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
+
+	node_data["room_id"] = room_line.text
 	"""
 	var idx = dice_roll_dropdown.selected
 	if idx > 0:

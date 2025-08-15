@@ -145,26 +145,26 @@ popup/item_12/text = "Inspire"
 popup/item_12/id = 12
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-visible = false
 layout_mode = 2
-
-[node name="LeftSpacer" type="Control" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
-text = "Difficulty: "
+text = "target_room: "
+
+[node name="LeftSpacer" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
 layout_mode = 2
-text = "0"
-alignment = 2
+size_flags_horizontal = 3
+placeholder_text = "(none)"
 
 [node name="RightSpacer" type="Control" parent="HBoxContainer"]
 visible = false
+custom_minimum_size = Vector2(14, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]

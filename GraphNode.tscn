@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_q50x6"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_sjb7a"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -110,6 +110,15 @@ slot/7/right_type = 0
 slot/7/right_color = Color(1, 1, 1, 1)
 slot/7/right_icon = null
 slot/7/draw_stylebox = true
+slot/8/left_enabled = false
+slot/8/left_type = 0
+slot/8/left_color = Color(1, 1, 1, 1)
+slot/8/left_icon = null
+slot/8/right_enabled = false
+slot/8/right_type = 0
+slot/8/right_color = Color(1, 1, 1, 1)
+slot/8/right_icon = null
+slot/8/draw_stylebox = true
 script = ExtResource("2_5cqbw")
 metadata/_edit_use_anchors_ = true
 
@@ -154,6 +163,22 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("2_okvfh")
 stretch_mode = 2
+
+[node name="RoomDesignator" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoomDesignator"]
+layout_mode = 2
+text = "is_room:"
+
+[node name="Spacer" type="Control" parent="RoomDesignator"]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="RoomDesignator"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+placeholder_text = "(none)"
 
 [node name="ImageTypeHBox" type="HBoxContainer" parent="."]
 visible = false
@@ -359,7 +384,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_q50x6")
+syntax_highlighter = SubResource("CodeHighlighter_sjb7a")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 

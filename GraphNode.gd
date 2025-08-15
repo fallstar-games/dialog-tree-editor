@@ -23,6 +23,8 @@ extends GraphNode
 @onready var duo_dropdown = $DuoInfo/DuoDropdown
 @onready var image_type_dropdown = $ImageTypeHBox/ImageType
 @onready var image_type_parent = $ImageTypeHBox
+@onready var room_designator_parent = $RoomDesignator
+@onready var room_line = $RoomDesignator/LineEdit
 
 
 var node_data = {
@@ -39,6 +41,7 @@ var node_data = {
 	"text": "",
 	#"image_id": "",
 	#"image_effect": "none",
+	"room_id": "",
 	"node title": "",
 	"go to": []
 }
@@ -61,15 +64,21 @@ func _on_option_button_item_selected(index):
 
 func change_speaker_mode(index):
 	match index:
+		0: # Narrator
+			image_type_parent.hide()
+			room_designator_parent.show()
 		1, 2: # Main person or other person
 			image_type_parent.show()
-		_: # Narrator or SMS or App
+			room_designator_parent.hide()
+		_: # SMS or App
 			image_type_parent.hide()
+			room_designator_parent.hide()
 
 func update_data():
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
-	
+
+	node_data["room_id"] = room_line.text
 	node_data["text"] = text.text
 
 func _on_image_type_item_selected(index:int):
