@@ -1,10 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=20 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
 [ext_resource type="FontFile" uid="uid://ngufbprst73q" path="res://Assets/Fonts/RobotoMono-VariableFont_wght.ttf" id="2_s3y22"]
+[ext_resource type="Texture2D" uid="uid://brgtcle5qjtoa" path="res://Assets/UI/choice_icon/back_arrow.png" id="3_3i8ad"]
 [ext_resource type="Script" path="res://CodeEdit.gd" id="3_8tdp0"]
+[ext_resource type="Texture2D" uid="uid://danyye32laut5" path="res://Assets/UI/choice_icon/bicep.png" id="4_xyad4"]
 [ext_resource type="AudioStream" uid="uid://couq2lkkju6q6" path="res://Assets/Sound/Type2.wav" id="4_yc4y8"]
+[ext_resource type="Texture2D" uid="uid://b06r2wtclnhfj" path="res://Assets/UI/choice_icon/cash_minus.png" id="5_syt4c"]
+[ext_resource type="Texture2D" uid="uid://dua1i2ah5nwwv" path="res://Assets/UI/choice_icon/cash_plus.png" id="6_nw4wx"]
+[ext_resource type="Texture2D" uid="uid://bvs4ekqrw2f18" path="res://Assets/UI/choice_icon/chain.png" id="7_ec7xk"]
+[ext_resource type="Texture2D" uid="uid://nurek301ejjt" path="res://Assets/UI/choice_icon/fire.png" id="8_mw6od"]
+[ext_resource type="Texture2D" uid="uid://cbqfwgpk8fyom" path="res://Assets/UI/choice_icon/hearts.png" id="9_khyks"]
+[ext_resource type="Texture2D" uid="uid://rqlj24noh2oy" path="res://Assets/UI/choice_icon/lips.png" id="10_qqwgv"]
+[ext_resource type="Texture2D" uid="uid://2350eeqhuksu" path="res://Assets/UI/choice_icon/time_forward.png" id="11_waecg"]
+[ext_resource type="Texture2D" uid="uid://dar3cqscjfl8h" path="res://Assets/UI/choice_icon/yellow_exclamation.png" id="12_3aftm"]
+[ext_resource type="Texture2D" uid="uid://dblw5dyk7acue" path="res://Assets/UI/choice_icon/char/jill.png" id="13_p1l6r"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -62,9 +73,67 @@ slot/2/right_type = 0
 slot/2/right_color = Color(1, 1, 1, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
 script = ExtResource("1_ojjra")
 ignore_color = Color(0.498039, 0.498039, 0.498039, 1)
 active_color = Color(0.929412, 0.603922, 0.494118, 1)
+
+[node name="IconDropdown" type="OptionButton" parent="."]
+layout_mode = 2
+item_count = 12
+selected = 0
+popup/item_0/text = "no_icon"
+popup/item_0/id = 1
+popup/item_1/text = "back_arrow"
+popup/item_1/icon = ExtResource("3_3i8ad")
+popup/item_1/id = 2
+popup/item_2/text = "cash_minus"
+popup/item_2/icon = ExtResource("5_syt4c")
+popup/item_2/id = 3
+popup/item_3/text = "cash_plus"
+popup/item_3/icon = ExtResource("6_nw4wx")
+popup/item_3/id = 4
+popup/item_4/text = "chain"
+popup/item_4/icon = ExtResource("7_ec7xk")
+popup/item_4/id = 4
+popup/item_5/text = "fire"
+popup/item_5/icon = ExtResource("8_mw6od")
+popup/item_5/id = 5
+popup/item_6/text = "hearts"
+popup/item_6/icon = ExtResource("9_khyks")
+popup/item_6/id = 6
+popup/item_7/text = "lips"
+popup/item_7/icon = ExtResource("10_qqwgv")
+popup/item_7/id = 7
+popup/item_8/text = "time_forward"
+popup/item_8/icon = ExtResource("11_waecg")
+popup/item_8/id = 8
+popup/item_9/text = "bicep"
+popup/item_9/icon = ExtResource("4_xyad4")
+popup/item_9/id = 9
+popup/item_10/text = "exclamation"
+popup/item_10/icon = ExtResource("12_3aftm")
+popup/item_10/id = 10
+popup/item_11/text = "char_jill"
+popup/item_11/icon = ExtResource("13_p1l6r")
+popup/item_11/id = 11
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -166,8 +235,32 @@ visible = false
 custom_minimum_size = Vector2(14, 0)
 layout_mode = 2
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "icons: "
+
+[node name="LeftSpacer" type="Control" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "(none)"
+
+[node name="RightSpacer" type="Control" parent="HBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
+[connection signal="item_selected" from="IconDropdown" to="." method="_on_icon_dropdown_item_selected"]
 [connection signal="text_changed" from="Text/TextEdit" to="Text/TextEdit" method="_on_text_changed" flags=18]
 [connection signal="item_selected" from="DiceDropdown" to="." method="_on_dice_dropdown_item_selected"]

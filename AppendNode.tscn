@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_k15nk"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_anx5j"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -28,7 +28,7 @@ color_regions = {
 [node name="AppendNode" type="GraphNode" groups=["APPEND", "graph_nodes"]]
 anchors_preset = -1
 anchor_right = 0.204
-anchor_bottom = 0.235
+anchor_bottom = 0.0961111
 offset_right = 8.32001
 offset_bottom = 106.2
 mouse_default_cursor_shape = 6
@@ -58,14 +58,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_03hav")
 text = "Text"
 
 [node name="TextEdit" parent="Text" instance=ExtResource("4_kng54")]
-custom_minimum_size = Vector2(2.08165e-12, 200)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_k15nk")
+syntax_highlighter = SubResource("CodeHighlighter_anx5j")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 

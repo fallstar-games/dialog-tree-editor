@@ -5,6 +5,7 @@ extends GraphNode
 #@export var text : CodeEdit
 @onready var text = $Text/TextEdit
 @onready var dice_roll_dropdown = $DiceDropdown
+@onready var icon_dropdown = $IconDropdown
 @onready var difficulty_container = $HBoxContainer
 @onready var room_line: LineEdit = $HBoxContainer/LineEdit
 
@@ -16,6 +17,7 @@ var node_data = {
 	"offset_y": 0,
 	"text": "",
 	"room_id": "",
+	"icon_id": "",
 	"go to": []
 }
 
@@ -62,3 +64,10 @@ func dice_roll_on(is_on:bool = true):
 		difficulty_container.hide()
 		dice_roll_dropdown.add_theme_color_override("font_color", ignore_color)
 """
+
+
+func _on_icon_dropdown_item_selected(index:int):
+	if index == 0:
+		node_data["icon_id"] = ""
+	else:
+		node_data["icon_id"] = icon_dropdown.get_item_text(index)

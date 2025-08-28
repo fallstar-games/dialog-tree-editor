@@ -7,6 +7,8 @@ extends GraphNode
 @onready var main_person_line:LineEdit = $Person1Container/PersonID
 @onready var second_person_line:LineEdit = $Person2Container/PersonID
 @onready var person_2_container:Node = $Person2Container
+@onready var weather_option:OptionButton = $WeatherContainer/WeatherOption
+@onready var phase_option:OptionButton = $PhaseContainer/PhaseOption
 
 var node_data = {
 	"offset_x": 0,
@@ -18,6 +20,8 @@ var node_data = {
 	"second_person_id": "",
 	#"person_type": 0, # 0 = main person, 1 = other person
 	#"focus_change": 0, # 0 = no change, 1 = focus on, 2 = focus off
+	"weather": "no_change",
+	"phase": "no_change",
 	"go to": []
 }
 
@@ -55,3 +59,16 @@ func show_hide_person_2():
 		person_2_container.show()
 	else:
 		person_2_container.hide()
+
+
+func _on_weather_option_item_selected(index:int):
+	if index != 0:
+		node_data["weather"] = weather_option.get_item_text(index)
+	else:
+		node_data["weather"] = "no_change"
+
+func _on_phase_option_item_selected(index:int):
+	if index != 0:
+		node_data["phase"] = phase_option.get_item_text(index)
+	else:
+		node_data["phase"] = "no_change"

@@ -571,6 +571,11 @@ func _on_file_dialog_load_file_async():
 			current_node.text.text = node["text"]
 			if node.has("room_id"):
 				current_node.room_line.text = node["room_id"]
+			if node.has("icon_id"):
+				if node["icon_id"] == "":
+					current_node.icon_dropdown.select(0) # Select "None" if icon is empty
+				else:
+					set_option_button_by_text(current_node.icon_dropdown, node["icon_id"], "back_arrow")
 
 		# if type: event
 		elif "EVENT" in node["node title"]:
@@ -584,9 +589,9 @@ func _on_file_dialog_load_file_async():
 
 			#if set_option_button_by_text(current_node.check_type_dropdown, node["check_type"], "Check type"):
 			#	current_node.change_check_mode(current_node.check_type_dropdown.selected)
-
-			if set_option_button_by_text(current_node.split_type_dropdown, node["split_type"], "Split type"):
-				current_node.change_split_mode(current_node.split_type_dropdown.selected)
+			if node.has("split_type"):
+				if set_option_button_by_text(current_node.split_type_dropdown, node["split_type"], "Split type"):
+					current_node.change_split_mode(current_node.split_type_dropdown.selected)
 
 			if set_option_button_by_text(current_node.wardrobe_action_dropdown, node["wardrobe_action"], "Wardrobe action"):
 				current_node.change_wardrobe_mode(current_node.wardrobe_action_dropdown.selected)
@@ -607,33 +612,34 @@ func _on_file_dialog_load_file_async():
 				#			current_node.line_edits["force_pass"].text = node["outcome_pass"]
 				#			current_node.line_edits["force_fail"].text = node["outcome_fail"]
 				"SPLIT":
-					match node["split_type"]:
-						"BOOL":
-							current_node.line_edits["split_bool_var_id"].text = node["split_bool_var_id"]
-							current_node.line_edits["split_true_outcome"].text = node["split_true_outcome"]
-							current_node.line_edits["split_false_outcome"].text = node["split_false_outcome"]
-						"INT":
-							current_node.line_edits["split_int_var_id"].text = node["split_int_var_id"]
-							current_node.line_edits["split_else_outcome"].text = node["split_else_outcome"]
-							if not node["split_greater_outcomes"].is_empty():
-								for target_value in node["split_greater_outcomes"]:
-									current_node._on_add_output_button_pressed("greater")
-									var current_output_count = current_node.output_greater_count
-									var output_node_name = "OutputGreater" + str(current_output_count)
-									var output_node = current_node.split_containers["INT"].get_node(output_node_name)
+					if node.has("split_type"):
+						match node["split_type"]:
+							"BOOL":
+								current_node.line_edits["split_bool_var_id"].text = node["split_bool_var_id"]
+								current_node.line_edits["split_true_outcome"].text = node["split_true_outcome"]
+								current_node.line_edits["split_false_outcome"].text = node["split_false_outcome"]
+							"INT":
+								current_node.line_edits["split_int_var_id"].text = node["split_int_var_id"]
+								current_node.line_edits["split_else_outcome"].text = node["split_else_outcome"]
+								if not node["split_greater_outcomes"].is_empty():
+									for target_value in node["split_greater_outcomes"]:
+										current_node._on_add_output_button_pressed("greater")
+										var current_output_count = current_node.output_greater_count
+										var output_node_name = "OutputGreater" + str(current_output_count)
+										var output_node = current_node.split_containers["INT"].get_node(output_node_name)
 
-									output_node.var_amount.text = str(target_value)
-									output_node.var_name.text = str(node["split_greater_outcomes"][target_value])
-						"RANDOM":
-							if not node["split_random_outcomes"].is_empty():
-								for target_node in node["split_random_outcomes"]:
-									current_node._on_add_output_button_pressed("random")
-									var current_output_count = current_node.output_random_count
-									var output_node_name = "OutputRandom" + str(current_output_count)
-									var output_node = current_node.split_containers["RANDOM"].get_node(output_node_name)
+										output_node.var_amount.text = str(target_value)
+										output_node.var_name.text = str(node["split_greater_outcomes"][target_value])
+							"RANDOM":
+								if not node["split_random_outcomes"].is_empty():
+									for target_node in node["split_random_outcomes"]:
+										current_node._on_add_output_button_pressed("random")
+										var current_output_count = current_node.output_random_count
+										var output_node_name = "OutputRandom" + str(current_output_count)
+										var output_node = current_node.split_containers["RANDOM"].get_node(output_node_name)
 
-									output_node.var_amount.text = str(node["split_random_outcomes"][target_node])
-									output_node.var_name.text = target_node
+										output_node.var_amount.text = str(node["split_random_outcomes"][target_node])
+										output_node.var_name.text = target_node
 				"SUBTREE":
 					current_node.line_edits["subtree_id"].text = node["subtree_id"]
 					current_node.line_edits["subtree_start"].text = node["subtree_start"]
@@ -803,6 +809,17 @@ func _on_file_dialog_load_file_async():
 			current_node.show_hide_person_2()
 			#current_node.person_opt.select(node["person_type"])
 			#current_node.focus_opt.select(node["focus_change"])
+			if node.has("weather"):
+				if node["weather"] == "no_change":
+					current_node.weather_option.select(0) # Select "No Change" if weather is empty
+				else:
+					set_option_button_by_text(current_node.weather_option, node["weather"], "Weather type")
+
+			if node.has("phase"):
+				if node["phase"] == "no_change":
+					current_node.phase_option.select(0) # Select "No Change" if phase is empty
+				else:
+					set_option_button_by_text(current_node.phase_option, node["phase"], "Phase type")
 		
 		# Link Connections
 		if "End" in node["go to"]:

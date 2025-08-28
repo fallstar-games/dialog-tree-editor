@@ -66,6 +66,24 @@ slot/5/right_type = 0
 slot/5/right_color = Color(1, 1, 1, 1)
 slot/5/right_icon = null
 slot/5/draw_stylebox = true
+slot/6/left_enabled = false
+slot/6/left_type = 0
+slot/6/left_color = Color(1, 1, 1, 1)
+slot/6/left_icon = null
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color(1, 1, 1, 1)
+slot/6/right_icon = null
+slot/6/draw_stylebox = true
+slot/7/left_enabled = false
+slot/7/left_type = 0
+slot/7/left_color = Color(1, 1, 1, 1)
+slot/7/left_icon = null
+slot/7/right_enabled = false
+slot/7/right_type = 0
+slot/7/right_color = Color(1, 1, 1, 1)
+slot/7/right_icon = null
+slot/7/draw_stylebox = true
 script = ExtResource("1_u73tp")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
@@ -164,9 +182,45 @@ popup/item_1/id = 1
 popup/item_2/text = "focus OFF"
 popup/item_2/id = 2
 
+[node name="WeatherContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="WeatherOption" type="OptionButton" parent="WeatherContainer"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "-dont change weather-"
+popup/item_0/id = 0
+popup/item_1/text = "CLEAR"
+popup/item_1/id = 1
+popup/item_2/text = "RAIN"
+popup/item_2/id = 2
+
+[node name="PhaseContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="PhaseOption" type="OptionButton" parent="PhaseContainer"]
+layout_mode = 2
+item_count = 6
+selected = 0
+popup/item_0/text = "-dont change time-"
+popup/item_0/id = 0
+popup/item_1/text = "NEXT"
+popup/item_1/id = 1
+popup/item_2/text = "MORNING"
+popup/item_2/id = 2
+popup/item_3/text = "AFTERNOON"
+popup/item_3/id = 3
+popup/item_4/text = "EVENING"
+popup/item_4/id = 4
+popup/item_5/text = "NIGHT"
+popup/item_5/id = 5
+
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
 [connection signal="item_selected" from="Person1Container/PersonOption" to="." method="_on_person_option_item_selected"]
 [connection signal="text_changed" from="Person1Container/PersonID" to="." method="_on_person_id_text_changed"]
 [connection signal="item_selected" from="HBoxContainer4/FocusOption" to="." method="_on_focus_option_item_selected"]
+[connection signal="item_selected" from="WeatherContainer/WeatherOption" to="." method="_on_weather_option_item_selected"]
+[connection signal="item_selected" from="PhaseContainer/PhaseOption" to="." method="_on_phase_option_item_selected"]
