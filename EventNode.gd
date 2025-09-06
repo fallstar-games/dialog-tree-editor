@@ -5,6 +5,8 @@ extends GraphNode
 @onready var split_type_dropdown:OptionButton = $SplitInfo/SplitType
 @onready var wardrobe_action_dropdown:OptionButton = $WardrobeInfo/WardrobeAction
 @onready var garment_slot_dropdown:OptionButton = $WardrobeInfo/SlotID/GarmentSlot
+@onready var action_target_dropdown:OptionButton = $SplitInfo/SplitAction/TargetPerson/ActionTarget
+@onready var subtree_type_dropdown:OptionButton = $SubTreeInfo/SubTreeType
 #@onready var buy_sell_container = $ShopMode
 @onready var menu_line:LineEdit = $MenuInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
@@ -19,6 +21,11 @@ extends GraphNode
 	"MENU": $MenuInfo
 }
 
+@onready var subtree_containers:Dictionary = {
+	"STANDARD": $SubTreeInfo/StandardInfo,
+	"NEGOTIATION": $SubTreeInfo/NegotiationInfo
+}
+
 @onready var check_containers:Dictionary = {
 	"REQUEST": $CheckInfo/RequestCheck,
 	"COERCE": $CheckInfo/CoerceCheck,
@@ -29,7 +36,8 @@ extends GraphNode
 @onready var split_containers:Dictionary = {
 	"BOOL": $SplitInfo/SplitBool,
 	"INT": $SplitInfo/SplitInt,
-	"RANDOM": $SplitInfo/SplitRandom
+	"RANDOM": $SplitInfo/SplitRandom,
+	"ACTION_TEST": $SplitInfo/SplitAction
 }
 
 @onready var wardrobe_containers:Dictionary = {
@@ -54,8 +62,20 @@ extends GraphNode
 	"split_false_outcome": $SplitInfo/SplitBool/FalseOutcome/LineEdit,
 	"split_else_outcome": $SplitInfo/SplitInt/ElseOutcome/LineEdit,
 	"split_int_var_id": $SplitInfo/SplitInt/VarCall/LineEdit,
-	"subtree_id": $SubTreeInfo/TreeName/LineEdit,
-	"subtree_start": $SubTreeInfo/NodeName/LineEdit,
+	"split_action_id": $SplitInfo/SplitAction/ActionID/LineEdit,
+	"split_action_crit_success": $SplitInfo/SplitAction/CritSuccess/LineEdit,
+	"split_action_success": $SplitInfo/SplitAction/Success/LineEdit,
+	"split_action_fail": $SplitInfo/SplitAction/Fail/LineEdit,
+	"split_action_crit_fail": $SplitInfo/SplitAction/CritFail/LineEdit,
+	"subtree_id": $SubTreeInfo/StandardInfo/TreeName/LineEdit,
+	"subtree_start": $SubTreeInfo/StandardInfo/NodeName/LineEdit,
+	"neg_action_id": $SubTreeInfo/NegotiationInfo/ActionID/LineEdit,
+	"neg_subtree_id": $SubTreeInfo/NegotiationInfo/TreeName/LineEdit,
+	"neg_subtree_start": $SubTreeInfo/NegotiationInfo/NodeName/LineEdit,
+	"neg_subtree_success": $SubTreeInfo/NegotiationInfo/OutcomeSuccess/LineEdit,
+	"neg_subtree_fail": $SubTreeInfo/NegotiationInfo/OutcomeFail/LineEdit,
+	"neg_subtree_aborted": $SubTreeInfo/NegotiationInfo/OutcomeAborted/LineEdit,
+	#"letter_id": $LetterInfo/LineEdit,
 	#"cycle_id": $CyclerInfo/CycleID/LineEdit,
 	"outfit_id": $WardrobeInfo/OutfitID/LineEdit,
 	"garment_id": $WardrobeInfo/GarmentID/LineEdit,
@@ -86,15 +106,25 @@ var node_data = {
 	"split_greater_outcomes": {},
 	"split_else_outcome": "",
 	"split_random_outcomes": {},
+	"split_action_id": "",
+	"split_action_target": "",
+	"split_action_outcomes": {},
 	#"check_type": "REQUEST",
 	#"request_id": "",
 	#"lever_id": "",
 	#"outcome_pass": "",
 	#"outcome_fail": "",
 	#"outcome_unsure": "",
+	"subtree_type": "STANDARD",
 	"subtree_id": "",
 	"subtree_start": "",
 	"subtree_outputs": {},
+	"neg_subtree_id": "",
+	"neg_subtree_start": "",
+	"neg_action_id": "",
+	"neg_subtree_success": "",
+	"neg_subtree_fail": "",
+	"neg_subtree_aborted": "",
 	#"cycle_id": "",
 	#"cycler_outputs": [],
 	#"random_outputs": {},
@@ -161,16 +191,33 @@ func update_data():
 							var target_weight = output.get_node("IntLine").text
 							var target_node = output.get_node("TargetLine").text
 							node_data["split_random_outcomes"][target_node] = target_weight
+				"ACTION_TEST":
+					node_data["split_action_id"] = line_edits["split_action_id"].text
+					node_data["split_action_outcomes"] = {
+						"crit_success": line_edits["split_action_crit_success"].text,
+						"success": line_edits["split_action_success"].text,
+						"fail": line_edits["split_action_fail"].text,
+						"crit_fail": line_edits["split_action_crit_fail"].text
+					}
 		"SUBTREE":
-			node_data["subtree_id"] = line_edits["subtree_id"].text
-			node_data["subtree_start"] = line_edits["subtree_start"].text
-			if output_subtree_count > 0:
-				node_data["subtree_outputs"] = {}
-				for output in event_containers["SUBTREE"].get_children():
-					if "OutputSubtree" in output.name:
-						var outcome_name = output.get_node("OutcomeLine").text
-						var target_node = output.get_node("TargetLine").text
-						node_data["subtree_outputs"][outcome_name] = target_node
+			match node_data["subtree_type"]:
+				"STANDARD":
+					node_data["subtree_id"] = line_edits["subtree_id"].text
+					node_data["subtree_start"] = line_edits["subtree_start"].text
+					if output_subtree_count > 0:
+						node_data["subtree_outputs"] = {}
+						for output in event_containers["SUBTREE"].get_children():
+							if "OutputSubtree" in output.name:
+								var outcome_name = output.get_node("OutcomeLine").text
+								var target_node = output.get_node("TargetLine").text
+								node_data["subtree_outputs"][outcome_name] = target_node
+				"NEGOTIATION":
+					node_data["neg_action_id"] = line_edits["neg_action_id"].text
+					node_data["neg_subtree_id"] = line_edits["neg_subtree_id"].text
+					node_data["neg_subtree_start"] = line_edits["neg_subtree_start"].text
+					node_data["neg_subtree_success"] = line_edits["neg_subtree_success"].text
+					node_data["neg_subtree_fail"] = line_edits["neg_subtree_fail"].text
+					node_data["neg_subtree_aborted"] = line_edits["neg_subtree_aborted"].text
 		#"CYCLER":
 		#	node_data["cycle_id"] = line_edits["cycle_id"].text
 		#	if output_cycler_count > 0:
@@ -231,6 +278,13 @@ func change_wardrobe_mode(idx:int = 0):
 
 	wardrobe_containers[wardrobe_action_dropdown.get_item_text(idx)].show()
 
+func change_subtree_mode(idx:int = 0):
+	# Hide all subtree containers first
+	for container in subtree_containers.values():
+		container.hide()
+
+	subtree_containers[subtree_type_dropdown.get_item_text(idx)].show()
+
 func _on_event_dropdown_item_selected(index:int):
 	node_data["event_type"] = event_dropdown.get_item_text(index)
 	change_mode(index)
@@ -284,3 +338,12 @@ func _on_cancel_button_pressed(output_type):
 
 func _on_garment_slot_item_selected(index:int):
 	node_data["garment_slot_id"] = garment_slot_dropdown.get_item_text(index)
+
+
+func _on_action_target_item_selected(index:int):
+	node_data["split_action_target"] = action_target_dropdown.get_item_text(index)
+
+
+func _on_sub_tree_type_item_selected(index:int):
+	node_data["subtree_type"] = subtree_type_dropdown.get_item_text(index)
+	change_subtree_mode(index)

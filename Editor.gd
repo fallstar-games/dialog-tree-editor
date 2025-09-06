@@ -593,6 +593,10 @@ func _on_file_dialog_load_file_async():
 				if set_option_button_by_text(current_node.split_type_dropdown, node["split_type"], "Split type"):
 					current_node.change_split_mode(current_node.split_type_dropdown.selected)
 
+			if node.has("subtree_type"):
+				if set_option_button_by_text(current_node.subtree_type_dropdown, node["subtree_type"], "Subtree type"):
+					current_node.change_subtree_mode(current_node.subtree_type_dropdown.selected)
+
 			if set_option_button_by_text(current_node.wardrobe_action_dropdown, node["wardrobe_action"], "Wardrobe action"):
 				current_node.change_wardrobe_mode(current_node.wardrobe_action_dropdown.selected)
 
@@ -640,20 +644,37 @@ func _on_file_dialog_load_file_async():
 
 										output_node.var_amount.text = str(node["split_random_outcomes"][target_node])
 										output_node.var_name.text = target_node
+							"ACTION_TEST":
+								current_node.line_edits["split_action_id"].text = node["split_action_id"]
+								set_option_button_by_text(current_node.action_target_dropdown, node["split_action_target"], "Action test target")
+								current_node.line_edits["split_action_crit_success"].text = node["split_action_outcomes"]["crit_success"]
+								current_node.line_edits["split_action_success"].text = node["split_action_outcomes"]["success"]
+								current_node.line_edits["split_action_fail"].text = node["split_action_outcomes"]["fail"]
+								current_node.line_edits["split_action_crit_fail"].text = node["split_action_outcomes"]["crit_fail"]
 				"SUBTREE":
-					current_node.line_edits["subtree_id"].text = node["subtree_id"]
-					current_node.line_edits["subtree_start"].text = node["subtree_start"]
-					if not node["subtree_outputs"].is_empty():
-						for output_name in node["subtree_outputs"]:
-							current_node._on_add_output_button_pressed("subtree")
-							var current_output_count = current_node.output_subtree_count
-							var output_node_name = "OutputSubtree" + str(current_output_count)
-							var output_node = current_node.event_containers["SUBTREE"].get_node(output_node_name)
-							if output_node == null:
-								print("Output node not found: " + output_node_name)
-								continue
-							output_node.outcome_name.text = node["subtree_outputs"].keys()[current_output_count - 1]
-							output_node.target_node.text = node["subtree_outputs"].values()[current_output_count - 1]
+					if node.has("subtree_type"):
+						match node["subtree_type"]:
+							"STANDARD":
+								current_node.line_edits["subtree_id"].text = node["subtree_id"]
+								current_node.line_edits["subtree_start"].text = node["subtree_start"]
+								if not node["subtree_outputs"].is_empty():
+									for output_name in node["subtree_outputs"]:
+										current_node._on_add_output_button_pressed("subtree")
+										var current_output_count = current_node.output_subtree_count
+										var output_node_name = "OutputSubtree" + str(current_output_count)
+										var output_node = current_node.event_containers["SUBTREE"].get_node(output_node_name)
+										if output_node == null:
+											print("Output node not found: " + output_node_name)
+											continue
+										output_node.outcome_name.text = node["subtree_outputs"].keys()[current_output_count - 1]
+										output_node.target_node.text = node["subtree_outputs"].values()[current_output_count - 1]
+							"NEGOTIATION":
+								current_node.line_edits["neg_action_id"].text = node["neg_action_id"]
+								current_node.line_edits["neg_subtree_id"].text = node["neg_subtree_id"]
+								current_node.line_edits["neg_subtree_start"].text = node["neg_subtree_start"]
+								current_node.line_edits["neg_subtree_success"].text = node["neg_subtree_success"]
+								current_node.line_edits["neg_subtree_fail"].text = node["neg_subtree_fail"]
+								current_node.line_edits["neg_subtree_aborted"].text = node["neg_subtree_aborted"]
 				#"CYCLER":
 				#	current_node.line_edits["cycle_id"].text = node["cycle_id"]
 					

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cxp4cacjxxr8i"]
+[gd_scene load_steps=36 format=3 uid="uid://cxp4cacjxxr8i"]
 
 [ext_resource type="Texture2D" uid="uid://duryjo7ut32s2" path="res://Assets/UI/MenuIcon.svg" id="1_lq43a"]
 [ext_resource type="Theme" uid="uid://thbfepb48rke" path="res://Assets/UI/GeneralTheme.tres" id="1_ogbra"]
@@ -209,6 +209,10 @@ _data = {
 "Jerk": SubResource("Animation_hvwa5"),
 "RESET": SubResource("Animation_iwi2y")
 }
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7yco3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ktmu"]
 
 [node name="GraphEdit" type="GraphEdit"]
 custom_minimum_size = Vector2(1920, 1080)
@@ -887,6 +891,106 @@ stream = ExtResource("13_ertqb")
 [node name="NotificationSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_f7qac")
 volume_db = -5.0
+
+[node name="CheatSheetNode" type="GraphNode" parent="."]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 136.0
+offset_right = 923.0
+offset_bottom = 579.0
+mouse_filter = 1
+theme_override_styles/frame = SubResource("StyleBoxEmpty_7yco3")
+position_offset = Vector2(36, 136)
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+
+[node name="Label" type="Label" parent="CheatSheetNode"]
+layout_mode = 2
+text = "CHEAT SHEET"
+
+[node name="cheat_sheet" type="Panel" parent="CheatSheetNode"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5ktmu")
+
+[node name="MarginContainer" type="MarginContainer" parent="CheatSheetNode/cheat_sheet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PanelContainer" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="IfBools" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "IF_BOOLS [color=goldenrod]
+is_raining
+is_phase:day_phase
+is_main_person:girl_id
+p1_slot_filled:slot_id
+p1_slot_pulled:slot_id
+solo_is_showing
+talkie_is_showing"
+fit_content = true
+
+[node name="PanelContainer2" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Signals" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "SIGNALS [color=olive_drab]
+p1_pull_slot:slot_id
+p1_unpull_slot:slot_id"
+fit_content = true
+
+[node name="PanelContainer3" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "VARS [color=steel_blue]
+girl_name:girl_id
+p1_garment_name:slot_id"
+fit_content = true
 
 [connection signal="connection_request" from="." to="." method="_on_connection_request"]
 [connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]
