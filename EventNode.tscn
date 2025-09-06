@@ -437,15 +437,15 @@ text = "(success) ->"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="OutcomeFail" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
+[node name="OutcomeNoPatience" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/OutcomeFail"]
+[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/OutcomeNoPatience"]
 layout_mode = 2
-text = "(fail) ->"
+text = "(no_patience) ->"
 
-[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeFail"]
+[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeNoPatience"]
 layout_mode = 2
 size_flags_horizontal = 3
 

@@ -73,7 +73,7 @@ extends GraphNode
 	"neg_subtree_id": $SubTreeInfo/NegotiationInfo/TreeName/LineEdit,
 	"neg_subtree_start": $SubTreeInfo/NegotiationInfo/NodeName/LineEdit,
 	"neg_subtree_success": $SubTreeInfo/NegotiationInfo/OutcomeSuccess/LineEdit,
-	"neg_subtree_fail": $SubTreeInfo/NegotiationInfo/OutcomeFail/LineEdit,
+	"neg_subtree_no_patience": $SubTreeInfo/NegotiationInfo/OutcomeNoPatience/LineEdit,
 	"neg_subtree_aborted": $SubTreeInfo/NegotiationInfo/OutcomeAborted/LineEdit,
 	#"letter_id": $LetterInfo/LineEdit,
 	#"cycle_id": $CyclerInfo/CycleID/LineEdit,
@@ -123,7 +123,7 @@ var node_data = {
 	"neg_subtree_start": "",
 	"neg_action_id": "",
 	"neg_subtree_success": "",
-	"neg_subtree_fail": "",
+	"neg_subtree_no_patience": "",
 	"neg_subtree_aborted": "",
 	#"cycle_id": "",
 	#"cycler_outputs": [],
@@ -216,7 +216,7 @@ func update_data():
 					node_data["neg_subtree_id"] = line_edits["neg_subtree_id"].text
 					node_data["neg_subtree_start"] = line_edits["neg_subtree_start"].text
 					node_data["neg_subtree_success"] = line_edits["neg_subtree_success"].text
-					node_data["neg_subtree_fail"] = line_edits["neg_subtree_fail"].text
+					node_data["neg_subtree_no_patience"] = line_edits["neg_subtree_no_patience"].text
 					node_data["neg_subtree_aborted"] = line_edits["neg_subtree_aborted"].text
 		#"CYCLER":
 		#	node_data["cycle_id"] = line_edits["cycle_id"].text

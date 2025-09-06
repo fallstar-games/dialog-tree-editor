@@ -673,7 +673,7 @@ func _on_file_dialog_load_file_async():
 								current_node.line_edits["neg_subtree_id"].text = node["neg_subtree_id"]
 								current_node.line_edits["neg_subtree_start"].text = node["neg_subtree_start"]
 								current_node.line_edits["neg_subtree_success"].text = node["neg_subtree_success"]
-								current_node.line_edits["neg_subtree_fail"].text = node["neg_subtree_fail"]
+								current_node.line_edits["neg_subtree_no_patience"].text = node["neg_subtree_no_patience"]
 								current_node.line_edits["neg_subtree_aborted"].text = node["neg_subtree_aborted"]
 				#"CYCLER":
 				#	current_node.line_edits["cycle_id"].text = node["cycle_id"]
