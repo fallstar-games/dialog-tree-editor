@@ -107,7 +107,7 @@ var node_data = {
 	"split_else_outcome": "",
 	"split_random_outcomes": {},
 	"split_action_id": "",
-	"split_action_target": "",
+	"split_action_target": "MAIN_PERSON",
 	"split_action_outcomes": {},
 	#"check_type": "REQUEST",
 	#"request_id": "",

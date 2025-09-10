@@ -897,10 +897,12 @@ layout_mode = 0
 offset_left = 36.0
 offset_top = 136.0
 offset_right = 923.0
-offset_bottom = 579.0
+offset_bottom = 540.0
 mouse_filter = 1
 theme_override_styles/frame = SubResource("StyleBoxEmpty_7yco3")
 position_offset = Vector2(36, 136)
+draggable = false
+selectable = false
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -927,6 +929,7 @@ text = "CHEAT SHEET"
 [node name="cheat_sheet" type="Panel" parent="CheatSheetNode"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_5ktmu")
 
 [node name="MarginContainer" type="MarginContainer" parent="CheatSheetNode/cheat_sheet"]
@@ -936,6 +939,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
@@ -943,16 +947,19 @@ theme_override_constants/margin_bottom = 25
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 12
 
 [node name="PanelContainer" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+mouse_filter = 2
 
 [node name="IfBools" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 bbcode_enabled = true
 text = "IF_BOOLS [color=goldenrod]
 is_raining
@@ -968,10 +975,12 @@ fit_content = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+mouse_filter = 2
 
 [node name="Signals" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 bbcode_enabled = true
 text = "SIGNALS [color=olive_drab]
 p1_pull_slot:slot_id
@@ -982,10 +991,12 @@ fit_content = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+mouse_filter = 2
 
 [node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 bbcode_enabled = true
 text = "VARS [color=steel_blue]
 girl_name:girl_id

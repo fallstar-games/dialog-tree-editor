@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=21 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -15,7 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://rqlj24noh2oy" path="res://Assets/UI/choice_icon/lips.png" id="10_qqwgv"]
 [ext_resource type="Texture2D" uid="uid://2350eeqhuksu" path="res://Assets/UI/choice_icon/time_forward.png" id="11_waecg"]
 [ext_resource type="Texture2D" uid="uid://dar3cqscjfl8h" path="res://Assets/UI/choice_icon/yellow_exclamation.png" id="12_3aftm"]
-[ext_resource type="Texture2D" uid="uid://dblw5dyk7acue" path="res://Assets/UI/choice_icon/char/jill.png" id="13_p1l6r"]
+[ext_resource type="Texture2D" uid="uid://xe6bxvgoc6aw" path="res://Assets/UI/choice_icon/speech_bubble.png" id="13_jf7nb"]
+[ext_resource type="Texture2D" uid="uid://dl6o2gsolbvgg" path="res://Assets/UI/choice_icon/treasure_map.png" id="14_xjj6i"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -97,7 +98,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 12
+item_count = 13
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -131,9 +132,12 @@ popup/item_9/id = 9
 popup/item_10/text = "exclamation"
 popup/item_10/icon = ExtResource("12_3aftm")
 popup/item_10/id = 10
-popup/item_11/text = "char_jill"
-popup/item_11/icon = ExtResource("13_p1l6r")
+popup/item_11/text = "speech_bubble"
+popup/item_11/icon = ExtResource("13_jf7nb")
 popup/item_11/id = 11
+popup/item_12/text = "treasure_map"
+popup/item_12/icon = ExtResource("14_xjj6i")
+popup/item_12/id = 12
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2

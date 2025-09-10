@@ -168,7 +168,7 @@ theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="SplitInfo/SplitBool/TrueOutcome"]
 layout_mode = 2
-text = "TRUE offramp: "
+text = "TRUE onramp: "
 
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitBool/TrueOutcome"]
 layout_mode = 2
@@ -180,7 +180,7 @@ theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="SplitInfo/SplitBool/FalseOutcome"]
 layout_mode = 2
-text = "FALSE offramp: "
+text = "FALSE onramp: "
 
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitBool/FalseOutcome"]
 layout_mode = 2
@@ -303,7 +303,7 @@ theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="SplitInfo/SplitInt/ElseOutcome"]
 layout_mode = 2
-text = "ELSE offramp: "
+text = "ELSE onramp: "
 
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitInt/ElseOutcome"]
 layout_mode = 2
