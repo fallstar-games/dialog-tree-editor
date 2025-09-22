@@ -65,7 +65,8 @@ func _on_save_pressed(skip_confirm:bool = false):
 		
 		# Save to file
 		#var file = FileAccess.open("user://" + file_path + ".json", FileAccess.WRITE)
-		var file = FileAccess.open("res://SaveDir/" + file_path + ".json", FileAccess.WRITE)
+		#var file = FileAccess.open("res://SaveDir/" + file_path + ".json", FileAccess.WRITE)
+		var file = FileAccess.open(Global.get_formal_filepath(file_path), FileAccess.WRITE)
 		file.store_string(dialog)
 		
 		# Hide self

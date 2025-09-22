@@ -20,8 +20,16 @@ extends Node
 
 signal close_menu
 
+func get_save_dir() -> String:
+	var exe_dir = OS.get_executable_path().get_base_dir()
+	var save_dir = exe_dir.path_join("SaveDir")
+	if not DirAccess.dir_exists_absolute(save_dir):
+		DirAccess.make_dir_recursive_absolute(save_dir)
+	return save_dir
+
 func get_formal_filepath(file_name):
-	var formatted_file_path = "res://SaveDir/" + file_name + ".json"
+	#var formatted_file_path = "res://SaveDir/" + file_name + ".json"
+	var formatted_file_path = get_save_dir().path_join(file_name + ".json")
 	return formatted_file_path
 	
 func if_file_exists(file_path):

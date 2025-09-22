@@ -66,6 +66,7 @@ extends GraphNode
 	"split_action_crit_success": $SplitInfo/SplitAction/CritSuccess/LineEdit,
 	"split_action_success": $SplitInfo/SplitAction/Success/LineEdit,
 	"split_action_fail": $SplitInfo/SplitAction/Fail/LineEdit,
+	"split_action_weak_fail": $SplitInfo/SplitAction/WeakFail/LineEdit,
 	"split_action_crit_fail": $SplitInfo/SplitAction/CritFail/LineEdit,
 	"subtree_id": $SubTreeInfo/StandardInfo/TreeName/LineEdit,
 	"subtree_start": $SubTreeInfo/StandardInfo/NodeName/LineEdit,
@@ -196,6 +197,7 @@ func update_data():
 					node_data["split_action_outcomes"] = {
 						"crit_success": line_edits["split_action_crit_success"].text,
 						"success": line_edits["split_action_success"].text,
+						"weak_fail": line_edits["split_action_weak_fail"].text,
 						"fail": line_edits["split_action_fail"].text,
 						"crit_fail": line_edits["split_action_crit_fail"].text
 					}

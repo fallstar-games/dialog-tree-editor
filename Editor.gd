@@ -50,6 +50,8 @@ func _ready():
 #		get_node("CanvasLayer/OpenFileDialog").disconnect("file_selected", _on_file_dialog_file_selected)
 		print("Signal: file_selected - This signal is only used to set the path")
 	get_node("CanvasLayer/OpenFileDialog").connect("confirmed", _on_file_dialog_load_file)
+	get_node("CanvasLayer/OpenFileDialog").access = FileDialog.ACCESS_FILESYSTEM
+	get_node("CanvasLayer/OpenFileDialog").current_dir = Global.get_save_dir()
 	Global.connect("close_menu", _close_menu)
 
 ################## Shortcut Keys ####################################
@@ -649,6 +651,8 @@ func _on_file_dialog_load_file_async():
 								set_option_button_by_text(current_node.action_target_dropdown, node["split_action_target"], "Action test target")
 								current_node.line_edits["split_action_crit_success"].text = node["split_action_outcomes"]["crit_success"]
 								current_node.line_edits["split_action_success"].text = node["split_action_outcomes"]["success"]
+								if node["split_action_outcomes"].has("weak_fail"):
+									current_node.line_edits["split_action_weak_fail"].text = node["split_action_outcomes"]["weak_fail"]
 								current_node.line_edits["split_action_fail"].text = node["split_action_outcomes"]["fail"]
 								current_node.line_edits["split_action_crit_fail"].text = node["split_action_outcomes"]["crit_fail"]
 				"SUBTREE":
