@@ -896,7 +896,7 @@ volume_db = -5.0
 layout_mode = 0
 offset_left = 36.0
 offset_top = 136.0
-offset_right = 923.0
+offset_right = 988.0
 offset_bottom = 540.0
 mouse_filter = 1
 theme_override_styles/frame = SubResource("StyleBoxEmpty_7yco3")
@@ -968,7 +968,9 @@ is_main_person:girl_id
 p1_slot_filled:slot_id
 p1_slot_pulled:slot_id
 solo_is_showing
-talkie_is_showing"
+talkie_is_showing
+has_patience:p1/p2/girl_id
+visit_has_touched:girl_id"
 fit_content = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
@@ -984,7 +986,8 @@ mouse_filter = 2
 bbcode_enabled = true
 text = "SIGNALS [color=olive_drab]
 p1_pull_slot:slot_id
-p1_unpull_slot:slot_id"
+p1_unpull_slot:slot_id
+trigger_response:response_id:p1/p2/girl_id"
 fit_content = true
 
 [node name="PanelContainer3" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
@@ -1000,7 +1003,9 @@ mouse_filter = 2
 bbcode_enabled = true
 text = "VARS [color=steel_blue]
 girl_name:girl_id
-p1_garment_name:slot_id"
+p1_garment_name:slot_id
+action_difficulty:girl_id:action_id
+heart_level:girl_id"
 fit_content = true
 
 [connection signal="connection_request" from="." to="." method="_on_connection_request"]

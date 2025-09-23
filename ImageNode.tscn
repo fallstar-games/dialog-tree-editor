@@ -57,6 +57,15 @@ slot/4/right_type = 0
 slot/4/right_color = Color(1, 1, 1, 1)
 slot/4/right_icon = null
 slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
 script = ExtResource("2_fm78k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -90,7 +99,7 @@ visible = false
 layout_mode = 2
 text = "Effect"
 
-[node name="SetHideDropdown" type="OptionButton" parent="."]
+[node name="SetHideBigDropdown" type="OptionButton" parent="."]
 layout_mode = 2
 item_count = 2
 selected = 0
@@ -98,6 +107,26 @@ popup/item_0/text = "HIDE"
 popup/item_0/id = 0
 popup/item_1/text = "SET"
 popup/item_1/id = 1
+
+[node name="SetHideSmallDropdown" type="OptionButton" parent="."]
+visible = false
+layout_mode = 2
+item_count = 7
+selected = 0
+popup/item_0/text = "HIDE_ALL"
+popup/item_0/id = 0
+popup/item_1/text = "SET_A"
+popup/item_1/id = 1
+popup/item_2/text = "SET_B"
+popup/item_2/id = 2
+popup/item_3/text = "SET_C"
+popup/item_3/id = 3
+popup/item_4/text = "HIDE_A"
+popup/item_4/id = 4
+popup/item_5/text = "HIDE_B"
+popup/item_5/id = 5
+popup/item_6/text = "HIDE_C"
+popup/item_6/id = 6
 
 [node name="SetImageInfo" type="VBoxContainer" parent="."]
 visible = false
@@ -125,7 +154,7 @@ theme_override_constants/separation = 9
 
 [node name="ModeDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig"]
 layout_mode = 2
-item_count = 3
+item_count = 4
 selected = 0
 popup/item_0/text = "PAPERDOLL"
 popup/item_0/id = 0
@@ -133,6 +162,8 @@ popup/item_1/text = "SOLO"
 popup/item_1/id = 1
 popup/item_2/text = "DUO"
 popup/item_2/id = 2
+popup/item_3/text = "OTHER"
+popup/item_3/id = 3
 
 [node name="PaperdollInfo" type="VBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig"]
 layout_mode = 2
@@ -222,7 +253,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/SoloInfo"]
 layout_mode = 2
-text = "Pose: "
+text = "P1 Pose: "
 
 [node name="SoloDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/SoloInfo"]
 layout_mode = 2
@@ -263,14 +294,40 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="SetImageInfo/SetPerson/SetPersonBig/DuoInfo"]
 layout_mode = 2
-text = "Pose: "
+text = "P2 Pose: "
 
 [node name="DuoDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/DuoInfo"]
 layout_mode = 2
-item_count = 1
+item_count = 14
 selected = 0
-popup/item_0/text = "HOLDING_HANDS"
+popup/item_0/text = "SITTING"
 popup/item_0/id = 0
+popup/item_1/text = "KNEELING"
+popup/item_1/id = 1
+popup/item_2/text = "HUG"
+popup/item_2/id = 2
+popup/item_3/text = "FROM_BEHIND"
+popup/item_3/id = 3
+popup/item_4/text = "BENT_OVER"
+popup/item_4/id = 4
+popup/item_5/text = "ALL_FOURS"
+popup/item_5/id = 5
+popup/item_6/text = "MISSIONARY"
+popup/item_6/id = 6
+popup/item_7/text = "PILEDRIVER"
+popup/item_7/id = 7
+popup/item_8/text = "WALKING_AWAY"
+popup/item_8/id = 8
+popup/item_9/text = "ASSJOB"
+popup/item_9/id = 9
+popup/item_10/text = "COWGIRL"
+popup/item_10/id = 10
+popup/item_11/text = "FACE_SITTING"
+popup/item_11/id = 11
+popup/item_12/text = "PAIZURI"
+popup/item_12/id = 12
+popup/item_13/text = "SLEEPING"
+popup/item_13/id = 13
 
 [node name="SetPersonSmall" type="VBoxContainer" parent="SetImageInfo/SetPerson"]
 visible = false
@@ -352,7 +409,8 @@ popup/item_1/id = 1
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
 [connection signal="item_selected" from="SlotDropdown" to="." method="_on_slot_dropdown_item_selected"]
-[connection signal="item_selected" from="SetHideDropdown" to="." method="_on_set_hide_dropdown_item_selected"]
+[connection signal="item_selected" from="SetHideBigDropdown" to="." method="_on_set_hide_big_dropdown_item_selected"]
+[connection signal="item_selected" from="SetHideSmallDropdown" to="." method="_on_set_hide_small_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/TargetDropdown" to="." method="_on_target_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/ModeDropdown" to="." method="_on_main_mode_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox/EyesDropdown" to="." method="_on_eyes_dropdown_item_selected"]

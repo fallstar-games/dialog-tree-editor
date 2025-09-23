@@ -1,7 +1,8 @@
 extends GraphNode
 
 @onready var slot_dropdown:OptionButton = $SlotDropdown
-@onready var set_hide_dropdown:OptionButton = $SetHideDropdown
+@onready var set_hide_big_dropdown:OptionButton = $SetHideBigDropdown
+@onready var set_hide_small_dropdown:OptionButton = $SetHideSmallDropdown
 @onready var target_dropdown:OptionButton = $SetImageInfo/TargetDropdown
 
 
@@ -32,7 +33,8 @@ var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"image_slot":"BIG",
-	"image_action":"HIDE",
+	"big_image_action":"HIDE",
+	"small_image_action":"HIDE_ALL",
 	"image_target": "PERSON_ONE",
 	"image_person_big_mode": "PAPERDOLL",
 	"expression_eyes": "no_change",
@@ -71,23 +73,40 @@ func _on_slot_dropdown_item_selected(index:int):
 func change_slot_mode(index:int):
 	match index:
 		0: #Big
+			set_hide_big_dropdown.show()
+			change_set_hide_big_mode(set_hide_big_dropdown.selected)
+			set_hide_small_dropdown.hide()
 			set_person_big_container.show()
 			set_person_small_container.hide()
 			effect_container.hide()
 		1: #Small
+			set_hide_big_dropdown.hide()
+			change_set_hide_small_mode(set_hide_small_dropdown.selected)
+			set_hide_small_dropdown.show()
 			set_person_big_container.hide()
 			set_person_small_container.show()
 			effect_container.show()
 
-func _on_set_hide_dropdown_item_selected(index:int):
-	node_data["image_action"] = set_hide_dropdown.get_item_text(index)
-	change_set_hide_mode(index)
+func _on_set_hide_big_dropdown_item_selected(index:int):
+	node_data["big_image_action"] = set_hide_big_dropdown.get_item_text(index)
+	change_set_hide_big_mode(index)
 
-func change_set_hide_mode(index:int):
+func _on_set_hide_small_dropdown_item_selected(index:int):
+	node_data["small_image_action"] = set_hide_small_dropdown.get_item_text(index)
+	change_set_hide_small_mode(index)
+
+func change_set_hide_big_mode(index:int):
 	match index:
 		0: #Hide Image
 			set_image_container.hide()
 		1: #Set Image
+			set_image_container.show()
+
+func change_set_hide_small_mode(index:int):
+	match index:
+		0, 4, 5, 6: #Hide All, Hide A, Hide B, Hide C
+			set_image_container.hide()
+		1, 2, 3: #Set Image A, B, C
 			set_image_container.show()
 
 func _on_target_dropdown_item_selected(index:int):
@@ -108,19 +127,23 @@ func _on_main_mode_dropdown_item_selected(index:int):
 	change_person_main_mode(index)
 
 func change_person_main_mode(index:int): #modes: PAPERDOLL, SOLO, DUO
+	hide_big_person_main_containers()
 	match index:
 		0: #Paperdoll
 			paperdoll_container.show()
-			solo_container.hide()
-			duo_container.hide()
 		1: #Solo
-			paperdoll_container.hide()
 			solo_container.show()
-			duo_container.hide()
 		2: #Duo
-			paperdoll_container.hide()
-			solo_container.hide()
+			solo_container.show()
 			duo_container.show()
+		3: #Other/Unique
+			set_other_container.show()
+
+func hide_big_person_main_containers():
+	paperdoll_container.hide()
+	solo_container.hide()
+	duo_container.hide()
+	set_other_container.hide()
 
 func _on_eyes_dropdown_item_selected(index:int):
 	if index != 0:

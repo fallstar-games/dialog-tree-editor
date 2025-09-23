@@ -728,17 +728,22 @@ func _on_file_dialog_load_file_async():
 			if set_option_button_by_text(current_node.slot_dropdown, node["image_slot"], "Image slot"):
 				current_node.change_slot_mode(current_node.slot_dropdown.selected)
 
-			#Set set_hide_dropdown to the index with the same name as node["image_action"]
-			if set_option_button_by_text(current_node.set_hide_dropdown, node["image_action"], "Image action"):
-				current_node.change_set_hide_mode(current_node.set_hide_dropdown.selected)
+			#Set set_hide_dropdown to the index with the same name as node["big_image_action"]
+			if node["image_slot"] == "BIG":
+				if set_option_button_by_text(current_node.set_hide_big_dropdown, node["big_image_action"], "Big Image action"):
+					current_node.change_set_hide_big_mode(current_node.set_hide_big_dropdown.selected)
+
+			if node["image_slot"] == "SMALL":
+				if set_option_button_by_text(current_node.set_hide_small_dropdown, node["small_image_action"], "Small Image action"):
+					current_node.change_set_hide_small_mode(current_node.set_hide_small_dropdown.selected)
 
 			#Set target_dropdown to the index with the same name as node["image_target"]
 			if set_option_button_by_text(current_node.target_dropdown, node["image_target"], "Image target"):
 				current_node.change_target_mode(current_node.target_dropdown.selected)
 			
-			#Set person_main_mode_dropdown to the index with the same name as node["image_person_main_mode"]
-			if node.has("image_person_main_mode"):
-				if set_option_button_by_text(current_node.person_main_mode_dropdown, node["image_person_main_mode"], "Image person main mode"):
+			#Set person_main_mode_dropdown to the index with the same name as node["image_person_big_mode"]
+			if node.has("image_person_big_mode") && node["image_slot"] == "BIG":
+				if set_option_button_by_text(current_node.person_main_mode_dropdown, node["image_person_big_mode"], "Image person big mode"):
 					current_node.change_person_main_mode(current_node.person_main_mode_dropdown.selected)
 			
 			#current_node.expression_eyes_dropdown.select(node["expression_eyes"])
