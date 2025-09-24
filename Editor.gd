@@ -729,11 +729,11 @@ func _on_file_dialog_load_file_async():
 				current_node.change_slot_mode(current_node.slot_dropdown.selected)
 
 			#Set set_hide_dropdown to the index with the same name as node["big_image_action"]
-			if node["image_slot"] == "BIG":
+			if node["image_slot"] == "BIG" && node.has("big_image_action"):
 				if set_option_button_by_text(current_node.set_hide_big_dropdown, node["big_image_action"], "Big Image action"):
 					current_node.change_set_hide_big_mode(current_node.set_hide_big_dropdown.selected)
 
-			if node["image_slot"] == "SMALL":
+			if node["image_slot"] == "SMALL" && node.has("small_image_action"):
 				if set_option_button_by_text(current_node.set_hide_small_dropdown, node["small_image_action"], "Small Image action"):
 					current_node.change_set_hide_small_mode(current_node.set_hide_small_dropdown.selected)
 
@@ -773,7 +773,12 @@ func _on_file_dialog_load_file_async():
 
 			#Set duo_pose_dropdown to the index with the same name as node["duo_pose"]
 			if node.has("duo_pose"):
-				set_option_button_by_text(current_node.duo_pose_dropdown, node["duo_pose"], "Image duo pose")
+				if node["duo_pose"] == "HOLDING_HANDS": #unused, change it to "SITTING"
+					print("Duo pose HOLDING_HANDS found, changing to SITTING")
+					set_option_button_by_text(current_node.duo_pose_dropdown, "SITTING", "Image duo pose") # Change to sitting if holding hands found
+				else:
+					set_option_button_by_text(current_node.duo_pose_dropdown, node["duo_pose"], "Image duo pose")
+				#	set_option_button_by_text(current_node.duo_pose_dropdown, "SITTING", "Image duo pose") # Default to sitting if not found
 
 			#Set framing_dropdown to the index with the same name as node["framing"]
 			if node["framing"] == "no_change":

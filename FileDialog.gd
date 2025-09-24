@@ -119,7 +119,8 @@ func _on_create_pressed():
 		var dialog = {}
 		get_tree().current_scene.dialog = dialog
 		dialog = JSON.stringify(dialog)
-		var file = FileAccess.open("res://SaveDir/" + file_path + ".json", FileAccess.WRITE)
+		#var file = FileAccess.open("res://SaveDir/" + file_path + ".json", FileAccess.WRITE)
+		var file = FileAccess.open(Global.get_formal_filepath(file_path), FileAccess.WRITE)
 		file.store_string(dialog)
 		self.hide()
 		Global.emit_signal("close_menu")

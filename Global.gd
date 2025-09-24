@@ -22,7 +22,7 @@ signal close_menu
 
 func get_save_dir() -> String:
 	var exe_dir = OS.get_executable_path().get_base_dir()
-	var save_dir = exe_dir.path_join("SaveDir")
+	var save_dir = exe_dir.path_join("DialogEditSaves")
 	if not DirAccess.dir_exists_absolute(save_dir):
 		DirAccess.make_dir_recursive_absolute(save_dir)
 	return save_dir

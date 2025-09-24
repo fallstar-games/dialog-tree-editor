@@ -41,7 +41,7 @@ var node_data = {
 	"expression_mouth": "no_change",
 	"paperdoll_pose": "no_change",
 	"solo_pose": "SITTING",
-	"duo_pose": "HOLDING_HANDS",
+	"duo_pose": "SITTING",
 	"framing": "no_change",
 	"person_image_id": "",
 	"other_image_id": "",
