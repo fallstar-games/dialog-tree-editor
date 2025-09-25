@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=35 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -19,6 +19,18 @@
 [ext_resource type="Texture2D" uid="uid://dl6o2gsolbvgg" path="res://Assets/UI/choice_icon/treasure_map.png" id="14_xjj6i"]
 [ext_resource type="Texture2D" uid="uid://b4ewjvl7rfoon" path="res://Assets/UI/choice_icon/brain.png" id="15_g787x"]
 [ext_resource type="Texture2D" uid="uid://dm4ghusiklby0" path="res://Assets/UI/choice_icon/grasp.png" id="16_xg636"]
+[ext_resource type="Texture2D" uid="uid://by6csmbrg8mv7" path="res://Assets/UI/choice_icon/backpack.png" id="17_sl7pm"]
+[ext_resource type="Texture2D" uid="uid://1wplalyj4yih" path="res://Assets/UI/choice_icon/star.png" id="18_xrlxi"]
+[ext_resource type="Texture2D" uid="uid://d0edm6jqqnud8" path="res://Assets/UI/choice_icon/contacts.png" id="19_gjlj1"]
+[ext_resource type="Texture2D" uid="uid://cll8wxw27gb8k" path="res://Assets/UI/choice_icon/door.png" id="20_v4k45"]
+[ext_resource type="Texture2D" uid="uid://r7257ruk7d7h" path="res://Assets/UI/choice_icon/gear.png" id="21_dmltg"]
+[ext_resource type="Texture2D" uid="uid://d8gia2d0yhga" path="res://Assets/UI/choice_icon/gift.png" id="22_hkhmc"]
+[ext_resource type="Texture2D" uid="uid://do3dlucc2l3rg" path="res://Assets/UI/choice_icon/load.png" id="23_1nobf"]
+[ext_resource type="Texture2D" uid="uid://cj51plvo7wnkh" path="res://Assets/UI/choice_icon/save.png" id="24_6s8fy"]
+[ext_resource type="Texture2D" uid="uid://dyilhcodt0kw" path="res://Assets/UI/choice_icon/scroll.png" id="25_snd5e"]
+[ext_resource type="Texture2D" uid="uid://b3wln2kjvel5u" path="res://Assets/UI/choice_icon/heart_empty.png" id="26_p7ovx"]
+[ext_resource type="Texture2D" uid="uid://be5j8s1mm7aep" path="res://Assets/UI/choice_icon/heart_full.png" id="27_hf0pw"]
+[ext_resource type="Texture2D" uid="uid://baya0gye1ddk2" path="res://Assets/UI/choice_icon/stopwatch.png" id="28_qgpv0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -100,7 +112,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 15
+item_count = 27
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -146,6 +158,42 @@ popup/item_13/id = 13
 popup/item_14/text = "grasp"
 popup/item_14/icon = ExtResource("16_xg636")
 popup/item_14/id = 14
+popup/item_15/text = "backpack"
+popup/item_15/icon = ExtResource("17_sl7pm")
+popup/item_15/id = 15
+popup/item_16/text = "star"
+popup/item_16/icon = ExtResource("18_xrlxi")
+popup/item_16/id = 16
+popup/item_17/text = "contacts"
+popup/item_17/icon = ExtResource("19_gjlj1")
+popup/item_17/id = 17
+popup/item_18/text = "door"
+popup/item_18/icon = ExtResource("20_v4k45")
+popup/item_18/id = 18
+popup/item_19/text = "gear"
+popup/item_19/icon = ExtResource("21_dmltg")
+popup/item_19/id = 19
+popup/item_20/text = "gift"
+popup/item_20/icon = ExtResource("22_hkhmc")
+popup/item_20/id = 20
+popup/item_21/text = "load"
+popup/item_21/icon = ExtResource("23_1nobf")
+popup/item_21/id = 21
+popup/item_22/text = "save"
+popup/item_22/icon = ExtResource("24_6s8fy")
+popup/item_22/id = 22
+popup/item_23/text = "scroll"
+popup/item_23/icon = ExtResource("25_snd5e")
+popup/item_23/id = 23
+popup/item_24/text = "heart_empty"
+popup/item_24/icon = ExtResource("26_p7ovx")
+popup/item_24/id = 24
+popup/item_25/text = "heart_full"
+popup/item_25/icon = ExtResource("27_hf0pw")
+popup/item_25/id = 25
+popup/item_26/text = "stopwatch"
+popup/item_26/icon = ExtResource("28_qgpv0")
+popup/item_26/id = 26
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2
