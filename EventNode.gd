@@ -7,6 +7,7 @@ extends GraphNode
 @onready var garment_slot_dropdown:OptionButton = $WardrobeInfo/SlotID/GarmentSlot
 @onready var action_target_dropdown:OptionButton = $SplitInfo/SplitAction/TargetPerson/ActionTarget
 @onready var subtree_type_dropdown:OptionButton = $SubTreeInfo/SubTreeType
+@onready var line_entry_type_dropdown:OptionButton = $LineEntryInfo/LineEntryType
 #@onready var buy_sell_container = $ShopMode
 @onready var menu_line:LineEdit = $MenuInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
@@ -18,7 +19,8 @@ extends GraphNode
 	"CYCLER": $CyclerInfo,
 	#"RANDOM": $RandomInfo,
 	"WARDROBE": $WardrobeInfo,
-	"MENU": $MenuInfo
+	"MENU": $MenuInfo,
+	"LINE_ENTRY": $LineEntryInfo
 }
 
 @onready var subtree_containers:Dictionary = {
@@ -81,7 +83,8 @@ extends GraphNode
 	"outfit_id": $WardrobeInfo/OutfitID/LineEdit,
 	"garment_id": $WardrobeInfo/GarmentID/LineEdit,
 	"garment_slot_id": $WardrobeInfo/SlotID/LineEdit,
-	"menu_id": $MenuInfo/LineEdit
+	"menu_id": $MenuInfo/LineEdit,
+	"line_entry_target_var": $LineEntryInfo/HBoxContainer/LineEdit
 }
 
 @onready var output_subtree = load("res://output_subtree.tscn")
@@ -135,6 +138,8 @@ var node_data = {
 	"garment_slot_id": "PANTIES",
 	"menu_id":"",
 	#"letter_id":"",
+	"line_entry_type":"PLAYER_NAME",
+	"line_entry_target_var":"",
 	"go to": []
 }
 
@@ -250,6 +255,8 @@ func update_data():
 					node_data["outfit_id"] = line_edits["outfit_id"].text
 		"MENU":
 			node_data["menu_id"] = line_edits["menu_id"].text
+		"LINE_ENTRY":
+			node_data["line_entry_target_var"] = line_edits["line_entry_target_var"].text
 
 
 func change_mode(idx:int = 0):
@@ -302,6 +309,9 @@ func _on_split_type_item_selected(index:int):
 func _on_wardrobe_action_item_selected(index:int):
 	node_data["wardrobe_action"] = wardrobe_action_dropdown.get_item_text(index)
 	change_wardrobe_mode(index)
+
+func _on_line_entry_type_item_selected(index:int):
+	node_data["line_entry_type"] = line_entry_type_dropdown.get_item_text(index)
 
 func _on_add_output_button_pressed(output_type):
 	if output_type == "subtree":

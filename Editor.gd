@@ -599,6 +599,9 @@ func _on_file_dialog_load_file_async():
 				if set_option_button_by_text(current_node.subtree_type_dropdown, node["subtree_type"], "Subtree type"):
 					current_node.change_subtree_mode(current_node.subtree_type_dropdown.selected)
 
+			if node.has("line_entry_type"):
+				set_option_button_by_text(current_node.line_entry_type_dropdown, node["line_entry_type"], "Line entry type")
+
 			if set_option_button_by_text(current_node.wardrobe_action_dropdown, node["wardrobe_action"], "Wardrobe action"):
 				current_node.change_wardrobe_mode(current_node.wardrobe_action_dropdown.selected)
 
@@ -714,7 +717,8 @@ func _on_file_dialog_load_file_async():
 							current_node.line_edits["outfit_id"].text = node["outfit_id"]
 				"MENU":
 					current_node.line_edits["menu_id"].text = node["menu_id"]
-					
+				"LINE_ENTRY":
+					current_node.line_edits["line_entry_target_var"].text = node["line_entry_target_var"]
 
 
 		# if type: image

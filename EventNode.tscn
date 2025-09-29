@@ -110,6 +110,15 @@ slot/8/right_type = 0
 slot/8/right_color = Color(1, 1, 1, 1)
 slot/8/right_icon = null
 slot/8/draw_stylebox = true
+slot/9/left_enabled = false
+slot/9/left_type = 0
+slot/9/left_color = Color(1, 1, 1, 1)
+slot/9/left_icon = null
+slot/9/right_enabled = false
+slot/9/right_type = 0
+slot/9/right_color = Color(1, 1, 1, 1)
+slot/9/right_icon = null
+slot/9/draw_stylebox = true
 script = ExtResource("1_qey05")
 
 [node name="Label" type="Label" parent="."]
@@ -118,7 +127,7 @@ text = "Event Type"
 
 [node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 4
+item_count = 5
 selected = 0
 popup/item_0/text = "SPLIT"
 popup/item_0/id = 0
@@ -128,6 +137,8 @@ popup/item_2/text = "WARDROBE"
 popup/item_2/id = 4
 popup/item_3/text = "MENU"
 popup/item_3/id = 5
+popup/item_4/text = "LINE_ENTRY"
+popup/item_4/id = 4
 
 [node name="SplitInfo" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -787,6 +798,34 @@ text = "Menu_ID:"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="LineEntryInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LineEntryType" type="OptionButton" parent="LineEntryInfo"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "PLAYER_NAME"
+popup/item_0/id = 0
+popup/item_1/text = "GIRL_NAME"
+popup/item_1/id = 1
+popup/item_2/text = "PASSWORD"
+popup/item_2/id = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LineEntryInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="LineEntryInfo/HBoxContainer"]
+layout_mode = 2
+text = "target_var:"
+
+[node name="LineEdit" type="LineEdit" parent="LineEntryInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="ShopMode" type="HBoxContainer" parent="."]
 visible = false
 layout_mode = 2
@@ -826,3 +865,4 @@ text = "Sell
 [connection signal="pressed" from="CyclerInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["cycler"]]
 [connection signal="item_selected" from="WardrobeInfo/WardrobeAction" to="." method="_on_wardrobe_action_item_selected"]
 [connection signal="item_selected" from="WardrobeInfo/SlotID/GarmentSlot" to="." method="_on_garment_slot_item_selected"]
+[connection signal="item_selected" from="LineEntryInfo/LineEntryType" to="." method="_on_line_entry_type_item_selected"]
