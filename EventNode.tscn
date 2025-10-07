@@ -725,6 +725,18 @@ popup/item_2/id = 2
 popup/item_3/text = "SAVE_OUTFIT"
 popup/item_3/id = 3
 
+[node name="GirlID" type="HBoxContainer" parent="WardrobeInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="WardrobeInfo/GirlID"]
+layout_mode = 2
+text = "Girl ID:"
+
+[node name="LineEdit" type="LineEdit" parent="WardrobeInfo/GirlID"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="OutfitID" type="HBoxContainer" parent="WardrobeInfo"]
 visible = false
 layout_mode = 2

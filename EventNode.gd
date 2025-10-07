@@ -80,6 +80,7 @@ extends GraphNode
 	"neg_subtree_aborted": $SubTreeInfo/NegotiationInfo/OutcomeAborted/LineEdit,
 	#"letter_id": $LetterInfo/LineEdit,
 	#"cycle_id": $CyclerInfo/CycleID/LineEdit,
+	"wardrobe_girl_id": $WardrobeInfo/GirlID/LineEdit,
 	"outfit_id": $WardrobeInfo/OutfitID/LineEdit,
 	"garment_id": $WardrobeInfo/GarmentID/LineEdit,
 	"garment_slot_id": $WardrobeInfo/SlotID/LineEdit,
@@ -133,6 +134,7 @@ var node_data = {
 	#"cycler_outputs": [],
 	#"random_outputs": {},
 	"wardrobe_action": "WEAR_GARMENT",
+	"wardrobe_girl_id": "",
 	"outfit_id": "",
 	"garment_id": "",
 	"garment_slot_id": "PANTIES",
@@ -244,6 +246,7 @@ func update_data():
 		#				node_data["random_outputs"][target_node] = target_weight
 
 		"WARDROBE":
+			node_data["wardrobe_girl_id"] = line_edits["wardrobe_girl_id"].text
 			match node_data["wardrobe_action"]:
 				"WEAR_GARMENT":
 					node_data["garment_id"] = line_edits["garment_id"].text

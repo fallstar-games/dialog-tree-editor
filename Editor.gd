@@ -706,6 +706,8 @@ func _on_file_dialog_load_file_async():
 				#			output_node.var_amount.text = str(node["random_outputs"][target_node])
 				#			output_node.var_name.text = target_node
 				"WARDROBE":
+					if node.has("wardrobe_girl_id"):
+						current_node.line_edits["wardrobe_girl_id"].text = node["wardrobe_girl_id"]
 					match node["wardrobe_action"]:
 						"WEAR_GARMENT":
 							current_node.line_edits["garment_id"].text = node["garment_id"]
@@ -1008,7 +1010,8 @@ func _close_menu():
 #func auto_connect_start(node):
 	#connect_node("Start", 0, node, 0)
 
-var utilities_path = "C:\\Users\\John\\Alexis' Team Dropbox\\Alexis Austin\\Bespoke\\working\\Godot\\Projects\\HaremHeavenExcel\\json2xl-utilities-5-18"
+#var utilities_path = "C:\\Users\\John\\Alexis' Team Dropbox\\Alexis Austin\\Bespoke\\working\\Godot\\Projects\\HaremHeavenExcel\\json2xl-utilities-5-18"
+var save_path = "C:\\Users\\John\\Alexis' Team Dropbox\\Alexis Austin\\Bespoke\\working\\Godot\\Projects\\harem-heaven\\executable\\DialogEditSaves"
 
 func _on_open_utilities_pressed():
-	OS.shell_open(utilities_path)
+	OS.shell_open(save_path)
