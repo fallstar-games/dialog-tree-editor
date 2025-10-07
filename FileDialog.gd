@@ -68,6 +68,16 @@ func _on_save_pressed(skip_confirm:bool = false):
 		#var file = FileAccess.open("res://SaveDir/" + file_path + ".json", FileAccess.WRITE)
 		var file = FileAccess.open(Global.get_formal_filepath(file_path), FileAccess.WRITE)
 		file.store_string(dialog)
+
+		# Also save a copy to <executable path>/XLUtilities/inbox/
+		var exe_dir = OS.get_executable_path().get_base_dir()
+		var inbox_dir = exe_dir.path_join("XLUtilities").path_join("inbox")
+		if not DirAccess.dir_exists_absolute(inbox_dir):
+			DirAccess.make_dir_recursive_absolute(inbox_dir)
+		var inbox_path = inbox_dir.path_join(file_path + ".json")
+		var inbox_file = FileAccess.open(inbox_path, FileAccess.WRITE)
+		if inbox_file:
+			inbox_file.store_string(dialog)
 		
 		# Hide self
 		self.hide()
