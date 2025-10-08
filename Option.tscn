@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=48 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -31,6 +31,19 @@
 [ext_resource type="Texture2D" uid="uid://b3wln2kjvel5u" path="res://Assets/UI/choice_icon/heart_empty.png" id="26_p7ovx"]
 [ext_resource type="Texture2D" uid="uid://be5j8s1mm7aep" path="res://Assets/UI/choice_icon/heart_full.png" id="27_hf0pw"]
 [ext_resource type="Texture2D" uid="uid://baya0gye1ddk2" path="res://Assets/UI/choice_icon/stopwatch.png" id="28_qgpv0"]
+[ext_resource type="Texture2D" uid="uid://dbjwd4f0ieo8m" path="res://Assets/UI/choice_icon/ellipses.png" id="29_ndjwe"]
+[ext_resource type="Texture2D" uid="uid://b0gstwesjh628" path="res://Assets/UI/choice_icon/eye.png" id="30_wxl75"]
+[ext_resource type="Texture2D" uid="uid://bkloslyeujapd" path="res://Assets/UI/choice_icon/hand.png" id="31_xdxmf"]
+[ext_resource type="Texture2D" uid="uid://cjs387uf8umiu" path="res://Assets/UI/choice_icon/heartbreak.png" id="32_koc3v"]
+[ext_resource type="Texture2D" uid="uid://b84u6wwc41hlm" path="res://Assets/UI/choice_icon/mushroom.png" id="33_ygdbx"]
+[ext_resource type="Texture2D" uid="uid://cvdb8lwrhn8n1" path="res://Assets/UI/choice_icon/oil_bottle.png" id="34_gbg2d"]
+[ext_resource type="Texture2D" uid="uid://cvagmwrds3gj1" path="res://Assets/UI/choice_icon/question.png" id="35_suxij"]
+[ext_resource type="Texture2D" uid="uid://bvnjbw2pe4pen" path="res://Assets/UI/choice_icon/sleep.png" id="36_tllp8"]
+[ext_resource type="Texture2D" uid="uid://b1yrdvsy4yyr7" path="res://Assets/UI/choice_icon/spiral.png" id="37_lmbar"]
+[ext_resource type="Texture2D" uid="uid://bxxppflpdjp4o" path="res://Assets/UI/choice_icon/splooge.png" id="38_eoaur"]
+[ext_resource type="Texture2D" uid="uid://bqdh114e63cov" path="res://Assets/UI/choice_icon/trophy.png" id="39_j6xnl"]
+[ext_resource type="Texture2D" uid="uid://c7u2mwpoohjs5" path="res://Assets/UI/choice_icon/voice.png" id="40_ixlmd"]
+[ext_resource type="Texture2D" uid="uid://btxkq8arspksu" path="res://Assets/UI/choice_icon/wine.png" id="41_88jec"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -112,7 +125,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 27
+item_count = 40
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -194,6 +207,45 @@ popup/item_25/id = 25
 popup/item_26/text = "stopwatch"
 popup/item_26/icon = ExtResource("28_qgpv0")
 popup/item_26/id = 26
+popup/item_27/text = "ellipses"
+popup/item_27/icon = ExtResource("29_ndjwe")
+popup/item_27/id = 27
+popup/item_28/text = "eye"
+popup/item_28/icon = ExtResource("30_wxl75")
+popup/item_28/id = 28
+popup/item_29/text = "hand"
+popup/item_29/icon = ExtResource("31_xdxmf")
+popup/item_29/id = 29
+popup/item_30/text = "heartbreak"
+popup/item_30/icon = ExtResource("32_koc3v")
+popup/item_30/id = 30
+popup/item_31/text = "mushroom"
+popup/item_31/icon = ExtResource("33_ygdbx")
+popup/item_31/id = 31
+popup/item_32/text = "oil_bottle"
+popup/item_32/icon = ExtResource("34_gbg2d")
+popup/item_32/id = 32
+popup/item_33/text = "question"
+popup/item_33/icon = ExtResource("35_suxij")
+popup/item_33/id = 33
+popup/item_34/text = "sleep"
+popup/item_34/icon = ExtResource("36_tllp8")
+popup/item_34/id = 34
+popup/item_35/text = "spiral"
+popup/item_35/icon = ExtResource("37_lmbar")
+popup/item_35/id = 35
+popup/item_36/text = "splooge"
+popup/item_36/icon = ExtResource("38_eoaur")
+popup/item_36/id = 36
+popup/item_37/text = "trophy"
+popup/item_37/icon = ExtResource("39_j6xnl")
+popup/item_37/id = 37
+popup/item_38/text = "voice"
+popup/item_38/icon = ExtResource("40_ixlmd")
+popup/item_38/id = 38
+popup/item_39/text = "wine"
+popup/item_39/icon = ExtResource("41_88jec")
+popup/item_39/id = 39
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2
