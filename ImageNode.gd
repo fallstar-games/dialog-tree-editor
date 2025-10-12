@@ -143,7 +143,7 @@ func hide_big_person_main_containers():
 	paperdoll_container.hide()
 	solo_container.hide()
 	duo_container.hide()
-	set_other_container.hide()
+	#set_other_container.hide()
 
 func _on_eyes_dropdown_item_selected(index:int):
 	if index != 0:

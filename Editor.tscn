@@ -383,7 +383,7 @@ bbcode_enabled = true
 text = "SIGNALS [color=olive_drab]
 p1_pull_slot:slot_id
 p1_unpull_slot:slot_id
-trigger_reaction:reaction_id:p1/p2/girl_id
+trigger_reaction:reaction_id:p1/p2/girl_id/player
 play_world_sound:sound_id"
 fit_content = true
 
