@@ -22,6 +22,7 @@ var node_data = {
 	"set_variables": {},
 	"signals": [],
 	"if_boolean": {},
+	"if_operator": "AND",
 	"if_greater": {},
 	"if_less": {},
 	"if_equal": {},
@@ -112,6 +113,7 @@ func update_data():
 @onready var variables_group = $VariablesGroup
 @onready var emit_signal_group = $EmitSignalGroup
 @onready var conditionals_group = $ConditionalsGroup
+@onready var operator_dropdown = $ConditionalsGroup/OperatorDropdown
 @onready var greater_group = $GreaterGroup
 @onready var less_group = $LessGroup
 @onready var equal_group = $EqualGroup
@@ -278,3 +280,7 @@ func _on_dragged(from, to):
 	
 func _on_resize_request(new_minsize):
 	custom_minimum_size = new_minsize
+
+func _on_operator_dropdown_item_selected(index:int):
+	#set the if operator to the option's text
+	node_data["if_operator"] = $ConditionalsGroup/OperatorDropdown.get_item_text(index)
