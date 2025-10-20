@@ -113,7 +113,7 @@ func update_data():
 @onready var variables_group = $VariablesGroup
 @onready var emit_signal_group = $EmitSignalGroup
 @onready var conditionals_group = $ConditionalsGroup
-@onready var operator_dropdown = $ConditionalsGroup/OperatorDropdown
+@onready var operator_dropdown = $OperatorDropdown
 @onready var greater_group = $GreaterGroup
 @onready var less_group = $LessGroup
 @onready var equal_group = $EqualGroup
@@ -240,34 +240,42 @@ func _on_option_button_item_selected(index):
 	node_data["opt_index"] = index
 	if index == 0:
 		variables_group.show()
+		operator_dropdown.hide()
 		_on_add_button_pressed("variable")
 		
 	elif index == 1: 
 		emit_signal_group.show()
+		operator_dropdown.hide()
 		_on_add_button_pressed("signal")
 		
 	elif index == 2:
 		conditionals_group.show()
+		operator_dropdown.show()
 		_on_add_button_pressed("conditional")
 
 	elif index == 3:
 		greater_group.show()
+		operator_dropdown.show()
 		_on_add_button_pressed("greater")
 
 	elif index == 4:
 		less_group.show()
+		operator_dropdown.show()
 		_on_add_button_pressed("less")
 
 	elif index == 5:
 		equal_group.show()
+		operator_dropdown.show()
 		_on_add_button_pressed("equal")
 
 	elif index == 6:
 		has_garment_group.show()
+		operator_dropdown.show()
 		_on_add_button_pressed("has_garment")
 
 	elif index == 7:
 		set_person_group.show()
+		operator_dropdown.hide()
 
 
 func _on_close_request():
@@ -283,4 +291,4 @@ func _on_resize_request(new_minsize):
 
 func _on_operator_dropdown_item_selected(index:int):
 	#set the if operator to the option's text
-	node_data["if_operator"] = $ConditionalsGroup/OperatorDropdown.get_item_text(index)
+	node_data["if_operator"] = operator_dropdown.get_item_text(index)

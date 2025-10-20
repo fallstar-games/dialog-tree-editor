@@ -16,8 +16,8 @@ layout_mode = 2
 text = ">"
 
 [node name="IntLine" type="LineEdit" parent="."]
-custom_minimum_size = Vector2(18, 0)
 layout_mode = 2
+expand_to_text_length = true
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
@@ -25,7 +25,7 @@ text = "->"
 
 [node name="TargetLine" type="LineEdit" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="CancelButton" type="Button" parent="."]
 layout_mode = 2

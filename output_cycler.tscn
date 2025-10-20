@@ -28,7 +28,7 @@ text = "->"
 
 [node name="TargetLine" type="LineEdit" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="CancelButton" type="Button" parent="."]
 layout_mode = 2

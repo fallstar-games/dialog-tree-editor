@@ -434,6 +434,14 @@ func _on_file_dialog_load_file_async():
 			current_node.second_person_line.text = node["second_person_id"]
 			current_node.option_button.select(node["opt_index"])
 			current_node._on_option_button_item_selected(node["opt_index"])
+
+			if node.has("if_operator"):
+				if set_option_button_by_text(current_node.operator_dropdown, node["if_operator"], "If operator"):
+					current_node._on_operator_dropdown_item_selected(current_node.operator_dropdown.selected)
+			else:
+				# Default to AND if no operator found
+				current_node.operator_dropdown.select(0)
+				current_node._on_operator_dropdown_item_selected(0)
 			
 			# variables
 			if not node["set_variables"].is_empty():
@@ -467,13 +475,6 @@ func _on_file_dialog_load_file_async():
 				var conditionals_group = current_node.get_node("ConditionalsGroup")
 				conditionals_group.show()
 
-				if node.has("if_operator"):
-					if set_option_button_by_text(current_node.operator_dropdown, node["if_operator"], "If operator"):
-						current_node._on_operator_dropdown_item_selected(current_node.operator_dropdown.selected)
-				else:
-					# Default to AND if no operator found
-					current_node.operator_dropdown.select(0)
-					current_node._on_operator_dropdown_item_selected(0)
 				var i := 1
 				for key in node["if_boolean"].keys():
 					if current_node.conditional_count < i:

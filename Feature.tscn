@@ -94,6 +94,15 @@ slot/8/right_type = 0
 slot/8/right_color = Color(1, 1, 1, 1)
 slot/8/right_icon = null
 slot/8/draw_stylebox = true
+slot/9/left_enabled = false
+slot/9/left_type = 0
+slot/9/left_color = Color(1, 1, 1, 1)
+slot/9/left_icon = null
+slot/9/right_enabled = false
+slot/9/right_type = 0
+slot/9/right_color = Color(1, 1, 1, 1)
+slot/9/right_icon = null
+slot/9/draw_stylebox = true
 script = ExtResource("1_qesbp")
 metadata/_edit_use_anchors_ = true
 
@@ -123,6 +132,16 @@ popup/item_6/text = "Has Garment"
 popup/item_6/id = 6
 popup/item_7/text = "Set Person"
 popup/item_7/id = 7
+
+[node name="OperatorDropdown" type="OptionButton" parent="."]
+visible = false
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "AND"
+popup/item_0/id = 0
+popup/item_1/text = "OR"
+popup/item_1/id = 1
 
 [node name="VariablesGroup" type="VBoxContainer" parent="."]
 visible = false
@@ -184,15 +203,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("2_ldgu0")
 stretch_mode = 2
-
-[node name="OperatorDropdown" type="OptionButton" parent="ConditionalsGroup"]
-layout_mode = 2
-item_count = 2
-selected = 0
-popup/item_0/text = "AND"
-popup/item_0/id = 0
-popup/item_1/text = "OR"
-popup/item_1/id = 1
 
 [node name="Title" type="HBoxContainer" parent="ConditionalsGroup"]
 layout_mode = 2
@@ -338,9 +348,9 @@ layout_mode = 2
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
 [connection signal="item_selected" from="Feature/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="OperatorDropdown" to="." method="_on_operator_dropdown_item_selected"]
 [connection signal="pressed" from="VariablesGroup/Title/AddVarButton" to="." method="_on_add_button_pressed" binds= ["variable"]]
 [connection signal="pressed" from="EmitSignalGroup/Title/AddSignalButton" to="." method="_on_add_button_pressed" binds= ["signal"]]
-[connection signal="item_selected" from="ConditionalsGroup/OperatorDropdown" to="." method="_on_operator_dropdown_item_selected"]
 [connection signal="pressed" from="ConditionalsGroup/Title/AddConditionalButton" to="." method="_on_add_button_pressed" binds= ["conditional"]]
 [connection signal="pressed" from="GreaterGroup/Title/AddGreaterButton" to="." method="_on_add_button_pressed" binds= ["greater"]]
 [connection signal="pressed" from="LessGroup/Title/AddLessButton" to="." method="_on_add_button_pressed" binds= ["less"]]
