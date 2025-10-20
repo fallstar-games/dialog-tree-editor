@@ -88,6 +88,10 @@ func _input(_event):
 			saved_notification.get_node("AnimationPlayer").play("FadeOut")
 	elif Input.is_action_just_released("Duplicate Selected"):
 		_duplicate_selected_nodes()
+	elif Input.is_action_just_released("Copy Nodes"):
+		_copy_selected_nodes_to_clipboard()
+	elif Input.is_action_just_released("Paste Nodes"):
+		_paste_nodes_from_clipboard(mouse_position_in_canvas)
 
 
 func random_number():
@@ -1373,3 +1377,94 @@ func _get_selected_nodes() -> Array:
 		if n is GraphNode and n.selected:
 			result.append(n)
 	return result
+
+# ================== Copy/Paste Support ==================
+# Copy selected nodes into clipboard as JSON string
+func _copy_selected_nodes_to_clipboard():
+	var sel = _get_selected_nodes()
+	if sel.is_empty():
+		return
+	# Determine anchor (top-left most selected) to store relative positions
+	var min_x = INF
+	var min_y = INF
+	for n in sel:
+		if n.position_offset.x < min_x:
+			min_x = n.position_offset.x
+		if n.position_offset.y < min_y:
+			min_y = n.position_offset.y
+	var payload = {
+		"version": 1,
+		"nodes": []
+	}
+	for n in sel:
+		var type_prefix = str(n.name).split("_")[0]
+		var data_any = n.get("node_data")
+		if typeof(data_any) != TYPE_DICTIONARY:
+			continue
+		var data:Dictionary = (data_any as Dictionary).duplicate(true)
+		# normalize to relative positions and clear connections
+		if data.has("offset_x") and data.has("offset_y"):
+			data["offset_x"] = n.position_offset.x - min_x
+			data["offset_y"] = n.position_offset.y - min_y
+		if data.has("go to"):
+			data["go to"] = []
+		# clear name/title; will be assigned on paste
+		if data.has("node title"):
+			data["node title"] = ""
+		payload["nodes"].append({
+			"type": type_prefix,
+			"data": data
+		})
+	var json_text = JSON.stringify(payload)
+	# Godot 4.x clipboard API
+	DisplayServer.clipboard_set(json_text)
+
+# Paste nodes from clipboard JSON at target canvas position
+func _paste_nodes_from_clipboard(target_canvas_pos:Vector2):
+	var clip = DisplayServer.clipboard_get()
+	if clip == null or str(clip) == "":
+		return
+	var parsed = JSON.parse_string(str(clip))
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return
+	if not parsed.has("nodes") or typeof(parsed["nodes"]) != TYPE_ARRAY:
+		return
+	# spawn sound
+	spawn_sound.pitch_scale = random_number()
+	spawn_sound.play()
+	# Use target as anchor, offset slightly so it doesn't overlap selection origin
+	var created:Array = []
+	for node_def in parsed["nodes"]:
+		if typeof(node_def) != TYPE_DICTIONARY:
+			continue
+		var type_prefix = node_def.get("type", "")
+		if not node_stack.has(type_prefix):
+			continue
+		var data_any = node_def.get("data")
+		if typeof(data_any) != TYPE_DICTIONARY:
+			continue
+		var data:Dictionary = (data_any as Dictionary).duplicate(true)
+		# Create node
+		var dst = get_new_node(type_prefix)
+		# Rebuild absolute position from relative offsets
+		if data.has("offset_x") and data.has("offset_y"):
+			data["offset_x"] = int(target_canvas_pos.x) + int(data["offset_x"]) + 20
+			data["offset_y"] = int(target_canvas_pos.y) + int(data["offset_y"]) + 15
+		# Fresh name/title
+		if data.has("node title"):
+			data["node title"] = dst.name
+		# Ensure no connections
+		if data.has("go to"):
+			data["go to"] = []
+		_apply_node_data_to_node(dst, data)
+		created.append(dst)
+	# Update selection to the newly created nodes
+	if created.size() > 0:
+		# Deselect anything currently selected
+		var existing_nodes = _get_selected_nodes()
+		for gn in existing_nodes:
+			if gn is GraphNode:
+				gn.selected = false
+		for n in created:
+			if n is GraphNode:
+				n.selected = true
