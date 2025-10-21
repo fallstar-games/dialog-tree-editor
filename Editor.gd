@@ -330,8 +330,27 @@ func _on_file_dialog_file_selected(path):
 	selected_file_path = path
 
 func _on_file_dialog_load_file():
-	# Change window title
-	get_window().title = selected_file_path.get_file().replace(".json", "")
+	# Change window title to the relative subpath (without .json) under the save directory
+	var save_dir: String = Global.get_save_dir()
+	var path_norm: String = String(selected_file_path).replace("\\", "/")
+	var save_dir_norm: String = save_dir.replace("\\", "/")
+	var rel: String = ""
+	# Ensure trailing slash match when checking prefix
+	var save_dir_with_sep: String = save_dir_norm
+	if not save_dir_with_sep.ends_with("/"):
+		save_dir_with_sep += "/"
+	if path_norm.begins_with(save_dir_with_sep):
+		rel = path_norm.substr(save_dir_with_sep.length())
+	else:
+		# Fallback: just use the filename (no folders)
+		rel = path_norm.get_file()
+	# Drop .json extension if present
+	if rel.ends_with(".json"):
+		rel = rel.substr(0, rel.length() - 5)
+	# Normalize any accidental leading slashes
+	while rel.begins_with("/"):
+		rel = rel.substr(1)
+	get_window().title = rel
 	# Make sure the listener runs before the emitter
 	_on_file_dialog_load_file_async() # Start the async function waiting for the signal
 	clear_all() # Run the function that emits the signal expected
@@ -1008,6 +1027,10 @@ func _duplicate_selected_nodes():
 	var sel = _get_selected_nodes()
 	if sel.is_empty():
 		return
+	# Ensure node_data reflects current UI before duplicating
+	for src in sel:
+		if src.has_method("update_data"):
+			src.update_data()
 	spawn_sound.pitch_scale = random_number()
 	spawn_sound.play()
 	var created:Array = []
@@ -1384,6 +1407,10 @@ func _copy_selected_nodes_to_clipboard():
 	var sel = _get_selected_nodes()
 	if sel.is_empty():
 		return
+	# Ensure node_data is up-to-date before serializing
+	for n in sel:
+		if n.has_method("update_data"):
+			n.update_data()
 	# Determine anchor (top-left most selected) to store relative positions
 	var min_x = INF
 	var min_y = INF
