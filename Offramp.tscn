@@ -86,6 +86,7 @@ text = "Filename:"
 [node name="LineEdit" type="LineEdit" parent="FileLineHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="TitleLineHBox" type="HBoxContainer" parent="."]
 visible = false
@@ -98,6 +99,7 @@ text = "Target Node:"
 [node name="LineEdit" type="LineEdit" parent="TitleLineHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="OutcomeLineHBox" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -109,6 +111,7 @@ text = "String Key:"
 [node name="LineEdit" type="LineEdit" parent="OutcomeLineHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]

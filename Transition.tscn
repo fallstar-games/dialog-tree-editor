@@ -111,6 +111,7 @@ text = "Room_ID: "
 [node name="LineEdit" type="LineEdit" parent="LocaleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="TransitionTimeContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -153,6 +154,7 @@ text = "Person 1:"
 [node name="PersonID" type="LineEdit" parent="Person1Container"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="Person2Container" type="HBoxContainer" parent="."]
 visible = false

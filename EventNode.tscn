@@ -172,6 +172,7 @@ text = "exposed_var: "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitBool/VarCall"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="TrueOutcome" type="HBoxContainer" parent="SplitInfo/SplitBool"]
 layout_mode = 2
@@ -184,6 +185,7 @@ text = "TRUE onramp: "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitBool/TrueOutcome"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="FalseOutcome" type="HBoxContainer" parent="SplitInfo/SplitBool"]
 layout_mode = 2
@@ -196,6 +198,7 @@ text = "FALSE onramp: "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitBool/FalseOutcome"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="SplitAction" type="VBoxContainer" parent="SplitInfo"]
 visible = false
@@ -212,6 +215,7 @@ text = "action_id: "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/ActionID"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="TargetPerson" type="HBoxContainer" parent="SplitInfo/SplitAction"]
 layout_mode = 2
@@ -241,6 +245,7 @@ text = "crit_success -> "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/CritSuccess"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="Success" type="HBoxContainer" parent="SplitInfo/SplitAction"]
 layout_mode = 2
@@ -253,6 +258,7 @@ text = "success ->"
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/Success"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="WeakFail" type="HBoxContainer" parent="SplitInfo/SplitAction"]
 layout_mode = 2
@@ -265,6 +271,7 @@ text = "weak_fail ->"
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/WeakFail"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="Fail" type="HBoxContainer" parent="SplitInfo/SplitAction"]
 layout_mode = 2
@@ -277,6 +284,7 @@ text = "fail ->"
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/Fail"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="CritFail" type="HBoxContainer" parent="SplitInfo/SplitAction"]
 layout_mode = 2
@@ -289,6 +297,7 @@ text = "crit_fail ->"
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/CritFail"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="SplitInt" type="VBoxContainer" parent="SplitInfo"]
 visible = false
@@ -380,6 +389,7 @@ text = "subtree_id:"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/StandardInfo/TreeName"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="NodeName" type="HBoxContainer" parent="SubTreeInfo/StandardInfo"]
 layout_mode = 2
@@ -392,6 +402,7 @@ text = "subtree_start:"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/StandardInfo/NodeName"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="Outcomes" type="HBoxContainer" parent="SubTreeInfo/StandardInfo"]
 layout_mode = 2
@@ -423,6 +434,7 @@ text = "action_id:"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/ActionID"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="TreeName" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
 layout_mode = 2
@@ -435,6 +447,7 @@ text = "subtree_id:"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/TreeName"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="NodeName" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
 layout_mode = 2
@@ -447,6 +460,7 @@ text = "subtree_start:"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/NodeName"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="OutcomeSuccess" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
 layout_mode = 2
@@ -459,6 +473,7 @@ text = "(success) ->"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeSuccess"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="OutcomeNoPatience" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
 layout_mode = 2
@@ -471,6 +486,7 @@ text = "(no_patience) ->"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeNoPatience"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="OutcomeAborted" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
 layout_mode = 2
@@ -483,6 +499,7 @@ text = "(aborted) ->"
 [node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeAborted"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="CheckInfo" type="VBoxContainer" parent="."]
 visible = false
@@ -736,6 +753,7 @@ text = "Girl ID:"
 [node name="LineEdit" type="LineEdit" parent="WardrobeInfo/GirlID"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="OutfitID" type="HBoxContainer" parent="WardrobeInfo"]
 visible = false
@@ -749,6 +767,7 @@ text = "Outfit ID:"
 [node name="LineEdit" type="LineEdit" parent="WardrobeInfo/OutfitID"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="GarmentID" type="HBoxContainer" parent="WardrobeInfo"]
 layout_mode = 2
@@ -761,6 +780,7 @@ text = "Garment ID:"
 [node name="LineEdit" type="LineEdit" parent="WardrobeInfo/GarmentID"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="SlotID" type="HBoxContainer" parent="WardrobeInfo"]
 visible = false
@@ -775,6 +795,7 @@ text = "Slot ID:"
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="GarmentSlot" type="OptionButton" parent="WardrobeInfo/SlotID"]
 layout_mode = 2
@@ -809,6 +830,7 @@ text = "Menu_ID:"
 [node name="LineEdit" type="LineEdit" parent="MenuInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="LineEntryInfo" type="VBoxContainer" parent="."]
 visible = false
@@ -837,6 +859,7 @@ text = "target_var:"
 [node name="LineEdit" type="LineEdit" parent="LineEntryInfo/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="ShopMode" type="HBoxContainer" parent="."]
 visible = false

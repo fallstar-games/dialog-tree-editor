@@ -46,6 +46,12 @@ func update_data():
 	node_data["offset_x"] = self.position_offset.x
 	node_data["offset_y"] = self.position_offset.y
 
+	# Persist dropdown-driven state even if selection signals didn't fire (duplicate/paste)
+	node_data["opt_index"] = int(option_button.selected)
+	var op_idx:int = operator_dropdown.selected
+	if op_idx >= 0:
+		node_data["if_operator"] = operator_dropdown.get_item_text(op_idx)
+
 	print("var count = " + str(variable_count) + ", signal count = " + str(signal_count) + ", conditional count = " + str(conditional_count))
 
 	node_data["main_person_id"] = main_person_line.text

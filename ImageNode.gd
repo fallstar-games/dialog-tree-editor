@@ -66,6 +66,62 @@ func update_data():
 	node_data["person_image_id"] = person_image_id_line.text
 	node_data["other_image_id"] = other_image_id_line.text
 
+	# Persist dropdown-driven state even if selection signals didn't fire (duplicate/paste)
+	if slot_dropdown:
+		var idx:int = slot_dropdown.selected
+		if idx >= 0:
+			node_data["image_slot"] = slot_dropdown.get_item_text(idx)
+	if set_hide_big_dropdown:
+		var big_idx:int = set_hide_big_dropdown.selected
+		if big_idx >= 0:
+			node_data["big_image_action"] = set_hide_big_dropdown.get_item_text(big_idx)
+	if set_hide_small_dropdown:
+		var small_idx:int = set_hide_small_dropdown.selected
+		if small_idx >= 0:
+			node_data["small_image_action"] = set_hide_small_dropdown.get_item_text(small_idx)
+	if target_dropdown:
+		var tgt_idx:int = target_dropdown.selected
+		if tgt_idx >= 0:
+			node_data["image_target"] = target_dropdown.get_item_text(tgt_idx)
+	if person_main_mode_dropdown:
+		var mode_idx:int = person_main_mode_dropdown.selected
+		if mode_idx >= 0:
+			node_data["image_person_big_mode"] = person_main_mode_dropdown.get_item_text(mode_idx)
+
+	# Paperdoll expressions and pose/framing
+	if expression_eyes_dropdown:
+		var eyes_idx:int = expression_eyes_dropdown.selected
+		if eyes_idx <= 0:
+			node_data["expression_eyes"] = "no_change"
+		else:
+			node_data["expression_eyes"] = expression_eyes_dropdown.get_item_text(eyes_idx)
+	if expression_mouth_dropdown:
+		var mouth_idx:int = expression_mouth_dropdown.selected
+		if mouth_idx <= 0:
+			node_data["expression_mouth"] = "no_change"
+		else:
+			node_data["expression_mouth"] = expression_mouth_dropdown.get_item_text(mouth_idx)
+	if paperdoll_pose_dropdown:
+		var pose_idx:int = paperdoll_pose_dropdown.selected
+		if pose_idx <= 0:
+			node_data["paperdoll_pose"] = "no_change"
+		else:
+			node_data["paperdoll_pose"] = paperdoll_pose_dropdown.get_item_text(pose_idx)
+	if framing_dropdown:
+		var frame_idx:int = framing_dropdown.selected
+		if frame_idx <= 0:
+			node_data["framing"] = "no_change"
+		else:
+			node_data["framing"] = framing_dropdown.get_item_text(frame_idx)
+
+	# Solo/Duo pose and effect
+	if solo_pose_dropdown and solo_pose_dropdown.selected >= 0:
+		node_data["solo_pose"] = solo_pose_dropdown.get_item_text(solo_pose_dropdown.selected)
+	if duo_pose_dropdown and duo_pose_dropdown.selected >= 0:
+		node_data["duo_pose"] = duo_pose_dropdown.get_item_text(duo_pose_dropdown.selected)
+	if effect_dropdown and effect_dropdown.selected >= 0:
+		node_data["effect"] = effect_dropdown.get_item_text(effect_dropdown.selected)
+
 func _on_slot_dropdown_item_selected(index:int):
 	node_data["image_slot"] = slot_dropdown.get_item_text(index)
 	change_slot_mode(index)

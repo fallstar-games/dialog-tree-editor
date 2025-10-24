@@ -78,6 +78,53 @@ func update_data():
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
 
+	# Persist dropdown-driven state even if selection signals didn't fire (duplicate/paste)
+	# Speaker
+	if character_opt:
+		node_data["speaker"] = int(character_opt.selected)
+
+	# Image type
+	if image_type_dropdown:
+		var idx:int = image_type_dropdown.selected
+		if idx <= 0:
+			node_data["image_type"] = "no_change"
+		else:
+			node_data["image_type"] = image_type_dropdown.get_item_text(idx)
+
+	# Expressions (eyes/mouth)
+	if eyes_opt:
+		var eyes_idx:int = eyes_opt.selected
+		if eyes_idx <= 0:
+			node_data["expression_eyes"] = "no_change"
+		else:
+			node_data["expression_eyes"] = eyes_opt.get_item_text(eyes_idx)
+	if mouth_opt:
+		var mouth_idx:int = mouth_opt.selected
+		if mouth_idx <= 0:
+			node_data["expression_mouth"] = "no_change"
+		else:
+			node_data["expression_mouth"] = mouth_opt.get_item_text(mouth_idx)
+
+	# Paperdoll pose and framing
+	if pose_dropdown:
+		var pose_idx:int = pose_dropdown.selected
+		if pose_idx <= 0:
+			node_data["paperdoll_pose"] = "no_change"
+		else:
+			node_data["paperdoll_pose"] = pose_dropdown.get_item_text(pose_idx)
+	if framing_dropdown:
+		var frame_idx:int = framing_dropdown.selected
+		if frame_idx <= 0:
+			node_data["framing"] = "no_change"
+		else:
+			node_data["framing"] = framing_dropdown.get_item_text(frame_idx)
+
+	# Solo / Duo poses
+	if solo_dropdown and solo_dropdown.selected >= 0:
+		node_data["solo_pose"] = solo_dropdown.get_item_text(solo_dropdown.selected)
+	if duo_dropdown and duo_dropdown.selected >= 0:
+		node_data["duo_pose"] = duo_dropdown.get_item_text(duo_dropdown.selected)
+
 	node_data["room_id"] = room_line.text
 	node_data["text"] = text.text
 

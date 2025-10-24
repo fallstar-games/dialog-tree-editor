@@ -376,6 +376,7 @@ text = "person_image_id:"
 [node name="LineEdit" type="LineEdit" parent="SetImageInfo/SetPerson/SetPersonSmall/PersonImageInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="SetOther" type="VBoxContainer" parent="SetImageInfo"]
 visible = false
@@ -392,6 +393,7 @@ text = "other_image_id:"
 [node name="LineEdit" type="LineEdit" parent="SetImageInfo/SetOther/OtherImageInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="EffectInfo" type="HBoxContainer" parent="SetImageInfo"]
 visible = false

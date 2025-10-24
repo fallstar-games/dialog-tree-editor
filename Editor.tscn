@@ -370,6 +370,7 @@ visit_has_touched:girl_id
 mc_visited_gym
 mc_flag:flag_id
 girl_flag:girl_id:flag_id
+leverage_flag:girl_id:flag_id
 quest_flag:quest_id:flag_id"
 fit_content = true
 
@@ -389,8 +390,11 @@ p1_pull_slot:slot_id
 p1_unpull_slot:slot_id
 trigger_reaction:reaction_id:p1/p2/girl_id/player
 play_world_sound:sound_id
+set_mc_flag:flag_id:true/false
+set_girl_flag:girl_id:flag_id:true/false
+set_leverage_flag:girl_id:flag_id:true/false
 set_quest_stage:quest_id:int
-set_quest_flat:quest_id:flag_id
+set_quest_flag:quest_id:flag_id
 delayed_quest_reset:quest_id:int"
 fit_content = true
 
@@ -411,8 +415,6 @@ girl_name:girl_id
 p1_garment_name:slot_id
 action_difficulty:girl_id:action_id
 heart_level:girl_id
-mc_flag:flag_id
-girl_flag:girl_id:flag_id
 quest_stage:quest_id"
 fit_content = true
 

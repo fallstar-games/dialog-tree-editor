@@ -159,8 +159,42 @@ func update_data():
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
 
-	#var idx = event_dropdown.selected
-	#node_data["event_type"] = event_dropdown.get_item_text(idx)
+	# Ensure dropdown-driven fields are captured even if no change signal fired (e.g., after duplicate/paste)
+	var idx:int = event_dropdown.selected
+	node_data["event_type"] = event_dropdown.get_item_text(idx)
+
+	# Capture check type selection
+	idx = check_type_dropdown.selected
+	if idx >= 0:
+		node_data["check_type"] = check_type_dropdown.get_item_text(idx)
+
+	# Capture split type and related dropdowns
+	idx = split_type_dropdown.selected
+	if idx >= 0:
+		node_data["split_type"] = split_type_dropdown.get_item_text(idx)
+
+	# Capture wardrobe action and garment slot
+	idx = wardrobe_action_dropdown.selected
+	if idx >= 0:
+		node_data["wardrobe_action"] = wardrobe_action_dropdown.get_item_text(idx)
+	idx = garment_slot_dropdown.selected
+	if idx >= 0:
+		node_data["garment_slot_id"] = garment_slot_dropdown.get_item_text(idx)
+
+	# Capture split action target (for ACTION_TEST)
+	idx = action_target_dropdown.selected
+	if idx >= 0:
+		node_data["split_action_target"] = action_target_dropdown.get_item_text(idx)
+
+	# Capture subtree type
+	idx = subtree_type_dropdown.selected
+	if idx >= 0:
+		node_data["subtree_type"] = subtree_type_dropdown.get_item_text(idx)
+
+	# Capture line entry type
+	idx = line_entry_type_dropdown.selected
+	if idx >= 0:
+		node_data["line_entry_type"] = line_entry_type_dropdown.get_item_text(idx)
 	
 	match node_data["event_type"]:
 		#"CHECK":

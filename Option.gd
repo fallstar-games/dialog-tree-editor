@@ -8,6 +8,7 @@ extends GraphNode
 @onready var icon_dropdown = $IconDropdown
 @onready var difficulty_container = $HBoxContainer
 @onready var room_line: LineEdit = $HBoxContainer/LineEdit
+@onready var disabled_checkbox: CheckBox = $HBoxContainer2/DisabledCheckBox
 
 @export var ignore_color: Color = Color.hex(0x7f7f7fff)
 @export var active_color: Color = Color.hex(0x7f7f7fff)
@@ -18,6 +19,7 @@ var node_data = {
 	"text": "",
 	"room_id": "",
 	"icon_id": "",
+	"disabled": false,
 	"go to": []
 }
 
@@ -39,6 +41,15 @@ func update_data():
 	node_data["offset_y"] = position_offset.y
 
 	node_data["room_id"] = room_line.text
+
+	node_data["disabled"] = disabled_checkbox.button_pressed
+
+	# Ensure dropdown-driven fields are captured on save (e.g., after duplicate/paste)
+	var idx:int = icon_dropdown.selected
+	if idx == 0:
+		node_data["icon_id"] = ""
+	else:
+		node_data["icon_id"] = icon_dropdown.get_item_text(idx)
 	"""
 	var idx = dice_roll_dropdown.selected
 	if idx > 0:

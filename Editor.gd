@@ -582,6 +582,8 @@ func _on_file_dialog_load_file_async():
 					current_node.icon_dropdown.select(0) # Select "None" if icon is empty
 				else:
 					set_option_button_by_text(current_node.icon_dropdown, node["icon_id"], "back_arrow")
+			if node.has("disabled"):
+				current_node.disabled_checkbox.button_pressed = node["disabled"]
 
 		# if type: event
 		elif "EVENT" in node["node title"]:
