@@ -430,6 +430,13 @@ func _on_file_dialog_load_file_async():
 				else:
 					set_option_button_by_text(current_node.framing_dropdown, node["framing"], "Image framing")
 
+			if node.has("overlay"):
+				# Set overlay_dropdown to the index with the same name as node["overlay"]
+				if node["overlay"] == "no_change":
+					current_node.overlay_dropdown.select(0) # Select "None" if overlay is empty
+				else:
+					set_option_button_by_text(current_node.overlay_dropdown, node["overlay"], "Image overlay")
+
 			if node.has("solo_pose"):
 				set_option_button_by_text(current_node.solo_dropdown, node["solo_pose"], "Image solo pose")
 
@@ -778,6 +785,13 @@ func _on_file_dialog_load_file_async():
 			else:
 				if node.has("paperdoll_pose"):
 					set_option_button_by_text(current_node.paperdoll_pose_dropdown, node["paperdoll_pose"], "Image pose")
+
+			#Set overlay_dropdown to the index with the same name as node["overlay"]
+			if node.has("overlay"):
+				if node["overlay"] == "no_change":
+					current_node.overlay_dropdown.select(0) # Select "None" if overlay is empty
+				else:
+					set_option_button_by_text(current_node.overlay_dropdown, node["overlay"], "Image overlay")
 
 			#Set solo_pose_dropdown to the index with the same name as node["solo_pose"]
 			if node.has("solo_pose"):

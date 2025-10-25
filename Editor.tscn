@@ -366,10 +366,10 @@ p1_slot_pulled:slot_id
 solo_is_showing
 talkie_is_showing
 has_patience:p1/p2/girl_id
-visit_has_touched:girl_id
 mc_visited_gym
 mc_flag:flag_id
 girl_flag:girl_id:flag_id
+girl_phase_flag:girl_id:flag_id
 leverage_flag:girl_id:flag_id
 quest_flag:quest_id:flag_id"
 fit_content = true
@@ -392,6 +392,7 @@ trigger_reaction:reaction_id:p1/p2/girl_id/player
 play_world_sound:sound_id
 set_mc_flag:flag_id:true/false
 set_girl_flag:girl_id:flag_id:true/false
+set_girl_phase_flag:girl_id:flag_id:true/false
 set_leverage_flag:girl_id:flag_id:true/false
 set_quest_stage:quest_id:int
 set_quest_flag:quest_id:flag_id
@@ -884,10 +885,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -244.0
-offset_top = -240.0
-offset_right = 256.0
-offset_bottom = 260.0
+offset_left = 716.0
+offset_top = 300.0
+offset_right = 1216.0
+offset_bottom = 800.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ogbra")

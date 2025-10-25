@@ -14,6 +14,7 @@ extends GraphNode
 @onready var mouth_opt = $PaperDollInfo/ExpressionHBox/LowerExpression
 @onready var pose_dropdown = $PaperDollInfo/PoseFrameHBox/Pose
 @onready var framing_dropdown = $PaperDollInfo/PoseFrameHBox/Framing
+@onready var overlay_dropdown = $PaperDollInfo/OverlayHBox/Overlay
 #@onready var pose_framing_parent = $PaperDollInfo/PoseFrameHBox
 #@onready var expression_parent = $PaperDollInfo/ExpressionHBox
 @onready var paperdoll_parent = $PaperDollInfo
@@ -36,6 +37,7 @@ var node_data = {
 	"expression_mouth": "no_change", #0 = none
 	"paperdoll_pose": "no_change", #"" = none
 	"framing": "no_change",
+	"overlay": "no_change",
 	"solo_pose": "SITTING",
 	"duo_pose": "HOLDING_HANDS", 
 	"text": "",
@@ -181,7 +183,11 @@ func _on_framing_item_selected(index:int):
 	else:
 		node_data["framing"] = "no_change"  # Leave current framing if "no change" is selected
 
-
+func _on_overlay_item_selected(index:int):
+	if index != 0:
+		node_data["overlay"] = overlay_dropdown.get_item_text(index)
+	else:
+		node_data["overlay"] = "no_change"  # Leave current overlay if "no change" is selected
 
 func _on_duo_dropdown_item_selected(index:int):
 	node_data["duo_pose"] = duo_dropdown.get_item_text(index)

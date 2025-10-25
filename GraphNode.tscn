@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_ix0nw"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_qr188"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -298,6 +298,22 @@ popup/item_2/id = 2
 popup/item_3/text = "FULL"
 popup/item_3/id = 3
 
+[node name="OverlayHBox" type="HBoxContainer" parent="PaperDollInfo"]
+layout_mode = 2
+
+[node name="Overlay" type="OptionButton" parent="PaperDollInfo/OverlayHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
+theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
+item_count = 3
+selected = 0
+popup/item_0/text = "Overlay"
+popup/item_0/id = 0
+popup/item_1/text = "BLUSH"
+popup/item_1/id = 1
+popup/item_2/text = "RM_BLUSH"
+popup/item_2/id = 2
+
 [node name="SoloInfo" type="HBoxContainer" parent="."]
 visible = false
 layout_mode = 2
@@ -386,7 +402,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_ix0nw")
+syntax_highlighter = SubResource("CodeHighlighter_qr188")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 
@@ -445,6 +461,7 @@ popup/item_2/id = 2
 [connection signal="item_selected" from="PaperDollInfo/ExpressionHBox/LowerExpression" to="." method="_on_lower_expression_item_selected"]
 [connection signal="item_selected" from="PaperDollInfo/PoseFrameHBox/Pose" to="." method="_on_pose_item_selected"]
 [connection signal="item_selected" from="PaperDollInfo/PoseFrameHBox/Framing" to="." method="_on_framing_item_selected"]
+[connection signal="item_selected" from="PaperDollInfo/OverlayHBox/Overlay" to="." method="_on_overlay_item_selected"]
 [connection signal="item_selected" from="SoloInfo/SoloDropdown" to="." method="_on_solo_dropdown_item_selected"]
 [connection signal="item_selected" from="DuoInfo/DuoDropdown" to="." method="_on_duo_dropdown_item_selected"]
 [connection signal="item_selected" from="LineAsset/HBoxContainer/ImageType" to="." method="_on_image_type_item_selected"]

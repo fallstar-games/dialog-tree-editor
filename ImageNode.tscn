@@ -253,6 +253,20 @@ popup/item_2/id = 2
 popup/item_3/text = "FULL"
 popup/item_3/id = 3
 
+[node name="OverlayHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
+layout_mode = 2
+
+[node name="Overlay" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/OverlayHBox"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Overlay"
+popup/item_0/id = 0
+popup/item_1/text = "BLUSH"
+popup/item_1/id = 1
+popup/item_2/text = "RM_BLUSH"
+popup/item_2/id = 2
+
 [node name="SoloInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig"]
 visible = false
 layout_mode = 2
@@ -425,6 +439,7 @@ popup/item_1/id = 1
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox/MouthDropdown" to="." method="_on_mouth_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/PoseDropdown" to="." method="_on_pose_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/FramingDropdown" to="." method="_on_framing_dropdown_item_selected"]
+[connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/OverlayHBox/Overlay" to="." method="_on_overlay_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/SoloInfo/SoloDropdown" to="." method="_on_solo_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonBig/DuoInfo/DuoDropdown" to="." method="_on_duo_dropdown_item_selected"]
 [connection signal="item_selected" from="SetImageInfo/SetPerson/SetPersonSmall/ModeDropdown" to="." method="_on_lr_mode_dropdown_item_selected"]

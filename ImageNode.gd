@@ -15,6 +15,7 @@ extends GraphNode
 @onready var expression_mouth_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox/MouthDropdown
 @onready var paperdoll_pose_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/PoseDropdown
 @onready var framing_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox/FramingDropdown
+@onready var overlay_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/OverlayHBox/Overlay
 @onready var solo_container:Node = $SetImageInfo/SetPerson/SetPersonBig/SoloInfo
 @onready var solo_pose_dropdown:OptionButton = $SetImageInfo/SetPerson/SetPersonBig/SoloInfo/SoloDropdown
 @onready var duo_container:Node = $SetImageInfo/SetPerson/SetPersonBig/DuoInfo
@@ -40,6 +41,7 @@ var node_data = {
 	"expression_eyes": "no_change",
 	"expression_mouth": "no_change",
 	"paperdoll_pose": "no_change",
+	"overlay": "no_change",
 	"solo_pose": "SITTING",
 	"duo_pose": "SITTING",
 	"framing": "no_change",
@@ -224,6 +226,12 @@ func _on_framing_dropdown_item_selected(index:int):
 		node_data["framing"] = framing_dropdown.get_item_text(index)
 	else:
 		node_data["framing"] = "no_change"  # Leave current framing if "no change" is selected
+
+func _on_overlay_item_selected(index:int):
+	if index != 0:
+		node_data["overlay"] = overlay_dropdown.get_item_text(index)
+	else:
+		node_data["overlay"] = "no_change"  # Leave current overlay if "no change" is selected
 
 func _on_lr_mode_dropdown_item_selected(index:int):
 	pass
