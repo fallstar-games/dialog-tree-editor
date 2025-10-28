@@ -671,6 +671,15 @@ func _on_file_dialog_load_file_async():
 									current_node.line_edits["split_action_weak_fail"].text = node["split_action_outcomes"]["weak_fail"]
 								current_node.line_edits["split_action_fail"].text = node["split_action_outcomes"]["fail"]
 								current_node.line_edits["split_action_crit_fail"].text = node["split_action_outcomes"]["crit_fail"]
+							"REACTION_STRENGTH":
+								current_node.line_edits["split_reaction_id"].text = node["split_reaction_id"]
+								set_option_button_by_text(current_node.reaction_target_dropdown, node["split_reaction_target"], "Reaction test target")
+								set_option_button_by_text(current_node.resource_type_dropdown, node["split_resource_type"], "Reaction resource type")
+								current_node.line_edits["split_reaction_subtree"].text = node["split_reaction_subtree"]
+								current_node.reaction_should_trigger_checkbox.button_pressed = node["split_reaction_should_trigger"]
+							"HEART_LEVEL":
+								set_option_button_by_text(current_node.heart_level_target_dropdown, node["split_heart_level_target"], "Heart level target")
+								current_node.line_edits["split_heart_level_subtree"].text = node["split_heart_level_subtree"]
 				"SUBTREE":
 					if node.has("subtree_type"):
 						match node["subtree_type"]:
@@ -1347,6 +1356,20 @@ func _apply_node_data_to_node(node, data:Dictionary):
 								node.line_edits["split_action_weak_fail"].text = str(data["split_action_outcomes"].get("weak_fail", ""))
 								node.line_edits["split_action_fail"].text = str(data["split_action_outcomes"].get("fail", ""))
 								node.line_edits["split_action_crit_fail"].text = str(data["split_action_outcomes"].get("crit_fail", ""))
+						"REACTION_STRENGTH":
+							# Mirror load-time mapping for reaction strength split
+							node.line_edits["split_reaction_id"].text = str(data.get("split_reaction_id", ""))
+							if data.has("split_reaction_target"):
+								set_option_button_by_text(node.reaction_target_dropdown, str(data["split_reaction_target"]))
+							if data.has("split_resource_type"):
+								set_option_button_by_text(node.resource_type_dropdown, str(data["split_resource_type"]))
+							node.line_edits["split_reaction_subtree"].text = str(data.get("split_reaction_subtree", ""))
+							node.reaction_should_trigger_checkbox.button_pressed = bool(data.get("split_reaction_should_trigger", false))
+						"HEART_LEVEL":
+							# Mirror load-time mapping for heart level split
+							if data.has("split_heart_level_target"):
+								set_option_button_by_text(node.heart_level_target_dropdown, str(data["split_heart_level_target"]))
+							node.line_edits["split_heart_level_subtree"].text = str(data.get("split_heart_level_subtree", ""))
 				"SUBTREE":
 					match str(data.get("subtree_type", "STANDARD")):
 						"STANDARD":

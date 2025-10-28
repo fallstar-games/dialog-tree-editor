@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_qr188"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_h7w0f"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -309,9 +309,9 @@ item_count = 3
 selected = 0
 popup/item_0/text = "Overlay"
 popup/item_0/id = 0
-popup/item_1/text = "BLUSH"
+popup/item_1/text = "ADD:BLUSH:HAIR_FRONT"
 popup/item_1/id = 1
-popup/item_2/text = "RM_BLUSH"
+popup/item_2/text = "RMV:BLUSH"
 popup/item_2/id = 2
 
 [node name="SoloInfo" type="HBoxContainer" parent="."]
@@ -402,7 +402,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_qr188")
+syntax_highlighter = SubResource("CodeHighlighter_h7w0f")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 

@@ -1,9 +1,29 @@
-[gd_scene load_steps=8 format=3 uid="uid://ccm7ijwj3w3ec"]
+[gd_scene load_steps=28 format=3 uid="uid://ccm7ijwj3w3ec"]
 
 [ext_resource type="Script" path="res://EventNode.gd" id="1_qey05"]
 [ext_resource type="Theme" uid="uid://bcfmo1cqbenmo" path="res://Themes/event_node_theme.tres" id="1_qulwx"]
 [ext_resource type="ButtonGroup" uid="uid://6awp5n2c664a" path="res://shopmode_button_group.tres" id="2_c3aul"]
 [ext_resource type="Texture2D" uid="uid://dctd3qs435f6c" path="res://Assets/UI/PlusIcon.svg" id="3_h7t40"]
+[ext_resource type="Texture2D" uid="uid://bygsxtccihjdr" path="res://Assets/UI/choice_icon/coin.png" id="3_u5u37"]
+[ext_resource type="Texture2D" uid="uid://danyye32laut5" path="res://Assets/UI/choice_icon/bicep.png" id="4_gkc0f"]
+[ext_resource type="Texture2D" uid="uid://brptfdd5xlskb" path="res://Assets/UI/choice_icon/volcano.png" id="5_6s1se"]
+[ext_resource type="Texture2D" uid="uid://baya0gye1ddk2" path="res://Assets/UI/choice_icon/stopwatch.png" id="6_03q5v"]
+[ext_resource type="Texture2D" uid="uid://cbqfwgpk8fyom" path="res://Assets/UI/choice_icon/hearts.png" id="7_pa1mf"]
+[ext_resource type="Texture2D" uid="uid://nurek301ejjt" path="res://Assets/UI/choice_icon/fire.png" id="8_5auea"]
+[ext_resource type="Texture2D" uid="uid://b1yrdvsy4yyr7" path="res://Assets/UI/choice_icon/spiral.png" id="9_3kxq6"]
+[ext_resource type="Texture2D" uid="uid://b4ewjvl7rfoon" path="res://Assets/UI/choice_icon/brain.png" id="10_ihyeb"]
+[ext_resource type="Texture2D" uid="uid://bvnjbw2pe4pen" path="res://Assets/UI/choice_icon/sleep.png" id="11_as3i1"]
+[ext_resource type="Texture2D" uid="uid://bkloslyeujapd" path="res://Assets/UI/choice_icon/hand.png" id="12_m7rd3"]
+[ext_resource type="Texture2D" uid="uid://b0gstwesjh628" path="res://Assets/UI/choice_icon/eye.png" id="13_l5jri"]
+[ext_resource type="Texture2D" uid="uid://dbyg5uaf8o8ie" path="res://Assets/UI/choice_icon/tongue.png" id="14_4pwre"]
+[ext_resource type="Texture2D" uid="uid://b84u6wwc41hlm" path="res://Assets/UI/choice_icon/mushroom.png" id="15_3ncmx"]
+[ext_resource type="Texture2D" uid="uid://bxxppflpdjp4o" path="res://Assets/UI/choice_icon/splooge.png" id="16_hmq0l"]
+[ext_resource type="Texture2D" uid="uid://c7u2mwpoohjs5" path="res://Assets/UI/choice_icon/voice.png" id="17_ra7ut"]
+[ext_resource type="Texture2D" uid="uid://rqlj24noh2oy" path="res://Assets/UI/choice_icon/lips.png" id="18_alftc"]
+[ext_resource type="Texture2D" uid="uid://b42lpftqkutbf" path="res://Assets/UI/choice_icon/throat.png" id="19_nlm3c"]
+[ext_resource type="Texture2D" uid="uid://dis2h5gjoju87" path="res://Assets/UI/choice_icon/boobs.png" id="20_bxp2r"]
+[ext_resource type="Texture2D" uid="uid://b0d26va2645af" path="res://Assets/UI/choice_icon/butt.png" id="21_c0cyw"]
+[ext_resource type="Texture2D" uid="uid://bgp83mal86r4l" path="res://Assets/UI/choice_icon/vagina.png" id="22_55v2f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_twcxw"]
 
@@ -146,7 +166,7 @@ theme_override_constants/separation = 8
 
 [node name="SplitType" type="OptionButton" parent="SplitInfo"]
 layout_mode = 2
-item_count = 4
+item_count = 6
 selected = 0
 popup/item_0/text = "BOOL"
 popup/item_0/id = 0
@@ -156,6 +176,10 @@ popup/item_2/text = "RANDOM"
 popup/item_2/id = 2
 popup/item_3/text = "INT"
 popup/item_3/id = 3
+popup/item_4/text = "REACTION_STRENGTH"
+popup/item_4/id = 4
+popup/item_5/text = "HEART_LEVEL"
+popup/item_5/id = 5
 
 [node name="SplitBool" type="VBoxContainer" parent="SplitInfo"]
 layout_mode = 2
@@ -295,6 +319,171 @@ layout_mode = 2
 text = "crit_fail ->"
 
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/CritFail"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="SplitReactionStrength" type="VBoxContainer" parent="SplitInfo"]
+visible = false
+layout_mode = 2
+
+[node name="ReactionID" type="HBoxContainer" parent="SplitInfo/SplitReactionStrength"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitReactionStrength/ReactionID"]
+layout_mode = 2
+text = "reaction_id: "
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitReactionStrength/ReactionID"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="TargetPerson" type="HBoxContainer" parent="SplitInfo/SplitReactionStrength"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitReactionStrength/TargetPerson"]
+layout_mode = 2
+text = "target:"
+
+[node name="ReactionTarget" type="OptionButton" parent="SplitInfo/SplitReactionStrength/TargetPerson"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "MAIN_PERSON"
+popup/item_0/id = 0
+popup/item_1/text = "SECOND_PERSON"
+popup/item_1/id = 1
+
+[node name="ResourceType" type="HBoxContainer" parent="SplitInfo/SplitReactionStrength"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitReactionStrength/ResourceType"]
+layout_mode = 2
+text = "resource_type:"
+
+[node name="ResourceType" type="OptionButton" parent="SplitInfo/SplitReactionStrength/ResourceType"]
+layout_mode = 2
+item_count = 20
+selected = 1
+popup/item_0/text = "player_money"
+popup/item_0/icon = ExtResource("3_u5u37")
+popup/item_0/id = 0
+popup/item_1/text = "player_vigor"
+popup/item_1/icon = ExtResource("4_gkc0f")
+popup/item_1/id = 1
+popup/item_2/text = "player_o"
+popup/item_2/icon = ExtResource("5_6s1se")
+popup/item_2/id = 2
+popup/item_3/text = "patience"
+popup/item_3/icon = ExtResource("6_03q5v")
+popup/item_3/id = 3
+popup/item_4/text = "love"
+popup/item_4/icon = ExtResource("7_pa1mf")
+popup/item_4/id = 4
+popup/item_5/text = "heat"
+popup/item_5/icon = ExtResource("8_5auea")
+popup/item_5/id = 5
+popup/item_6/text = "sanity"
+popup/item_6/icon = ExtResource("9_3kxq6")
+popup/item_6/id = 6
+popup/item_7/text = "resistance"
+popup/item_7/icon = ExtResource("10_ihyeb")
+popup/item_7/id = 7
+popup/item_8/text = "torpor"
+popup/item_8/icon = ExtResource("11_as3i1")
+popup/item_8/id = 8
+popup/item_9/text = "MC_TOUCH"
+popup/item_9/icon = ExtResource("12_m7rd3")
+popup/item_9/id = 9
+popup/item_10/text = "MC_GAZE"
+popup/item_10/icon = ExtResource("13_l5jri")
+popup/item_10/id = 10
+popup/item_11/text = "MC_TONGUE"
+popup/item_11/icon = ExtResource("14_4pwre")
+popup/item_11/id = 11
+popup/item_12/text = "MC_PENIS"
+popup/item_12/icon = ExtResource("15_3ncmx")
+popup/item_12/id = 12
+popup/item_13/text = "MC_CUM"
+popup/item_13/icon = ExtResource("16_hmq0l")
+popup/item_13/id = 13
+popup/item_14/text = "MC_AUTHORITY"
+popup/item_14/icon = ExtResource("17_ra7ut")
+popup/item_14/id = 14
+popup/item_15/text = "LIPS"
+popup/item_15/icon = ExtResource("18_alftc")
+popup/item_15/id = 15
+popup/item_16/text = "THROAT"
+popup/item_16/icon = ExtResource("19_nlm3c")
+popup/item_16/id = 16
+popup/item_17/text = "BREASTS"
+popup/item_17/icon = ExtResource("20_bxp2r")
+popup/item_17/id = 17
+popup/item_18/text = "ASS"
+popup/item_18/icon = ExtResource("21_c0cyw")
+popup/item_18/id = 18
+popup/item_19/text = "PUSSY"
+popup/item_19/icon = ExtResource("22_55v2f")
+popup/item_19/id = 19
+
+[node name="Subtree" type="HBoxContainer" parent="SplitInfo/SplitReactionStrength"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitReactionStrength/Subtree"]
+layout_mode = 2
+text = "subtree_id:"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitReactionStrength/Subtree"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="TriggerReaction" type="HBoxContainer" parent="SplitInfo/SplitReactionStrength"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SplitInfo/SplitReactionStrength/TriggerReaction"]
+layout_mode = 2
+text = "trigger reaction: "
+
+[node name="CheckBox" type="CheckBox" parent="SplitInfo/SplitReactionStrength/TriggerReaction"]
+layout_mode = 2
+button_pressed = true
+
+[node name="SplitHeartLevel" type="VBoxContainer" parent="SplitInfo"]
+visible = false
+layout_mode = 2
+
+[node name="TargetPerson" type="HBoxContainer" parent="SplitInfo/SplitHeartLevel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitHeartLevel/TargetPerson"]
+layout_mode = 2
+text = "target:"
+
+[node name="HeartLevelTarget" type="OptionButton" parent="SplitInfo/SplitHeartLevel/TargetPerson"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "MAIN_PERSON"
+popup/item_0/id = 0
+popup/item_1/text = "SECOND_PERSON"
+popup/item_1/id = 1
+
+[node name="Subtree" type="HBoxContainer" parent="SplitInfo/SplitHeartLevel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitHeartLevel/Subtree"]
+layout_mode = 2
+text = "subtree_id:"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitHeartLevel/Subtree"]
 layout_mode = 2
 size_flags_horizontal = 3
 expand_to_text_length = true
@@ -892,6 +1081,10 @@ text = "Sell
 [connection signal="item_selected" from="OptionButton" to="." method="_on_event_dropdown_item_selected"]
 [connection signal="item_selected" from="SplitInfo/SplitType" to="." method="_on_split_type_item_selected"]
 [connection signal="item_selected" from="SplitInfo/SplitAction/TargetPerson/ActionTarget" to="." method="_on_action_target_item_selected"]
+[connection signal="item_selected" from="SplitInfo/SplitReactionStrength/TargetPerson/ReactionTarget" to="." method="_on_reaction_target_item_selected"]
+[connection signal="item_selected" from="SplitInfo/SplitReactionStrength/ResourceType/ResourceType" to="." method="_on_resource_type_item_selected"]
+[connection signal="toggled" from="SplitInfo/SplitReactionStrength/TriggerReaction/CheckBox" to="." method="_on_should_trigger_reaction_check_box_toggled"]
+[connection signal="item_selected" from="SplitInfo/SplitHeartLevel/TargetPerson/HeartLevelTarget" to="." method="_on_heart_level_target_item_selected"]
 [connection signal="pressed" from="SplitInfo/SplitInt/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["greater"]]
 [connection signal="pressed" from="SplitInfo/SplitRandom/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["random"]]
 [connection signal="item_selected" from="SubTreeInfo/SubTreeType" to="." method="_on_sub_tree_type_item_selected"]

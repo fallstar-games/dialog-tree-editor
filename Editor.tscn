@@ -290,13 +290,13 @@ libraries = {
 
 [node name="CheatSheetNode" type="GraphNode" parent="."]
 layout_mode = 0
-offset_left = 36.0
-offset_top = 136.0
-offset_right = 1058.0
-offset_bottom = 540.0
+offset_left = 32.0
+offset_top = 175.0
+offset_right = 1054.0
+offset_bottom = 579.0
 mouse_filter = 1
 theme_override_styles/frame = SubResource("StyleBoxEmpty_7yco3")
-position_offset = Vector2(36, 136)
+position_offset = Vector2(32, 175)
 draggable = false
 selectable = false
 slot/0/left_enabled = false
@@ -330,14 +330,13 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_5ktmu")
 
 [node name="MarginContainer" type="MarginContainer" parent="CheatSheetNode/cheat_sheet"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 424.0
 grow_horizontal = 2
-grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
@@ -405,7 +404,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 mouse_filter = 2
 
-[node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3"]
+layout_mode = 2
+
+[node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -416,7 +418,21 @@ girl_name:girl_id
 p1_garment_name:slot_id
 action_difficulty:girl_id:action_id
 heart_level:girl_id
-quest_stage:quest_id"
+quest_stage:quest_id
+reaction_abs_change:reaction_id:target_id:resource_type
+reaction_strength_adjective:reaction_id:target_id:resource_type"
+fit_content = true
+
+[node name="Prefabs" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "SPLIT PREFABS [color=gray]
+REACTION_STRENGTH: not_very, somewhat, very, super
+Outputs: end_split_subtree
+HEART_LEVEL: zero_hearts, one_heart, two_hearts, three_hearts, four_hearts, five_hearts, six_hearts
+Outputs: end_split_subtree"
 fit_content = true
 
 [node name="Tool" type="HBoxContainer" parent="."]
@@ -885,10 +901,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 716.0
-offset_top = 300.0
-offset_right = 1216.0
-offset_bottom = 800.0
+offset_left = -244.0
+offset_top = -240.0
+offset_right = 256.0
+offset_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ogbra")

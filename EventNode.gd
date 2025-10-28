@@ -8,6 +8,10 @@ extends GraphNode
 @onready var action_target_dropdown:OptionButton = $SplitInfo/SplitAction/TargetPerson/ActionTarget
 @onready var subtree_type_dropdown:OptionButton = $SubTreeInfo/SubTreeType
 @onready var line_entry_type_dropdown:OptionButton = $LineEntryInfo/LineEntryType
+@onready var reaction_target_dropdown:OptionButton = $SplitInfo/SplitReactionStrength/TargetPerson/ReactionTarget
+@onready var resource_type_dropdown:OptionButton = $SplitInfo/SplitReactionStrength/ResourceType/ResourceType
+@onready var reaction_should_trigger_checkbox:CheckBox = $SplitInfo/SplitReactionStrength/TriggerReaction/CheckBox
+@onready var heart_level_target_dropdown:OptionButton = $SplitInfo/SplitHeartLevel/TargetPerson/HeartLevelTarget
 #@onready var buy_sell_container = $ShopMode
 @onready var menu_line:LineEdit = $MenuInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
@@ -39,7 +43,9 @@ extends GraphNode
 	"BOOL": $SplitInfo/SplitBool,
 	"INT": $SplitInfo/SplitInt,
 	"RANDOM": $SplitInfo/SplitRandom,
-	"ACTION_TEST": $SplitInfo/SplitAction
+	"ACTION_TEST": $SplitInfo/SplitAction,
+	"REACTION_STRENGTH": $SplitInfo/SplitReactionStrength,
+	"HEART_LEVEL": $SplitInfo/SplitHeartLevel
 }
 
 @onready var wardrobe_containers:Dictionary = {
@@ -70,6 +76,9 @@ extends GraphNode
 	"split_action_fail": $SplitInfo/SplitAction/Fail/LineEdit,
 	"split_action_weak_fail": $SplitInfo/SplitAction/WeakFail/LineEdit,
 	"split_action_crit_fail": $SplitInfo/SplitAction/CritFail/LineEdit,
+	"split_reaction_id": $SplitInfo/SplitReactionStrength/ReactionID/LineEdit,
+	"split_reaction_subtree": $SplitInfo/SplitReactionStrength/Subtree/LineEdit,
+	"split_heart_level_subtree": $SplitInfo/SplitHeartLevel/Subtree/LineEdit,
 	"subtree_id": $SubTreeInfo/StandardInfo/TreeName/LineEdit,
 	"subtree_start": $SubTreeInfo/StandardInfo/NodeName/LineEdit,
 	"neg_action_id": $SubTreeInfo/NegotiationInfo/ActionID/LineEdit,
@@ -114,6 +123,13 @@ var node_data = {
 	"split_action_id": "",
 	"split_action_target": "MAIN_PERSON",
 	"split_action_outcomes": {},
+	"split_reaction_id": "",
+	"split_reaction_target": "MAIN_PERSON",
+	"split_reaction_should_trigger": true,
+	"split_resource_type": "player_money",
+	"split_reaction_subtree": "",
+	"split_heart_level_target": "MAIN_PERSON",
+	"split_heart_level_subtree": "",
 	#"check_type": "REQUEST",
 	#"request_id": "",
 	#"lever_id": "",
@@ -242,6 +258,11 @@ func update_data():
 						"fail": line_edits["split_action_fail"].text,
 						"crit_fail": line_edits["split_action_crit_fail"].text
 					}
+				"REACTION_STRENGTH":
+					node_data["split_reaction_id"] = line_edits["split_reaction_id"].text
+					node_data["split_reaction_subtree"] = line_edits["split_reaction_subtree"].text
+				"HEART_LEVEL":
+					node_data["split_heart_level_subtree"] = line_edits["split_heart_level_subtree"].text
 		"SUBTREE":
 			match node_data["subtree_type"]:
 				"STANDARD":
@@ -396,3 +417,15 @@ func _on_action_target_item_selected(index:int):
 func _on_sub_tree_type_item_selected(index:int):
 	node_data["subtree_type"] = subtree_type_dropdown.get_item_text(index)
 	change_subtree_mode(index)
+
+func _on_heart_level_target_item_selected(index:int):
+	node_data["split_heart_level_target"] = heart_level_target_dropdown.get_item_text(index)
+
+func _on_reaction_target_item_selected(index:int):
+	node_data["split_reaction_target"] = reaction_target_dropdown.get_item_text(index)
+
+func _on_resource_type_item_selected(index:int):
+	node_data["split_resource_type"] = resource_type_dropdown.get_item_text(index)
+
+func _on_should_trigger_reaction_check_box_toggled(pressed: bool):
+	node_data["split_reaction_should_trigger"] = pressed
