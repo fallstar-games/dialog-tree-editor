@@ -503,6 +503,7 @@ text = "exposed_var: "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitInt/VarCall"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="Outcomes" type="HBoxContainer" parent="SplitInfo/SplitInt"]
 layout_mode = 2
@@ -529,6 +530,7 @@ text = "ELSE onramp: "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitInt/ElseOutcome"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="SplitRandom" type="VBoxContainer" parent="SplitInfo"]
 visible = false

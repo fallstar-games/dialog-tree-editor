@@ -44,7 +44,10 @@ func set_option_button_by_text(option_button: OptionButton, target_value: String
 			break
 	if not found:
 		push_error(error_prefix + " not found: " + target_value)
+		#just set the value to whatever the first option is
+		option_button.select(0)
 	return found
+
 func _ready():
 	if get_node("CanvasLayer/OpenFileDialog").is_connected("file_selected", _on_file_dialog_file_selected):
 #		get_node("CanvasLayer/OpenFileDialog").disconnect("file_selected", _on_file_dialog_file_selected)
@@ -53,6 +56,10 @@ func _ready():
 	get_node("CanvasLayer/OpenFileDialog").access = FileDialog.ACCESS_FILESYSTEM
 	get_node("CanvasLayer/OpenFileDialog").current_dir = Global.get_save_dir()
 	Global.connect("close_menu", _close_menu)
+	# Ensure we have an action to close all selected nodes at once
+	_ensure_close_selected_action()
+	# Ensure we have a cut action (Ctrl/Cmd+X) that copies then deletes
+	_ensure_cut_nodes_action()
 
 ################## Shortcut Keys ####################################
 	
@@ -92,6 +99,12 @@ func _input(_event):
 		_copy_selected_nodes_to_clipboard()
 	elif Input.is_action_just_released("Paste Nodes"):
 		_paste_nodes_from_clipboard(mouse_position_in_canvas)
+	elif Input.is_action_just_released("Cut Nodes"):
+		# Copy first, then delete
+		_copy_selected_nodes_to_clipboard()
+		_close_selected_nodes()
+	elif Input.is_action_just_released("Close Selected"):
+		_close_selected_nodes()
 
 
 func random_number():
@@ -1035,6 +1048,79 @@ func clear_all():
 
 func _close_menu():
 	menu_panel.hide()
+
+# Ensure the input action exists and is bound to useful defaults
+func _ensure_close_selected_action():
+	var action := "Close Selected"
+	if not InputMap.has_action(action):
+		InputMap.add_action(action)
+		# Bind Delete key
+		var del_event := InputEventKey.new()
+		del_event.physical_keycode = KEY_DELETE
+		InputMap.action_add_event(action, del_event)
+	else:
+		# If action exists but has no events, ensure at least Delete is present
+		var events := InputMap.action_get_events(action)
+		if events.is_empty():
+			var del_event2 := InputEventKey.new()
+			del_event2.physical_keycode = KEY_DELETE
+			InputMap.action_add_event(action, del_event2)
+		# Remove any stray Ctrl/Cmd+X bindings from this action, to reserve it for Cut
+		for ev in events:
+			if ev is InputEventKey and ev.physical_keycode == KEY_X:
+				InputMap.action_erase_event(action, ev)
+
+# Ensure the cut action exists and is bound to Ctrl/Cmd+X
+func _ensure_cut_nodes_action():
+	var action := "Cut Nodes"
+	if not InputMap.has_action(action):
+		InputMap.add_action(action)
+		var cut_event := InputEventKey.new()
+		cut_event.command_or_control_autoremap = true
+		cut_event.physical_keycode = KEY_X
+		InputMap.action_add_event(action, cut_event)
+	else:
+		var events := InputMap.action_get_events(action)
+		if events.is_empty():
+			var cut_event2 := InputEventKey.new()
+			cut_event2.command_or_control_autoremap = true
+			cut_event2.physical_keycode = KEY_X
+			InputMap.action_add_event(action, cut_event2)
+
+# Close all currently selected nodes using the same logic as the close button
+func _close_selected_nodes():
+	var sel := _get_selected_nodes()
+	if sel.is_empty():
+		return
+	# Feedback
+	spawn_sound.pitch_scale = random_number()
+	spawn_sound.play()
+	# Build list first to avoid mutating while iterating selection
+	var to_remove:Array = []
+	for n in sel:
+		if n == null:
+			continue
+		if not (n is GraphNode):
+			continue
+		var node_name := str(n.name)
+		# Skip Start (not removable via this bulk action)
+		if node_name == "Start":
+			continue
+		# Handle End explicitly (not tracked in node_stack)
+		if node_name == "End":
+			for connection in get_connection_list():
+				if connection.from == "End" or connection.to == "End":
+					disconnect_node(connection.from, connection.from_port, connection.to, connection.to_port)
+			n.queue_free()
+			end_count = 0
+			continue
+		# Regular tracked nodes: only remove if known type prefix exists
+		var type_prefix := node_name.split("_")[0]
+		if node_stack.has(type_prefix):
+			to_remove.append(n)
+	# Remove after collection
+	for n in to_remove:
+		remove_node(n)
 
 #func auto_connect_start(node):
 	#connect_node("Start", 0, node, 0)

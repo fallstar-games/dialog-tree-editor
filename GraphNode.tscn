@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_h7w0f"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_q753n"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -214,7 +214,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 9
+item_count = 13
 selected = 0
 popup/item_0/text = "Eyes"
 popup/item_0/id = 0
@@ -234,20 +234,28 @@ popup/item_7/text = "ROLLING"
 popup/item_7/id = 7
 popup/item_8/text = "CLENCHED"
 popup/item_8/id = 8
+popup/item_9/text = "AVERTED"
+popup/item_9/id = 9
+popup/item_10/text = "SAD"
+popup/item_10/id = 10
+popup/item_11/text = "SQUINT"
+popup/item_11/id = 11
+popup/item_12/text = "WINK"
+popup/item_12/id = 12
 
 [node name="LowerExpression" type="OptionButton" parent="PaperDollInfo/ExpressionHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 9
+item_count = 12
 selected = 0
 fit_to_longest_item = false
 popup/item_0/text = "Mouth"
 popup/item_0/id = 0
 popup/item_1/text = "SMILE"
 popup/item_1/id = 1
-popup/item_2/text = "NEUTRAL"
+popup/item_2/text = "TIGHT"
 popup/item_2/id = 2
 popup/item_3/text = "SCREAM"
 popup/item_3/id = 3
@@ -261,6 +269,12 @@ popup/item_7/text = "GRIN"
 popup/item_7/id = 7
 popup/item_8/text = "PARTED"
 popup/item_8/id = 8
+popup/item_9/text = "OHO"
+popup/item_9/id = 9
+popup/item_10/text = "CLENCHED"
+popup/item_10/id = 10
+popup/item_11/text = "NEUTRAL"
+popup/item_11/id = 11
 
 [node name="PoseFrameHBox" type="HBoxContainer" parent="PaperDollInfo"]
 layout_mode = 2
@@ -305,7 +319,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 3
+item_count = 5
 selected = 0
 popup/item_0/text = "Overlay"
 popup/item_0/id = 0
@@ -313,6 +327,10 @@ popup/item_1/text = "ADD:BLUSH:HAIR_FRONT"
 popup/item_1/id = 1
 popup/item_2/text = "RMV:BLUSH"
 popup/item_2/id = 2
+popup/item_3/text = "ADD:SWEATDROP:HAIR_FRONT"
+popup/item_3/id = 3
+popup/item_4/text = "RMV:SWEATDROP"
+popup/item_4/id = 4
 
 [node name="SoloInfo" type="HBoxContainer" parent="."]
 visible = false
@@ -330,13 +348,13 @@ theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
 item_count = 14
 selected = 0
-popup/item_0/text = "SITTING"
+popup/item_0/text = "FROM_BEHIND"
 popup/item_0/id = 0
-popup/item_1/text = "KNEELING"
+popup/item_1/text = "POV_KNEELING"
 popup/item_1/id = 1
 popup/item_2/text = "HUG"
 popup/item_2/id = 2
-popup/item_3/text = "FROM_BEHIND"
+popup/item_3/text = "PRONE"
 popup/item_3/id = 3
 popup/item_4/text = "BENT_OVER"
 popup/item_4/id = 4
@@ -344,7 +362,7 @@ popup/item_5/text = "ALL_FOURS"
 popup/item_5/id = 5
 popup/item_6/text = "MISSIONARY"
 popup/item_6/id = 6
-popup/item_7/text = "PILEDRIVER"
+popup/item_7/text = "SLEEPING"
 popup/item_7/id = 7
 popup/item_8/text = "WALKING_AWAY"
 popup/item_8/id = 8
@@ -356,7 +374,7 @@ popup/item_11/text = "FACE_SITTING"
 popup/item_11/id = 11
 popup/item_12/text = "PAIZURI"
 popup/item_12/id = 12
-popup/item_13/text = "SLEEPING"
+popup/item_13/text = "PILEDRIVER"
 popup/item_13/id = 13
 
 [node name="DuoInfo" type="HBoxContainer" parent="."]
@@ -402,7 +420,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_h7w0f")
+syntax_highlighter = SubResource("CodeHighlighter_q753n")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 

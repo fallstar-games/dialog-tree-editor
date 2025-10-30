@@ -38,7 +38,7 @@ var node_data = {
 	"paperdoll_pose": "no_change", #"" = none
 	"framing": "no_change",
 	"overlay": "no_change",
-	"solo_pose": "SITTING",
+	"solo_pose": "FROM_BEHIND",
 	"duo_pose": "HOLDING_HANDS", 
 	"text": "",
 	#"image_id": "",
