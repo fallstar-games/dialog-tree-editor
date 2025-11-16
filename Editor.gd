@@ -100,11 +100,15 @@ func _input(_event):
 	elif Input.is_action_just_released("Paste Nodes"):
 		_paste_nodes_from_clipboard(mouse_position_in_canvas)
 	elif Input.is_action_just_released("Cut Nodes"):
-		# Copy first, then delete
-		_copy_selected_nodes_to_clipboard()
-		_close_selected_nodes()
+		# Only act if not typing into a text field
+		if not _is_text_input_focused():
+			# Copy first, then delete
+			_copy_selected_nodes_to_clipboard()
+			_close_selected_nodes()
 	elif Input.is_action_just_released("Close Selected"):
-		_close_selected_nodes()
+		# Require modifier (handled by InputMap) and ignore if typing
+		if not _is_text_input_focused():
+			_close_selected_nodes()
 
 
 func random_number():
@@ -1054,21 +1058,14 @@ func _ensure_close_selected_action():
 	var action := "Close Selected"
 	if not InputMap.has_action(action):
 		InputMap.add_action(action)
-		# Bind Delete key
-		var del_event := InputEventKey.new()
-		del_event.physical_keycode = KEY_DELETE
-		InputMap.action_add_event(action, del_event)
-	else:
-		# If action exists but has no events, ensure at least Delete is present
-		var events := InputMap.action_get_events(action)
-		if events.is_empty():
-			var del_event2 := InputEventKey.new()
-			del_event2.physical_keycode = KEY_DELETE
-			InputMap.action_add_event(action, del_event2)
-		# Remove any stray Ctrl/Cmd+X bindings from this action, to reserve it for Cut
-		for ev in events:
-			if ev is InputEventKey and ev.physical_keycode == KEY_X:
-				InputMap.action_erase_event(action, ev)
+	# Reset bindings to strictly Ctrl/Cmd + Delete
+	var existing := InputMap.action_get_events(action)
+	for ev in existing:
+		InputMap.action_erase_event(action, ev)
+	var del_event := InputEventKey.new()
+	del_event.command_or_control_autoremap = true
+	del_event.physical_keycode = KEY_DELETE
+	InputMap.action_add_event(action, del_event)
 
 # Ensure the cut action exists and is bound to Ctrl/Cmd+X
 func _ensure_cut_nodes_action():
@@ -1086,6 +1083,13 @@ func _ensure_cut_nodes_action():
 			cut_event2.command_or_control_autoremap = true
 			cut_event2.physical_keycode = KEY_X
 			InputMap.action_add_event(action, cut_event2)
+
+# Returns true if a LineEdit or TextEdit currently has keyboard focus.
+func _is_text_input_focused() -> bool:
+	var fo = get_viewport().gui_get_focus_owner()
+	if fo == null:
+		return false
+	return (fo is LineEdit) or (fo is TextEdit)
 
 # Close all currently selected nodes using the same logic as the close button
 func _close_selected_nodes():
@@ -1225,6 +1229,12 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					node.framing_dropdown.select(0)
 				else:
 					set_option_button_by_text(node.framing_dropdown, str(data["framing"]))
+			# Ensure overlay dropdown copies over on duplicate/copy-paste
+			if data.has("overlay"):
+				if data["overlay"] == "no_change":
+					node.overlay_dropdown.select(0)
+				else:
+					set_option_button_by_text(node.overlay_dropdown, str(data["overlay"]), "Image overlay")
 			if data.has("solo_pose"):
 				set_option_button_by_text(node.solo_dropdown, str(data["solo_pose"]))
 			if data.has("duo_pose"):
@@ -1359,6 +1369,12 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					node.paperdoll_pose_dropdown.select(0)
 				else:
 					set_option_button_by_text(node.paperdoll_pose_dropdown, str(data["paperdoll_pose"]))
+			# Ensure overlay dropdown copies over on duplicate/copy-paste
+			if data.has("overlay"):
+				if data["overlay"] == "no_change":
+					node.overlay_dropdown.select(0)
+				else:
+					set_option_button_by_text(node.overlay_dropdown, str(data["overlay"]), "Image overlay")
 			if data.has("framing"):
 				if data["framing"] == "no_change":
 					node.framing_dropdown.select(0)
@@ -1502,6 +1518,9 @@ func _apply_node_data_to_node(node, data:Dictionary):
 			if data.has("wait_time"):
 				node.wait_line.text = str(data["wait_time"]) 
 			node.main_person_line.text = data.get("main_person_id", "")
+	# After mapping UI, make sure the node's internal node_data mirrors the UI state.
+	if node and node.has_method("update_data"):
+		node.update_data()
 			node.second_person_line.text = data.get("second_person_id", "")
 			node.show_hide_person_2()
 			if data.has("weather"):
