@@ -1518,9 +1518,6 @@ func _apply_node_data_to_node(node, data:Dictionary):
 			if data.has("wait_time"):
 				node.wait_line.text = str(data["wait_time"]) 
 			node.main_person_line.text = data.get("main_person_id", "")
-	# After mapping UI, make sure the node's internal node_data mirrors the UI state.
-	if node and node.has_method("update_data"):
-		node.update_data()
 			node.second_person_line.text = data.get("second_person_id", "")
 			node.show_hide_person_2()
 			if data.has("weather"):
@@ -1535,6 +1532,10 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					set_option_button_by_text(node.phase_option, str(data["phase"]))
 		_:
 			pass
+
+	# After mapping UI, make sure the node's internal node_data mirrors the UI state.
+	if node and node.has_method("update_data"):
+		node.update_data()
 
 # Helper to gather currently selected GraphNodes by name
 func _get_selected_nodes() -> Array:
