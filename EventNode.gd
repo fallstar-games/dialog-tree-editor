@@ -202,6 +202,19 @@ func update_data():
 	if idx >= 0:
 		node_data["split_action_target"] = action_target_dropdown.get_item_text(idx)
 
+	# Capture reaction target/resource type and heart level target even if signal didn't fire
+	idx = reaction_target_dropdown.selected
+	if idx >= 0:
+		node_data["split_reaction_target"] = reaction_target_dropdown.get_item_text(idx)
+	idx = resource_type_dropdown.selected
+	if idx >= 0:
+		node_data["split_resource_type"] = resource_type_dropdown.get_item_text(idx)
+	idx = heart_level_target_dropdown.selected
+	if idx >= 0:
+		node_data["split_heart_level_target"] = heart_level_target_dropdown.get_item_text(idx)
+	# Also persist the reaction trigger checkbox state
+	node_data["split_reaction_should_trigger"] = bool(reaction_should_trigger_checkbox.button_pressed)
+
 	# Capture subtree type
 	idx = subtree_type_dropdown.selected
 	if idx >= 0:

@@ -189,7 +189,7 @@ layout_mode = 2
 
 [node name="WeatherOption" type="OptionButton" parent="WeatherContainer"]
 layout_mode = 2
-item_count = 3
+item_count = 4
 selected = 0
 popup/item_0/text = "-dont change weather-"
 popup/item_0/id = 0
@@ -197,6 +197,8 @@ popup/item_1/text = "CLEAR"
 popup/item_1/id = 1
 popup/item_2/text = "RAIN"
 popup/item_2/id = 2
+popup/item_3/text = "CLIMAX"
+popup/item_3/id = 3
 
 [node name="PhaseContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

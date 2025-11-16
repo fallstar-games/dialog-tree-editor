@@ -54,7 +54,7 @@ var node_data = {
 func _on_close_request():
 	get_parent().remove_node(self)
 
-func _on_dragged(from, to):
+func _on_dragged(_from, to):
 	position_offset = to
 
 func _on_resize_request(new_minsize):
@@ -115,6 +115,14 @@ func update_data():
 			node_data["framing"] = "no_change"
 		else:
 			node_data["framing"] = framing_dropdown.get_item_text(frame_idx)
+
+	# Overlay dropdown (persist even if selection signal didn't fire)
+	if overlay_dropdown:
+		var overlay_idx:int = overlay_dropdown.selected
+		if overlay_idx <= 0:
+			node_data["overlay"] = "no_change"
+		else:
+			node_data["overlay"] = overlay_dropdown.get_item_text(overlay_idx)
 
 	# Solo/Duo pose and effect
 	if solo_pose_dropdown and solo_pose_dropdown.selected >= 0:
@@ -233,12 +241,12 @@ func _on_overlay_item_selected(index:int):
 	else:
 		node_data["overlay"] = "no_change"  # Leave current overlay if "no change" is selected
 
-func _on_lr_mode_dropdown_item_selected(index:int):
+func _on_lr_mode_dropdown_item_selected(_index:int):
 	pass
 	#node_data["image_person_lr_mode"] = person_lr_mode_dropdown.get_item_text(index)
 	#change_person_lr_mode(index)
 
-func change_person_lr_mode(index:int):
+func change_person_lr_mode(_index:int):
 	pass
 	#match index:
 	#	0: #Action
@@ -248,11 +256,11 @@ func change_person_lr_mode(index:int):
 	#		lr_action_dropdown.hide()
 	#		lr_reaction_dropdown.show()
 
-func _on_reaction_dropdown_item_selected(index:int):
+func _on_reaction_dropdown_item_selected(_index:int):
 	#node_data["reaction"] = lr_reaction_dropdown.get_item_text(index)
 	pass
 
-func _on_action_dropdown_item_selected(index:int):
+func _on_action_dropdown_item_selected(_index:int):
 	#node_data["action"] = lr_action_dropdown.get_item_text(index)
 	pass
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=63 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -49,6 +49,16 @@
 [ext_resource type="Texture2D" uid="uid://b0d26va2645af" path="res://Assets/UI/choice_icon/butt.png" id="44_fcolw"]
 [ext_resource type="Texture2D" uid="uid://bgp83mal86r4l" path="res://Assets/UI/choice_icon/vagina.png" id="45_6se2r"]
 [ext_resource type="Texture2D" uid="uid://b42lpftqkutbf" path="res://Assets/UI/choice_icon/throat.png" id="46_2gnqr"]
+[ext_resource type="Texture2D" uid="uid://hrg238m63ksf" path="res://Assets/UI/choice_icon/heart_up.png" id="47_wce84"]
+[ext_resource type="Texture2D" uid="uid://d0o5ebh5r62oo" path="res://Assets/UI/choice_icon/devil.png" id="48_xbacb"]
+[ext_resource type="Texture2D" uid="uid://cwi2ybpkp3i1v" path="res://Assets/UI/choice_icon/diamond.png" id="49_v8jv4"]
+[ext_resource type="Texture2D" uid="uid://c1x35wmpra4xx" path="res://Assets/UI/choice_icon/envelope.png" id="50_gh5sc"]
+[ext_resource type="Texture2D" uid="uid://cw6q65cc271st" path="res://Assets/UI/choice_icon/magnifying_glass.png" id="51_3a4po"]
+[ext_resource type="Texture2D" uid="uid://0ssv3sat0xoa" path="res://Assets/UI/choice_icon/flowers.png" id="52_65qyd"]
+[ext_resource type="Texture2D" uid="uid://dyvmeyck456i3" path="res://Assets/UI/choice_icon/ring.png" id="53_uypey"]
+[ext_resource type="Texture2D" uid="uid://cbeqyct5wtr25" path="res://Assets/UI/choice_icon/peach.png" id="54_phdoc"]
+[ext_resource type="Texture2D" uid="uid://pdy3eu2eo315" path="res://Assets/UI/choice_icon/eggplant.png" id="55_3o5t0"]
+[ext_resource type="Texture2D" uid="uid://dan2bxs5g2kl" path="res://Assets/UI/choice_icon/melons.png" id="56_ouldq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -130,7 +140,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 45
+item_count = 55
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -266,6 +276,36 @@ popup/item_43/id = 43
 popup/item_44/text = "throat"
 popup/item_44/icon = ExtResource("46_2gnqr")
 popup/item_44/id = 44
+popup/item_45/text = "heart_up"
+popup/item_45/icon = ExtResource("47_wce84")
+popup/item_45/id = 45
+popup/item_46/text = "devil"
+popup/item_46/icon = ExtResource("48_xbacb")
+popup/item_46/id = 46
+popup/item_47/text = "diamond"
+popup/item_47/icon = ExtResource("49_v8jv4")
+popup/item_47/id = 47
+popup/item_48/text = "envelope"
+popup/item_48/icon = ExtResource("50_gh5sc")
+popup/item_48/id = 48
+popup/item_49/text = "magnifying_glass"
+popup/item_49/icon = ExtResource("51_3a4po")
+popup/item_49/id = 49
+popup/item_50/text = "flowers"
+popup/item_50/icon = ExtResource("52_65qyd")
+popup/item_50/id = 50
+popup/item_51/text = "ring"
+popup/item_51/icon = ExtResource("53_uypey")
+popup/item_51/id = 51
+popup/item_52/text = "peach"
+popup/item_52/icon = ExtResource("54_phdoc")
+popup/item_52/id = 52
+popup/item_53/text = "eggplant"
+popup/item_53/icon = ExtResource("55_3o5t0")
+popup/item_53/id = 53
+popup/item_54/text = "melons"
+popup/item_54/icon = ExtResource("56_ouldq")
+popup/item_54/id = 54
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2

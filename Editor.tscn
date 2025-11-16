@@ -308,7 +308,7 @@ slot/1/draw_stylebox = true
 
 [node name="Label" type="Label" parent="CheatSheetNode"]
 layout_mode = 2
-text = "CHEAT SHEET (hotkeys: r-click, ctrl+D, ctrl+C, ctrl+V, ctrl+X, DEL)"
+text = "CHEAT SHEET (hotkeys: r-click, ctrl+S, ctrl+D, ctrl+C, ctrl+V, ctrl+X, ctrl+DEL)"
 
 [node name="cheat_sheet" type="Panel" parent="CheatSheetNode"]
 layout_mode = 2
@@ -357,7 +357,9 @@ mc_visited_gym
 mc_flag:flag_id
 girl_flag:girl_id:flag_id
 girl_phase_flag:girl_id:flag_id
+girl_status_effect:girl_id:effect_key
 leverage_flag:girl_id:flag_id
+pledged_leverage_flag:girl_id:flag_id
 quest_flag:quest_id:flag_id"
 fit_content = true
 
@@ -375,15 +377,26 @@ bbcode_enabled = true
 text = "SIGNALS [color=olive_drab]
 p1_pull_slot:slot_id
 p1_unpull_slot:slot_id
-trigger_reaction:reaction_id:p1/p2/girl_id/player
+trigger_reaction:reaction_id:p1/p2/girl_id/player:(outcome_id)
 play_world_sound:sound_id
+play_bgm:sound_id
 set_mc_flag:flag_id:true/false
 set_girl_flag:girl_id:flag_id:true/false
 set_girl_phase_flag:girl_id:flag_id:true/false
+set_girl_name:girl_id:new_name
+set_girl_hearts:girl_id:hearts_value
 set_leverage_flag:girl_id:flag_id:true/false
+pledge_leverage:girl_id:flag_id
+restore_pledged_leverage:girl_id:true/false
 set_quest_stage:quest_id:int
 set_quest_flag:quest_id:flag_id
-delayed_quest_reset:quest_id:int"
+delayed_quest_reset:quest_id:int
+set_global_counter:counter_id:int
+mod_global_counter:counter_id:int
+dress_up_pose:pose/framing/eyes/mouth:value
+dress_up_hair:hairstyle/pubes_style:value
+plap_emitter:start/stop:emitter_id:(true/false)
+plap_emitter:stop_all:(true/false)"
 fit_content = true
 
 [node name="PanelContainer3" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
@@ -408,7 +421,8 @@ action_difficulty:girl_id:action_id
 heart_level:girl_id
 quest_stage:quest_id
 reaction_abs_change:reaction_id:target_id:resource_type
-reaction_strength_adjective:reaction_id:target_id:resource_type"
+reaction_strength_adjective:reaction_id:target_id:resource_type
+global_counter:counter_id"
 fit_content = true
 
 [node name="Prefabs" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]

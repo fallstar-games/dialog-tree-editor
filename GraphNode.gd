@@ -54,7 +54,7 @@ func _on_close_request():
 	get_parent().remove_node(self)
 
 
-func _on_dragged(from, to):
+func _on_dragged(_from, to):
 	position_offset = to
 	
 func _on_resize_request(new_minsize):
@@ -120,6 +120,14 @@ func update_data():
 			node_data["framing"] = "no_change"
 		else:
 			node_data["framing"] = framing_dropdown.get_item_text(frame_idx)
+
+	# Overlay dropdown (persist even if selection signal didn't fire)
+	if overlay_dropdown:
+		var overlay_idx:int = overlay_dropdown.selected
+		if overlay_idx <= 0:
+			node_data["overlay"] = "no_change"
+		else:
+			node_data["overlay"] = overlay_dropdown.get_item_text(overlay_idx)
 
 	# Solo / Duo poses
 	if solo_dropdown and solo_dropdown.selected >= 0:
