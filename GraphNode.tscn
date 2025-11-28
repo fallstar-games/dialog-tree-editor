@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_2aob8"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_fsidw"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -214,7 +214,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 13
+item_count = 14
 selected = 0
 popup/item_0/text = "Eyes"
 popup/item_0/id = 0
@@ -242,13 +242,15 @@ popup/item_11/text = "SQUINT"
 popup/item_11/id = 11
 popup/item_12/text = "WINK"
 popup/item_12/id = 12
+popup/item_13/text = "UNAMUSED"
+popup/item_13/id = 13
 
 [node name="LowerExpression" type="OptionButton" parent="PaperDollInfo/ExpressionHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 12
+item_count = 13
 selected = 0
 fit_to_longest_item = false
 popup/item_0/text = "Mouth"
@@ -275,6 +277,8 @@ popup/item_10/text = "CLENCHED"
 popup/item_10/id = 10
 popup/item_11/text = "NEUTRAL"
 popup/item_11/id = 11
+popup/item_12/text = "LAUGHING"
+popup/item_12/id = 12
 
 [node name="PoseFrameHBox" type="HBoxContainer" parent="PaperDollInfo"]
 layout_mode = 2
@@ -321,7 +325,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 5
+item_count = 6
 selected = 0
 popup/item_0/text = "Overlay"
 popup/item_0/id = 0
@@ -333,6 +337,8 @@ popup/item_3/text = "ADD:SWEATDROP:HAIR_FRONT"
 popup/item_3/id = 3
 popup/item_4/text = "RMV:SWEATDROP"
 popup/item_4/id = 4
+popup/item_5/text = "RMV_ALL"
+popup/item_5/id = 5
 
 [node name="SoloInfo" type="HBoxContainer" parent="."]
 visible = false
@@ -422,7 +428,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_2aob8")
+syntax_highlighter = SubResource("CodeHighlighter_fsidw")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 

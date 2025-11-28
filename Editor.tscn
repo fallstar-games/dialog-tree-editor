@@ -387,7 +387,7 @@ set_girl_name:girl_id:new_name
 set_girl_hearts:girl_id:hearts_value
 set_leverage_flag:girl_id:flag_id:true/false
 pledge_leverage:girl_id:flag_id
-restore_pledged_leverage:girl_id:true/false
+finished_negotiation:girl_id:true/false
 set_quest_stage:quest_id:int
 set_quest_flag:quest_id:flag_id
 delayed_quest_reset:quest_id:int
@@ -396,7 +396,10 @@ mod_global_counter:counter_id:int
 dress_up_pose:pose/framing/eyes/mouth:value
 dress_up_hair:hairstyle/pubes_style:value
 plap_emitter:start/stop:emitter_id:(true/false)
-plap_emitter:stop_all:(true/false)"
+plap_emitter:stop_all:(true/false)
+paperdoll_overlay:girl_id:ADD:overlay_name:parent_layer
+paperdoll_overlay:girl_id:RMV:overlay_name
+paperdoll_overlay:girl_id:RMV_ALL"
 fit_content = true
 
 [node name="PanelContainer3" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
@@ -418,10 +421,15 @@ mc_name
 girl_name:girl_id
 p1_garment_name:slot_id
 action_difficulty:girl_id:action_id
+force_difficulty:girl_id
 heart_level:girl_id
+resistance:girl_id
+mc_arousal
+mc_vigor
 quest_stage:quest_id
 reaction_abs_change:reaction_id:target_id:resource_type
 reaction_strength_adjective:reaction_id:target_id:resource_type
+try_force:girl_id
 global_counter:counter_id"
 fit_content = true
 
