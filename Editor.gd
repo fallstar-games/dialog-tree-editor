@@ -688,6 +688,10 @@ func _on_file_dialog_load_file_async():
 									current_node.line_edits["split_action_weak_fail"].text = node["split_action_outcomes"]["weak_fail"]
 								current_node.line_edits["split_action_fail"].text = node["split_action_outcomes"]["fail"]
 								current_node.line_edits["split_action_crit_fail"].text = node["split_action_outcomes"]["crit_fail"]
+								if node["split_action_outcomes"].has("crit_success_alt"):
+									current_node.line_edits["split_action_crit_success_alt"].text = node["split_action_outcomes"]["crit_success_alt"]
+								if node["split_action_outcomes"].has("success_alt"):
+									current_node.line_edits["split_action_success_alt"].text = node["split_action_outcomes"]["success_alt"]
 							"REACTION_STRENGTH":
 								current_node.line_edits["split_reaction_id"].text = node["split_reaction_id"]
 								set_option_button_by_text(current_node.reaction_target_dropdown, node["split_reaction_target"], "Reaction test target")
@@ -1458,6 +1462,10 @@ func _apply_node_data_to_node(node, data:Dictionary):
 								node.line_edits["split_action_weak_fail"].text = str(data["split_action_outcomes"].get("weak_fail", ""))
 								node.line_edits["split_action_fail"].text = str(data["split_action_outcomes"].get("fail", ""))
 								node.line_edits["split_action_crit_fail"].text = str(data["split_action_outcomes"].get("crit_fail", ""))
+								if data["split_action_outcomes"].has("crit_success_alt"):
+									node.line_edits["split_action_crit_success_alt"].text = str(data["split_action_outcomes"].get("crit_success_alt", ""))
+								if data["split_action_outcomes"].has("success_alt"):
+									node.line_edits["split_action_success_alt"].text = str(data["split_action_outcomes"].get("success_alt", ""))
 						"REACTION_STRENGTH":
 							# Mirror load-time mapping for reaction strength split
 							node.line_edits["split_reaction_id"].text = str(data.get("split_reaction_id", ""))

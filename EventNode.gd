@@ -72,7 +72,9 @@ extends GraphNode
 	"split_int_var_id": $SplitInfo/SplitInt/VarCall/LineEdit,
 	"split_action_id": $SplitInfo/SplitAction/ActionID/LineEdit,
 	"split_action_crit_success": $SplitInfo/SplitAction/CritSuccess/LineEdit,
+	"split_action_crit_success_alt": $SplitInfo/SplitAction/CritSuccessAlt/LineEdit,
 	"split_action_success": $SplitInfo/SplitAction/Success/LineEdit,
+	"split_action_success_alt": $SplitInfo/SplitAction/SuccessAlt/LineEdit, 
 	"split_action_fail": $SplitInfo/SplitAction/Fail/LineEdit,
 	"split_action_weak_fail": $SplitInfo/SplitAction/WeakFail/LineEdit,
 	"split_action_crit_fail": $SplitInfo/SplitAction/CritFail/LineEdit,
@@ -269,7 +271,9 @@ func update_data():
 						"success": line_edits["split_action_success"].text,
 						"weak_fail": line_edits["split_action_weak_fail"].text,
 						"fail": line_edits["split_action_fail"].text,
-						"crit_fail": line_edits["split_action_crit_fail"].text
+						"crit_fail": line_edits["split_action_crit_fail"].text,
+						"crit_success_alt": line_edits["split_action_crit_success_alt"].text,
+						"success_alt": line_edits["split_action_success_alt"].text
 					}
 				"REACTION_STRENGTH":
 					node_data["split_reaction_id"] = line_edits["split_reaction_id"].text

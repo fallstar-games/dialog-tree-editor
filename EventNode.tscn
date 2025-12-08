@@ -271,6 +271,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 expand_to_text_length = true
 
+[node name="CritSuccessAlt" type="HBoxContainer" parent="SplitInfo/SplitAction"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitAction/CritSuccessAlt"]
+layout_mode = 2
+text = "crit_success_alt -> "
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/CritSuccessAlt"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
 [node name="Success" type="HBoxContainer" parent="SplitInfo/SplitAction"]
 layout_mode = 2
 theme_override_constants/separation = 12
@@ -280,6 +293,19 @@ layout_mode = 2
 text = "success ->"
 
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/Success"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="SuccessAlt" type="HBoxContainer" parent="SplitInfo/SplitAction"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitAction/SuccessAlt"]
+layout_mode = 2
+text = "success_alt ->"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitAction/SuccessAlt"]
 layout_mode = 2
 size_flags_horizontal = 3
 expand_to_text_length = true
