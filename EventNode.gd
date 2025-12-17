@@ -45,7 +45,8 @@ extends GraphNode
 	"RANDOM": $SplitInfo/SplitRandom,
 	"ACTION_TEST": $SplitInfo/SplitAction,
 	"REACTION_STRENGTH": $SplitInfo/SplitReactionStrength,
-	"HEART_LEVEL": $SplitInfo/SplitHeartLevel
+	"HEART_LEVEL": $SplitInfo/SplitHeartLevel,
+	"STRING": $SplitInfo/SplitString,
 }
 
 @onready var wardrobe_containers:Dictionary = {
@@ -70,6 +71,8 @@ extends GraphNode
 	"split_false_outcome": $SplitInfo/SplitBool/FalseOutcome/LineEdit,
 	"split_else_outcome": $SplitInfo/SplitInt/ElseOutcome/LineEdit,
 	"split_int_var_id": $SplitInfo/SplitInt/VarCall/LineEdit,
+	"split_string_var_id": $SplitInfo/SplitString/VarCall/LineEdit,
+	"split_string_else_outcome": $SplitInfo/SplitString/ElseOutcome/LineEdit,
 	"split_action_id": $SplitInfo/SplitAction/ActionID/LineEdit,
 	"split_action_crit_success": $SplitInfo/SplitAction/CritSuccess/LineEdit,
 	"split_action_crit_success_alt": $SplitInfo/SplitAction/CritSuccessAlt/LineEdit,
@@ -103,6 +106,7 @@ extends GraphNode
 @onready var output_cycler = load("res://output_cycler.tscn")
 @onready var output_random = load("res://output_random.tscn")
 @onready var output_greater = load("res://output_greater.tscn")
+@onready var output_split_string = load("res://output_split_string.tscn")
 
 signal _cancel_button_pressed(output_type)
 
@@ -110,17 +114,22 @@ var output_subtree_count: int = 0
 var output_cycler_count: int = 0
 var output_random_count: int = 0
 var output_greater_count: int = 0
+var output_split_string_count: int = 0
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
 	"event_type":"SPLIT",
 	"split_type": "BOOL",
-	"split_var_id": "",
+	"split_bool_var_id": "",
+	"split_int_var_id": "",
+	"split_string_var_id": "",
 	"split_true_outcome": "",
 	"split_false_outcome": "",
 	"split_greater_outcomes": {},
 	"split_else_outcome": "",
+	"split_string_else_outcome": "",
+	"split_string_outcomes": {},
 	"split_random_outcomes": {},
 	"split_action_id": "",
 	"split_action_target": "MAIN_PERSON",
@@ -257,6 +266,15 @@ func update_data():
 							var target_node = output.get_node("TargetLine").text
 							node_data["split_greater_outcomes"][target_value] = target_node
 					node_data["split_else_outcome"] = line_edits["split_else_outcome"].text
+				"STRING":
+					node_data["split_string_var_id"] = line_edits["split_string_var_id"].text
+					node_data["split_string_outcomes"] = {}
+					for output in split_containers["STRING"].get_children():
+						if "OutputSplitString" in output.name:
+							var target_value = output.get_node("StringLine").text
+							var target_node = output.get_node("TargetLine").text
+							node_data["split_string_outcomes"][target_value] = target_node
+					node_data["split_string_else_outcome"] = line_edits["split_string_else_outcome"].text
 				"RANDOM":
 					node_data["split_random_outcomes"] = {}
 					for output in split_containers["RANDOM"].get_children():
@@ -410,6 +428,11 @@ func _on_add_output_button_pressed(output_type):
 		var new_output = output_greater.instantiate()
 		new_output.name = "OutputGreater" + str(output_greater_count)
 		split_containers["INT"].add_child(new_output)
+	elif output_type == "string":
+		output_split_string_count += 1
+		var new_output = output_split_string.instantiate()
+		new_output.name = "OutputSplitString" + str(output_split_string_count)
+		split_containers["STRING"].add_child(new_output)
 	else:
 		push_error("Unknown output type: " + output_type)
 
@@ -422,6 +445,8 @@ func _on_cancel_button_pressed(output_type):
 		output_random_count -= 1
 	elif "greater" in output_type:
 		output_greater_count -= 1
+	elif "string" in output_type:
+		output_split_string_count -= 1
 
 func _on_garment_slot_item_selected(index:int):
 	node_data["garment_slot_id"] = garment_slot_dropdown.get_item_text(index)

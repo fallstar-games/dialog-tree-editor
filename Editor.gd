@@ -669,6 +669,18 @@ func _on_file_dialog_load_file_async():
 
 										output_node.var_amount.text = str(target_value)
 										output_node.var_name.text = str(node["split_greater_outcomes"][target_value])
+							"STRING":
+								current_node.line_edits["split_string_var_id"].text = node["split_string_var_id"]
+								current_node.line_edits["split_string_else_outcome"].text = node["split_string_else_outcome"]
+								if not node["split_string_outcomes"].is_empty():
+									for target_value in node["split_string_outcomes"]:
+										current_node._on_add_output_button_pressed("string")
+										var current_output_count = current_node.output_split_string_count
+										var output_node_name = "OutputSplitString" + str(current_output_count)
+										var output_node = current_node.split_containers["STRING"].get_node(output_node_name)
+
+										output_node.outcome_name.text = str(node["split_string_outcomes"][target_value])
+										output_node.target_node.text = target_value
 							"RANDOM":
 								if not node["split_random_outcomes"].is_empty():
 									for target_node in node["split_random_outcomes"]:
@@ -1442,6 +1454,18 @@ func _apply_node_data_to_node(node, data:Dictionary):
 										output_node.var_amount.text = str(target_value)
 										output_node.var_name.text = str(data["split_greater_outcomes"][target_value])
 							node.line_edits["split_else_outcome"].text = str(data.get("split_else_outcome", ""))
+						"STRING":
+							node.line_edits["split_string_var_id"].text = str(data.get("split_string_var_id", ""))
+							if data.has("split_string_outcomes") and not data["split_string_outcomes"].is_empty():
+								for target_value in data["split_string_outcomes"].keys():
+									node._on_add_output_button_pressed("string")
+									var current_output_count = node.output_split_string_count
+									var output_node_name = "OutputSplitString" + str(current_output_count)
+									var output_node = node.split_containers["STRING"].get_node(output_node_name)
+									if output_node:
+										output_node.outcome_name.text = str(target_value)
+										output_node.target_node.text = str(data["split_string_outcomes"][target_value])
+							node.line_edits["split_string_else_outcome"].text = str(data.get("split_string_else_outcome", ""))
 						"RANDOM":
 							if data.has("split_random_outcomes") and not data["split_random_outcomes"].is_empty():
 								for target_node in data["split_random_outcomes"].keys():

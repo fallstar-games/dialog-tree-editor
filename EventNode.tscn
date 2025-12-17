@@ -166,7 +166,7 @@ theme_override_constants/separation = 8
 
 [node name="SplitType" type="OptionButton" parent="SplitInfo"]
 layout_mode = 2
-item_count = 6
+item_count = 7
 selected = 0
 popup/item_0/text = "BOOL"
 popup/item_0/id = 0
@@ -176,10 +176,12 @@ popup/item_2/text = "RANDOM"
 popup/item_2/id = 2
 popup/item_3/text = "INT"
 popup/item_3/id = 3
-popup/item_4/text = "REACTION_STRENGTH"
+popup/item_4/text = "STRING"
 popup/item_4/id = 4
 popup/item_5/text = "HEART_LEVEL"
 popup/item_5/id = 5
+popup/item_6/text = "REACTION_STRENGTH"
+popup/item_6/id = 6
 
 [node name="SplitBool" type="VBoxContainer" parent="SplitInfo"]
 layout_mode = 2
@@ -576,6 +578,51 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_twcxw")
 icon = ExtResource("3_h7t40")
+
+[node name="SplitString" type="VBoxContainer" parent="SplitInfo"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="VarCall" type="HBoxContainer" parent="SplitInfo/SplitString"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitString/VarCall"]
+layout_mode = 2
+text = "exposed_var: "
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitString/VarCall"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="Outcomes" type="HBoxContainer" parent="SplitInfo/SplitString"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="SplitInfo/SplitString/Outcomes"]
+layout_mode = 2
+text = "Add 'Equals' Output"
+
+[node name="AddOutputButton" type="Button" parent="SplitInfo/SplitString/Outcomes"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_twcxw")
+icon = ExtResource("3_h7t40")
+
+[node name="ElseOutcome" type="HBoxContainer" parent="SplitInfo/SplitString"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitString/ElseOutcome"]
+layout_mode = 2
+text = "ELSE onramp: "
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitString/ElseOutcome"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
 
 [node name="SubTreeInfo" type="VBoxContainer" parent="."]
 visible = false
@@ -1115,6 +1162,7 @@ text = "Sell
 [connection signal="item_selected" from="SplitInfo/SplitHeartLevel/TargetPerson/HeartLevelTarget" to="." method="_on_heart_level_target_item_selected"]
 [connection signal="pressed" from="SplitInfo/SplitInt/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["greater"]]
 [connection signal="pressed" from="SplitInfo/SplitRandom/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["random"]]
+[connection signal="pressed" from="SplitInfo/SplitString/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["string"]]
 [connection signal="item_selected" from="SubTreeInfo/SubTreeType" to="." method="_on_sub_tree_type_item_selected"]
 [connection signal="pressed" from="SubTreeInfo/StandardInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["subtree"]]
 [connection signal="item_selected" from="CheckInfo/CheckType" to="." method="_on_check_type_item_selected"]

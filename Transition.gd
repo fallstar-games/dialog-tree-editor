@@ -44,6 +44,16 @@ func update_data():
 	node_data["main_person_id"] = main_person_line.text
 	node_data["second_person_id"] = second_person_line.text
 
+	if weather_option.selected != 0:
+		node_data["weather"] = weather_option.get_item_text(weather_option.selected)
+	else:
+		node_data["weather"] = "no_change"
+
+	if phase_option.selected != 0:
+		node_data["phase"] = phase_option.get_item_text(phase_option.selected)
+	else:
+		node_data["phase"] = "no_change"
+
 func _on_focus_option_item_selected(index:int):
 	node_data["focus_change"] = index
 

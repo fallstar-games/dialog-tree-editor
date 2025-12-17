@@ -347,6 +347,8 @@ bbcode_enabled = true
 text = "IF_BOOLS [color=goldenrod]
 is_raining
 is_phase:day_phase
+current_room_is:room_id
+room_is_public
 is_main_person:girl_id
 p1_slot_filled:slot_id
 p1_slot_pulled:slot_id
@@ -354,6 +356,7 @@ solo_is_showing
 talkie_is_showing
 has_patience:p1/p2/girl_id
 mc_visited_gym
+mc_is_naked
 mc_flag:flag_id
 girl_flag:girl_id:flag_id
 girl_phase_flag:girl_id:flag_id
