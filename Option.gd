@@ -9,6 +9,7 @@ extends GraphNode
 @onready var difficulty_container = $HBoxContainer
 @onready var room_line: LineEdit = $HBoxContainer/LineEdit
 @onready var disabled_checkbox: CheckBox = $HBoxContainer2/DisabledCheckBox
+@onready var reqs_preset_line: LineEdit = $ReqsPresetID/LineEdit
 
 @export var ignore_color: Color = Color.hex(0x7f7f7fff)
 @export var active_color: Color = Color.hex(0x7f7f7fff)
@@ -19,6 +20,7 @@ var node_data = {
 	"text": "",
 	"room_id": "",
 	"icon_id": "",
+	"reqs_id": "",
 	"disabled": false,
 	"go to": []
 }
@@ -41,6 +43,7 @@ func update_data():
 	node_data["offset_y"] = position_offset.y
 
 	node_data["room_id"] = room_line.text
+	node_data["reqs_id"] = reqs_preset_line.text
 
 	node_data["disabled"] = disabled_checkbox.button_pressed
 

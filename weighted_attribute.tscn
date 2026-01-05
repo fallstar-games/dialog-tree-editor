@@ -1,0 +1,93 @@
+[gd_scene load_steps=20 format=3 uid="uid://blxx8mssrjvtl"]
+
+[ext_resource type="Script" path="res://weighted_attribute.gd" id="1_cc42v"]
+[ext_resource type="Texture2D" uid="uid://dbyg5uaf8o8ie" path="res://Assets/UI/choice_icon/tongue.png" id="2_6h3fd"]
+[ext_resource type="Texture2D" uid="uid://b0gstwesjh628" path="res://Assets/UI/choice_icon/eye.png" id="3_au8qf"]
+[ext_resource type="Texture2D" uid="uid://bkloslyeujapd" path="res://Assets/UI/choice_icon/hand.png" id="4_jk66o"]
+[ext_resource type="Texture2D" uid="uid://bxxppflpdjp4o" path="res://Assets/UI/choice_icon/splooge.png" id="5_ym1om"]
+[ext_resource type="Texture2D" uid="uid://b84u6wwc41hlm" path="res://Assets/UI/choice_icon/mushroom.png" id="6_s0ign"]
+[ext_resource type="Texture2D" uid="uid://rqlj24noh2oy" path="res://Assets/UI/choice_icon/lips.png" id="7_cbdqh"]
+[ext_resource type="Texture2D" uid="uid://b42lpftqkutbf" path="res://Assets/UI/choice_icon/throat.png" id="8_xhfhe"]
+[ext_resource type="Texture2D" uid="uid://dis2h5gjoju87" path="res://Assets/UI/choice_icon/boobs.png" id="9_1r2yf"]
+[ext_resource type="Texture2D" uid="uid://b0d26va2645af" path="res://Assets/UI/choice_icon/butt.png" id="10_whr01"]
+[ext_resource type="Texture2D" uid="uid://bgp83mal86r4l" path="res://Assets/UI/choice_icon/vagina.png" id="11_86omk"]
+[ext_resource type="Texture2D" uid="uid://danyye32laut5" path="res://Assets/UI/choice_icon/bicep.png" id="12_yjej2"]
+[ext_resource type="Texture2D" uid="uid://dq6rcs4m7xtc8" path="res://Assets/UI/choice_icon/dress.png" id="13_5q5c7"]
+[ext_resource type="Texture2D" uid="uid://dl6o2gsolbvgg" path="res://Assets/UI/choice_icon/treasure_map.png" id="14_nm2ae"]
+[ext_resource type="Texture2D" uid="uid://cbeqyct5wtr25" path="res://Assets/UI/choice_icon/peach.png" id="15_yq60b"]
+[ext_resource type="Texture2D" uid="uid://pdy3eu2eo315" path="res://Assets/UI/choice_icon/eggplant.png" id="16_ofih2"]
+[ext_resource type="Texture2D" uid="uid://bvs4ekqrw2f18" path="res://Assets/UI/choice_icon/chain.png" id="17_mg2x5"]
+[ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="18_ikqli"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fpl5p"]
+
+[node name="WeightedAttribute" type="HBoxContainer"]
+theme_override_constants/separation = 12
+script = ExtResource("1_cc42v")
+
+[node name="AttributeType" type="OptionButton" parent="."]
+layout_mode = 2
+item_count = 16
+selected = 0
+popup/item_0/text = "craving_tongue"
+popup/item_0/icon = ExtResource("2_6h3fd")
+popup/item_0/id = 0
+popup/item_1/text = "craving_gaze"
+popup/item_1/icon = ExtResource("3_au8qf")
+popup/item_1/id = 1
+popup/item_2/text = "craving_touch"
+popup/item_2/icon = ExtResource("4_jk66o")
+popup/item_2/id = 2
+popup/item_3/text = "craving_cum"
+popup/item_3/icon = ExtResource("5_ym1om")
+popup/item_3/id = 3
+popup/item_4/text = "craving_cock"
+popup/item_4/icon = ExtResource("6_s0ign")
+popup/item_4/id = 4
+popup/item_5/text = "sensitivity_lips"
+popup/item_5/icon = ExtResource("7_cbdqh")
+popup/item_5/id = 5
+popup/item_6/text = "sensitivity_throat"
+popup/item_6/icon = ExtResource("8_xhfhe")
+popup/item_6/id = 6
+popup/item_7/text = "sensitivity_breasts"
+popup/item_7/icon = ExtResource("9_1r2yf")
+popup/item_7/id = 7
+popup/item_8/text = "sensitivity_ass"
+popup/item_8/icon = ExtResource("10_whr01")
+popup/item_8/id = 8
+popup/item_9/text = "sensitivity_pussy"
+popup/item_9/icon = ExtResource("11_86omk")
+popup/item_9/id = 9
+popup/item_10/text = "opinion_rough_sex"
+popup/item_10/icon = ExtResource("12_yjej2")
+popup/item_10/id = 10
+popup/item_11/text = "opinion_lesbian_sex"
+popup/item_11/icon = ExtResource("13_5q5c7")
+popup/item_11/id = 11
+popup/item_12/text = "opinion_public_sex"
+popup/item_12/icon = ExtResource("14_nm2ae")
+popup/item_12/id = 12
+popup/item_13/text = "sex_skill_anal"
+popup/item_13/icon = ExtResource("15_yq60b")
+popup/item_13/id = 13
+popup/item_14/text = "sex_skill_deepthroat"
+popup/item_14/icon = ExtResource("16_ofih2")
+popup/item_14/id = 14
+popup/item_15/text = "obedience"
+popup/item_15/icon = ExtResource("17_mg2x5")
+popup/item_15/id = 15
+
+[node name="AttributeWeight" type="LineEdit" parent="."]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+placeholder_text = "0"
+expand_to_text_length = true
+
+[node name="CancelButton" type="Button" parent="."]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fpl5p")
+icon = ExtResource("18_ikqli")
+
+[connection signal="pressed" from="CancelButton" to="." method="_on_cancel_button_pressed"]

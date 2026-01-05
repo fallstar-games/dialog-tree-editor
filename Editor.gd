@@ -399,538 +399,18 @@ func _on_file_dialog_load_file_async():
 			dialog[ node_name ].res = new_node
 
 	for node_name in dialog:
-		var node = dialog[node_name]
+		var node_data = dialog[node_name]
+		var current_node = node_data.res
 		
-		# if type: node
-		if "DIALOG" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-			
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-			
-			current_node.text.text = node["text"]
-			current_node.character_opt.select(node["speaker"])
-			current_node.change_speaker_mode(int(node["speaker"]))
-
-
-			if node.has("image_type"):
-				if node["image_type"] == "no_change":
-					current_node.image_type_dropdown.select(0) # Select "No Image" if image type is empty
-					current_node.change_image_type_mode(0)
-				else:
-					if set_option_button_by_text(current_node.image_type_dropdown, node["image_type"], "Image type"):
-						current_node.change_image_type_mode(current_node.image_type_dropdown.selected)
-
-			if node.has("expression_eyes"):
-				if node["expression_eyes"] == "no_change":
-					current_node.eyes_opt.select(0) # Select "None" if eyes is empty
-				else:
-					set_option_button_by_text(current_node.eyes_opt, node["expression_eyes"], "Image eyes")
-
-			if node.has("expression_mouth"):
-				if node["expression_mouth"] == "no_change":
-					current_node.mouth_opt.select(0) # Select "None" if mouth is empty
-				else:
-					set_option_button_by_text(current_node.mouth_opt, node["expression_mouth"], "Image mouth")
-
-			#Set pose_dropdown to the index with the same name as node["pose"]
-			if node.has("paperdoll_pose"):
-				if node["paperdoll_pose"] == "no_change":
-					current_node.pose_dropdown.select(0) # Select "None" if pose is empty
-				else:
-					set_option_button_by_text(current_node.pose_dropdown, node["paperdoll_pose"], "Image pose")
-
-			if node.has("framing"):
-				# Set framing_dropdown to the index with the same name as node["framing"]
-				if node["framing"] == "no_change":
-					current_node.framing_dropdown.select(0) # Select "None" if framing is empty
-				else:
-					set_option_button_by_text(current_node.framing_dropdown, node["framing"], "Image framing")
-
-			if node.has("overlay"):
-				# Set overlay_dropdown to the index with the same name as node["overlay"]
-				if node["overlay"] == "no_change":
-					current_node.overlay_dropdown.select(0) # Select "None" if overlay is empty
-				else:
-					set_option_button_by_text(current_node.overlay_dropdown, node["overlay"], "Image overlay")
-
-			if node.has("solo_pose"):
-				set_option_button_by_text(current_node.solo_dropdown, node["solo_pose"], "Image solo pose")
-
-			if node.has("duo_pose"):
-				set_option_button_by_text(current_node.duo_dropdown, node["duo_pose"], "Image duo pose")
-
-			if node.has("room_id"):
-				current_node.room_line.text = node["room_id"]
-
-		# if type: append
-		elif "APPEND" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-			
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-			
-			current_node.text.text = node["text"]
-			
-		# if type: feature	
-		elif "LOGIC" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-			
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-
-			current_node.main_person_line.text = node["main_person_id"]
-			current_node.second_person_line.text = node["second_person_id"]
-			current_node.option_button.select(node["opt_index"])
-			current_node._on_option_button_item_selected(node["opt_index"])
-
-			if node.has("if_operator"):
-				if set_option_button_by_text(current_node.operator_dropdown, node["if_operator"], "If operator"):
-					current_node._on_operator_dropdown_item_selected(current_node.operator_dropdown.selected)
-			else:
-				# Default to AND if no operator found
-				current_node.operator_dropdown.select(0)
-				current_node._on_operator_dropdown_item_selected(0)
-			
-			# variables
-			if not node["set_variables"].is_empty():
-				var variables_group = current_node.get_node("VariablesGroup")
-				variables_group.show()
-				var i := 1
-				for key in node["set_variables"].keys():
-					if current_node.variable_count < i:
-						current_node._on_add_button_pressed("variable")
-					var variable_node = variables_group.get_node("Variable" + str(i))
-					if variable_node:
-						variable_node.text.text = key
-						variable_node.check_button.button_pressed = node["set_variables"][key]
-					i += 1
-			
-			# signals
-			if not node["signals"].is_empty():
-				var emit_signal_group = current_node.get_node("EmitSignalGroup")
-				emit_signal_group.show()
-				var i := 1
-				for signal_name in node["signals"]:
-					if current_node.signal_count < i:
-						current_node._on_add_button_pressed("signal")
-					var signal_node = emit_signal_group.get_node("Signal" + str(i))
-					if signal_node:
-						signal_node.text.text = signal_name
-					i += 1
-			
-			# boolean conditionals
-			if not node["if_boolean"].is_empty():
-				var conditionals_group = current_node.get_node("ConditionalsGroup")
-				conditionals_group.show()
-
-				var i := 1
-				for key in node["if_boolean"].keys():
-					if current_node.conditional_count < i:
-						current_node._on_add_button_pressed("conditional")
-					var conditional_node = conditionals_group.get_node("Conditional" + str(i))
-					if conditional_node:
-						conditional_node.text.text = key
-						conditional_node.check_button.button_pressed = node["if_boolean"][key]
-					i += 1
-
-			# greater than conditionals
-			if not node["if_greater"].is_empty():
-				var greater_group = current_node.get_node("GreaterGroup")
-				greater_group.show()
-				var i := 1
-				for key in node["if_greater"].keys():
-					if current_node.greater_count < i:
-						current_node._on_add_button_pressed("greater")
-					var greater_node = greater_group.get_node("Greater" + str(i))
-					if greater_node:
-						greater_node.var_name.text = key
-						greater_node.var_amount.text = str(node["if_greater"][key])
-					i += 1
-			
-			# less than conditionals
-			if not node["if_less"].is_empty():
-				var less_group = current_node.get_node("LessGroup")
-				less_group.show()
-				var i := 1
-				for key in node["if_less"].keys():
-					if current_node.less_count < i:
-						current_node._on_add_button_pressed("less")
-					var less_node = less_group.get_node("Less" + str(i))
-					if less_node:
-						less_node.var_name.text = key
-						less_node.var_amount.text = str(node["if_less"][key])
-					i += 1
-
-			# equal to conditionals
-			if not node["if_equal"].is_empty():
-				var equal_group = current_node.get_node("EqualGroup")
-				equal_group.show()
-				var i := 1
-				for key in node["if_equal"].keys():
-					if current_node.equal_count < i:
-						current_node._on_add_button_pressed("equal")
-					var equal_node = equal_group.get_node("Equal" + str(i))
-					if equal_node:
-						equal_node.var_name.text = key
-						equal_node.var_amount.text = str(node["if_equal"][key])
-					i += 1
-
-			# has garment conditionals
-			if not node["has_garment"].is_empty():
-				var has_garment_group = current_node.get_node("HasGarmentGroup")
-				has_garment_group.show()
-				var i := 1
-				for key in node["has_garment"].keys():
-					if current_node.has_garment_count < i:
-						current_node._on_add_button_pressed("has_garment")
-					var has_garment_node = has_garment_group.get_node("HasGarment" + str(i))
-					if has_garment_node:
-						has_garment_node.text.text = key
-						has_garment_node.check_button.button_pressed = node["has_garment"][key]
-					i += 1
-			
-		# if type: option
-		elif "CHOICE" in node["node title"]:
-			#_on_new_option_pressed(true)
-			#print("option spawned at bottom of load function")
-			var current_node = dialog[ node_name ].res
-
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-			current_node.text.text = node["text"]
-			if node.has("room_id"):
-				current_node.room_line.text = node["room_id"]
-			if node.has("icon_id"):
-				if node["icon_id"] == "":
-					current_node.icon_dropdown.select(0) # Select "None" if icon is empty
-				else:
-					set_option_button_by_text(current_node.icon_dropdown, node["icon_id"], "back_arrow")
-			if node.has("disabled"):
-				current_node.disabled_checkbox.button_pressed = node["disabled"]
-
-		# if type: event
-		elif "EVENT" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-
-			if set_option_button_by_text(current_node.event_dropdown, node["event_type"], "Event type"):
-				current_node.change_mode(current_node.event_dropdown.selected)
-
-			#if set_option_button_by_text(current_node.check_type_dropdown, node["check_type"], "Check type"):
-			#	current_node.change_check_mode(current_node.check_type_dropdown.selected)
-			if node.has("split_type"):
-				if set_option_button_by_text(current_node.split_type_dropdown, node["split_type"], "Split type"):
-					current_node.change_split_mode(current_node.split_type_dropdown.selected)
-
-			if node.has("subtree_type"):
-				if set_option_button_by_text(current_node.subtree_type_dropdown, node["subtree_type"], "Subtree type"):
-					current_node.change_subtree_mode(current_node.subtree_type_dropdown.selected)
-
-			if node.has("line_entry_type"):
-				set_option_button_by_text(current_node.line_entry_type_dropdown, node["line_entry_type"], "Line entry type")
-
-			if set_option_button_by_text(current_node.wardrobe_action_dropdown, node["wardrobe_action"], "Wardrobe action"):
-				current_node.change_wardrobe_mode(current_node.wardrobe_action_dropdown.selected)
-
-			match node["event_type"]:
-				#"CHECK":
-				#	match node["check_type"]:
-				#		"REQUEST":
-				#			current_node.line_edits["request_id"].text = node["request_id"]
-				#			current_node.line_edits["request_pass"].text = node["outcome_pass"]
-				#			current_node.line_edits["request_fail"].text = node["outcome_fail"]
-				#			current_node.line_edits["request_unsure"].text = node["outcome_unsure"]
-				#		"COERCE":
-				#			current_node.line_edits["lever_id"].text = node["lever_id"]
-				#			current_node.line_edits["coerce_pass"].text = node["outcome_pass"]
-				#			current_node.line_edits["coerce_fail"].text = node["outcome_fail"]
-				#		"FORCE":
-				#			current_node.line_edits["force_pass"].text = node["outcome_pass"]
-				#			current_node.line_edits["force_fail"].text = node["outcome_fail"]
-				"SPLIT":
-					if node.has("split_type"):
-						match node["split_type"]:
-							"BOOL":
-								current_node.line_edits["split_bool_var_id"].text = node["split_bool_var_id"]
-								current_node.line_edits["split_true_outcome"].text = node["split_true_outcome"]
-								current_node.line_edits["split_false_outcome"].text = node["split_false_outcome"]
-							"INT":
-								current_node.line_edits["split_int_var_id"].text = node["split_int_var_id"]
-								current_node.line_edits["split_else_outcome"].text = node["split_else_outcome"]
-								if not node["split_greater_outcomes"].is_empty():
-									for target_value in node["split_greater_outcomes"]:
-										current_node._on_add_output_button_pressed("greater")
-										var current_output_count = current_node.output_greater_count
-										var output_node_name = "OutputGreater" + str(current_output_count)
-										var output_node = current_node.split_containers["INT"].get_node(output_node_name)
-
-										output_node.var_amount.text = str(target_value)
-										output_node.var_name.text = str(node["split_greater_outcomes"][target_value])
-							"STRING":
-								current_node.line_edits["split_string_var_id"].text = node["split_string_var_id"]
-								current_node.line_edits["split_string_else_outcome"].text = node["split_string_else_outcome"]
-								if not node["split_string_outcomes"].is_empty():
-									for target_value in node["split_string_outcomes"]:
-										current_node._on_add_output_button_pressed("string")
-										var current_output_count = current_node.output_split_string_count
-										var output_node_name = "OutputSplitString" + str(current_output_count)
-										var output_node = current_node.split_containers["STRING"].get_node(output_node_name)
-
-										output_node.outcome_name.text = str(node["split_string_outcomes"][target_value])
-										output_node.target_node.text = target_value
-							"RANDOM":
-								if not node["split_random_outcomes"].is_empty():
-									for target_node in node["split_random_outcomes"]:
-										current_node._on_add_output_button_pressed("random")
-										var current_output_count = current_node.output_random_count
-										var output_node_name = "OutputRandom" + str(current_output_count)
-										var output_node = current_node.split_containers["RANDOM"].get_node(output_node_name)
-
-										output_node.var_amount.text = str(node["split_random_outcomes"][target_node])
-										output_node.var_name.text = target_node
-							"ACTION_TEST":
-								current_node.line_edits["split_action_id"].text = node["split_action_id"]
-								set_option_button_by_text(current_node.action_target_dropdown, node["split_action_target"], "Action test target")
-								current_node.line_edits["split_action_crit_success"].text = node["split_action_outcomes"]["crit_success"]
-								current_node.line_edits["split_action_success"].text = node["split_action_outcomes"]["success"]
-								if node["split_action_outcomes"].has("weak_fail"):
-									current_node.line_edits["split_action_weak_fail"].text = node["split_action_outcomes"]["weak_fail"]
-								current_node.line_edits["split_action_fail"].text = node["split_action_outcomes"]["fail"]
-								current_node.line_edits["split_action_crit_fail"].text = node["split_action_outcomes"]["crit_fail"]
-								if node["split_action_outcomes"].has("crit_success_alt"):
-									current_node.line_edits["split_action_crit_success_alt"].text = node["split_action_outcomes"]["crit_success_alt"]
-								if node["split_action_outcomes"].has("success_alt"):
-									current_node.line_edits["split_action_success_alt"].text = node["split_action_outcomes"]["success_alt"]
-							"REACTION_STRENGTH":
-								current_node.line_edits["split_reaction_id"].text = node["split_reaction_id"]
-								set_option_button_by_text(current_node.reaction_target_dropdown, node["split_reaction_target"], "Reaction test target")
-								set_option_button_by_text(current_node.resource_type_dropdown, node["split_resource_type"], "Reaction resource type")
-								current_node.line_edits["split_reaction_subtree"].text = node["split_reaction_subtree"]
-								current_node.reaction_should_trigger_checkbox.button_pressed = node["split_reaction_should_trigger"]
-							"HEART_LEVEL":
-								set_option_button_by_text(current_node.heart_level_target_dropdown, node["split_heart_level_target"], "Heart level target")
-								current_node.line_edits["split_heart_level_subtree"].text = node["split_heart_level_subtree"]
-				"SUBTREE":
-					if node.has("subtree_type"):
-						match node["subtree_type"]:
-							"STANDARD":
-								current_node.line_edits["subtree_id"].text = node["subtree_id"]
-								current_node.line_edits["subtree_start"].text = node["subtree_start"]
-								if not node["subtree_outputs"].is_empty():
-									for output_name in node["subtree_outputs"]:
-										current_node._on_add_output_button_pressed("subtree")
-										var current_output_count = current_node.output_subtree_count
-										var output_node_name = "OutputSubtree" + str(current_output_count)
-										var output_node = current_node.event_containers["SUBTREE"].get_node(output_node_name)
-										if output_node == null:
-											print("Output node not found: " + output_node_name)
-											continue
-										output_node.outcome_name.text = node["subtree_outputs"].keys()[current_output_count - 1]
-										output_node.target_node.text = node["subtree_outputs"].values()[current_output_count - 1]
-							"NEGOTIATION":
-								current_node.line_edits["neg_action_id"].text = node["neg_action_id"]
-								current_node.line_edits["neg_subtree_id"].text = node["neg_subtree_id"]
-								current_node.line_edits["neg_subtree_start"].text = node["neg_subtree_start"]
-								current_node.line_edits["neg_subtree_success"].text = node["neg_subtree_success"]
-								current_node.line_edits["neg_subtree_no_patience"].text = node["neg_subtree_no_patience"]
-								current_node.line_edits["neg_subtree_aborted"].text = node["neg_subtree_aborted"]
-				#"CYCLER":
-				#	current_node.line_edits["cycle_id"].text = node["cycle_id"]
-					
-				#	if not node["cycler_outputs"].is_empty():
-				#		for target_key in node["cycler_outputs"]:
-				#			current_node._on_add_output_button_pressed("cycler")
-				#			var current_output_count = current_node.output_cycler_count
-				#			var output_node_name = "OutputCycler" + str(current_output_count)
-				#			var output_node = current_node.event_containers["CYCLER"].get_node(output_node_name)
-
-							#output_node.var_amount.text = cycle_index
-				#			output_node.var_name.text = target_key
-					
-				#"RANDOM":
-				#	if not node["random_outputs"].is_empty():
-				#		for target_node in node["random_outputs"]:
-				#			current_node._on_add_output_button_pressed("random")
-				#			var current_output_count = current_node.output_random_count
-				#			var output_node_name = "OutputRandom" + str(current_output_count)
-				#			var output_node = current_node.event_containers["RANDOM"].get_node(output_node_name)
-
-				#			output_node.var_amount.text = str(node["random_outputs"][target_node])
-				#			output_node.var_name.text = target_node
-				"WARDROBE":
-					if node.has("wardrobe_girl_id"):
-						current_node.line_edits["wardrobe_girl_id"].text = node["wardrobe_girl_id"]
-					match node["wardrobe_action"]:
-						"WEAR_GARMENT":
-							current_node.line_edits["garment_id"].text = node["garment_id"]
-						"REMOVE_GARMENT":
-							set_option_button_by_text(current_node.garment_slot_dropdown, node["garment_slot_id"], "Garment slot")
-						"WEAR_OUTFIT":
-							current_node.line_edits["outfit_id"].text = node["outfit_id"]
-						"SAVE_OUTFIT":
-							current_node.line_edits["outfit_id"].text = node["outfit_id"]
-				"MENU":
-					current_node.line_edits["menu_id"].text = node["menu_id"]
-				"LINE_ENTRY":
-					current_node.line_edits["line_entry_target_var"].text = node["line_entry_target_var"]
-
-
-		# if type: image
-		elif "IMAGE" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-
-			#set slot_dropdown to the index with the same name as node["image_slot"]
-			if set_option_button_by_text(current_node.slot_dropdown, node["image_slot"], "Image slot"):
-				current_node.change_slot_mode(current_node.slot_dropdown.selected)
-
-			#Set set_hide_dropdown to the index with the same name as node["big_image_action"]
-			if node["image_slot"] == "BIG" && node.has("big_image_action"):
-				if set_option_button_by_text(current_node.set_hide_big_dropdown, node["big_image_action"], "Big Image action"):
-					current_node.change_set_hide_big_mode(current_node.set_hide_big_dropdown.selected)
-
-			if node["image_slot"] == "SMALL" && node.has("small_image_action"):
-				if set_option_button_by_text(current_node.set_hide_small_dropdown, node["small_image_action"], "Small Image action"):
-					current_node.change_set_hide_small_mode(current_node.set_hide_small_dropdown.selected)
-
-			#Set target_dropdown to the index with the same name as node["image_target"]
-			if set_option_button_by_text(current_node.target_dropdown, node["image_target"], "Image target"):
-				current_node.change_target_mode(current_node.target_dropdown.selected)
-			
-			#Set person_main_mode_dropdown to the index with the same name as node["image_person_big_mode"]
-			if node.has("image_person_big_mode") && node["image_slot"] == "BIG":
-				if set_option_button_by_text(current_node.person_main_mode_dropdown, node["image_person_big_mode"], "Image person big mode"):
-					current_node.change_person_main_mode(current_node.person_main_mode_dropdown.selected)
-			
-			#current_node.expression_eyes_dropdown.select(node["expression_eyes"])
-			if node["expression_eyes"] == "no_change":
-				current_node.expression_eyes_dropdown.select(0) # Select "None" if eyes is empty
-			else:
-				var eyes_str = str(node["expression_eyes"])
-				set_option_button_by_text(current_node.expression_eyes_dropdown, eyes_str, "Image expression eyes")
-
-			#current_node.expression_mouth_dropdown.select(node["expression_mouth"])
-			if node["expression_mouth"] == "no_change":
-				current_node.expression_mouth_dropdown.select(0) # Select "None" if mouth is empty
-			else:
-				var mouth_str = str(node["expression_mouth"])
-				set_option_button_by_text(current_node.expression_mouth_dropdown, mouth_str, "Image expression mouth")
-
-			#Set paperdoll_pose_dropdown to the index with the same name as node["paperdoll_pose"]
-			if node["paperdoll_pose"] == "no_change":
-				current_node.paperdoll_pose_dropdown.select(0) # Select "None" if pose is empty
-			else:
-				if node.has("paperdoll_pose"):
-					set_option_button_by_text(current_node.paperdoll_pose_dropdown, node["paperdoll_pose"], "Image pose")
-
-			#Set overlay_dropdown to the index with the same name as node["overlay"]
-			if node.has("overlay"):
-				if node["overlay"] == "no_change":
-					current_node.overlay_dropdown.select(0) # Select "None" if overlay is empty
-				else:
-					set_option_button_by_text(current_node.overlay_dropdown, node["overlay"], "Image overlay")
-
-			#Set solo_pose_dropdown to the index with the same name as node["solo_pose"]
-			if node.has("solo_pose"):
-				set_option_button_by_text(current_node.solo_pose_dropdown, node["solo_pose"], "Image solo pose")
-
-			#Set duo_pose_dropdown to the index with the same name as node["duo_pose"]
-			if node.has("duo_pose"):
-				if node["duo_pose"] == "HOLDING_HANDS": #unused, change it to "SITTING"
-					print("Duo pose HOLDING_HANDS found, changing to SITTING")
-					set_option_button_by_text(current_node.duo_pose_dropdown, "SITTING", "Image duo pose") # Change to sitting if holding hands found
-				else:
-					set_option_button_by_text(current_node.duo_pose_dropdown, node["duo_pose"], "Image duo pose")
-				#	set_option_button_by_text(current_node.duo_pose_dropdown, "SITTING", "Image duo pose") # Default to sitting if not found
-
-			#Set framing_dropdown to the index with the same name as node["framing"]
-			if node["framing"] == "no_change":
-				current_node.framing_dropdown.select(0) # Select "None" if framing is empty
-			else:
-				set_option_button_by_text(current_node.framing_dropdown, node["framing"], "Image framing")
-
-			if node.has("person_image_id"):
-				current_node.person_image_id_line.text = node["person_image_id"]
-			if node.has("other_image_id"):
-				current_node.other_image_id_line.text = node["other_image_id"]
-
-			#set effect_dropdown to the index with the same name as node["effect"]
-			if node.has("effect"):
-				set_option_button_by_text(current_node.effect_dropdown, node["effect"], "Image effect")
-
-		# if type: offramp
-		elif "OFFRAMP" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-
-			match node["dest_type"]:
-				"SAME_TREE":
-					current_node.destination_dropdown.select(0)
-					current_node.change_mode(0)
-					#current_node.title_line.text = node["dest_node"]
-					current_node.outcome_line.text = node["dest_outcome"]
-				"OUTSIDE_TREE":
-					current_node.destination_dropdown.select(1)
-					current_node.change_mode(1)
-					current_node.file_line.text = node["dest_node"]
-					current_node.outcome_line.text = node["dest_outcome"]
-				"TERMINATE":
-					current_node.destination_dropdown.select(2)
-					current_node.change_mode(2)
-					current_node.outcome_line.text = node["dest_outcome"]
-
-		# if type: onramp
-		elif "ONRAMP" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-
-			current_node.key_line.text = node["string_key"]
-
-		# if type: transition
-		elif "TRANSITION" in node["node title"]:
-			var current_node = dialog[ node_name ].res
-
-			current_node.position_offset.x = node["offset_x"]
-			current_node.position_offset.y = node["offset_y"]
-			
-			current_node.locale_line.text = node["room_id"]
-			if "fade_time" in node:
-				current_node.fade_line.text = str(node["fade_time"])
-			if "wait_time" in node:
-				current_node.wait_line.text = str(node["wait_time"])
-			current_node.main_person_line.text = node["main_person_id"]
-			current_node.second_person_line.text = node["second_person_id"]
-			current_node.show_hide_person_2()
-			#current_node.person_opt.select(node["person_type"])
-			#current_node.focus_opt.select(node["focus_change"])
-			if node.has("weather"):
-				if node["weather"] == "no_change":
-					current_node.weather_option.select(0) # Select "No Change" if weather is empty
-				else:
-					set_option_button_by_text(current_node.weather_option, node["weather"], "Weather type")
-
-			if node.has("phase"):
-				if node["phase"] == "no_change":
-					current_node.phase_option.select(0) # Select "No Change" if phase is empty
-				else:
-					set_option_button_by_text(current_node.phase_option, node["phase"], "Phase type")
+		_apply_node_data_to_node(current_node, node_data)
 		
 		# Link Connections
-		if "End" in node["go to"]:
+		if "End" in node_data["go to"]:
 			_on_end_node_pressed()
-			connect_node(node["node title"], 0, "End", 0)
+			connect_node(node_data["node title"], 0, "End", 0)
 		else:
-			for to in node["go to"]:
-				connect_node(node["node title"], 0, to, 0)
+			for to in node_data["go to"]:
+				connect_node(node_data["node title"], 0, to, 0)
 
 	#finally, connect the first dialog node to start
 	#if first_dialog_node != "":
@@ -1268,8 +748,13 @@ func _apply_node_data_to_node(node, data:Dictionary):
 			if data.has("if_operator"):
 				set_option_button_by_text(node.operator_dropdown, str(data["if_operator"]))
 				node._on_operator_dropdown_item_selected(node.operator_dropdown.selected)
+			else:
+				# Default to AND if no operator found
+				node.operator_dropdown.select(0)
+				node._on_operator_dropdown_item_selected(0)
 			# Variables
 			if data.has("set_variables") and not data["set_variables"].is_empty():
+				node.variables_group.show()
 				var i := 1
 				for key in data["set_variables"].keys():
 					if node.variable_count < i:
@@ -1281,6 +766,7 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					i += 1
 			# Signals
 			if data.has("signals") and not data["signals"].is_empty():
+				node.emit_signal_group.show()
 				var i2 := 1
 				for signal_name in data["signals"]:
 					if node.signal_count < i2:
@@ -1291,6 +777,7 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					i2 += 1
 			# If boolean
 			if data.has("if_boolean") and not data["if_boolean"].is_empty():
+				node.conditionals_group.show()
 				var i3 := 1
 				for key in data["if_boolean"].keys():
 					if node.conditional_count < i3:
@@ -1302,6 +789,7 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					i3 += 1
 			# Greater
 			if data.has("if_greater") and not data["if_greater"].is_empty():
+				node.greater_group.show()
 				var i4 := 1
 				for key in data["if_greater"].keys():
 					if node.greater_count < i4:
@@ -1313,6 +801,7 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					i4 += 1
 			# Less
 			if data.has("if_less") and not data["if_less"].is_empty():
+				node.less_group.show()
 				var i5 := 1
 				for key in data["if_less"].keys():
 					if node.less_count < i5:
@@ -1324,6 +813,7 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					i5 += 1
 			# Equal
 			if data.has("if_equal") and not data["if_equal"].is_empty():
+				node.equal_group.show()
 				var i6 := 1
 				for key in data["if_equal"].keys():
 					if node.equal_count < i6:
@@ -1335,6 +825,7 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					i6 += 1
 			# Has garment
 			if data.has("has_garment") and not data["has_garment"].is_empty():
+				node.has_garment_group.show()
 				var i7 := 1
 				for key in data["has_garment"].keys():
 					if node.has_garment_count < i7:
@@ -1348,6 +839,8 @@ func _apply_node_data_to_node(node, data:Dictionary):
 			node.text.text = data.get("text", "")
 			if data.has("room_id"):
 				node.room_line.text = str(data["room_id"])
+			if data.has("reqs_id"):
+				node.reqs_preset_line.text = str(data["reqs_id"])
 			if data.has("icon_id"):
 				if str(data["icon_id"]) == "":
 					node.icon_dropdown.select(0)
@@ -1391,6 +884,14 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					node.overlay_dropdown.select(0)
 				else:
 					set_option_button_by_text(node.overlay_dropdown, str(data["overlay"]), "Image overlay")
+			if data.has("solo_pose"):
+				set_option_button_by_text(node.solo_pose_dropdown, str(data["solo_pose"]), "Image solo pose")
+			if data.has("duo_pose"):
+				if str(data["duo_pose"]) == "HOLDING_HANDS":
+					print("Duo pose HOLDING_HANDS found, changing to SITTING")
+					set_option_button_by_text(node.duo_pose_dropdown, "SITTING", "Image duo pose")
+				else:
+					set_option_button_by_text(node.duo_pose_dropdown, str(data["duo_pose"]), "Image duo pose")
 			if data.has("framing"):
 				if data["framing"] == "no_change":
 					node.framing_dropdown.select(0)
@@ -1476,6 +977,49 @@ func _apply_node_data_to_node(node, data:Dictionary):
 									if output_node:
 										output_node.var_amount.text = str(data["split_random_outcomes"][target_node])
 										output_node.var_name.text = str(target_node)
+						"PERMISSION_CHECK":
+							if data.has("split_permission_target"):
+								set_option_button_by_text(node.permission_target_dropdown, str(data["split_permission_target"]))
+							if data.has("split_permission_difficulties"):
+								node.line_edits["split_permission_diff_crit"].text = str(data["split_permission_difficulties"].get("crit", ""))
+								node.line_edits["split_permission_diff_success"].text = str(data["split_permission_difficulties"].get("success", ""))
+								node.line_edits["split_permission_diff_objection"].text = str(data["split_permission_difficulties"].get("objection", ""))
+							if data.has("split_permission_attributes") and not data["split_permission_attributes"].is_empty():
+								for attr_type in data["split_permission_attributes"].keys():
+									node._on_add_attribute_button_pressed("permission")
+									var current_attr_count = node.attribute_permission_count
+									var attr_node_name = "WeightedAttributePermission" + str(current_attr_count)
+									var attr_node = node.split_containers["PERMISSION_CHECK"].get_node("RelatedAttributes").get_node(attr_node_name)
+									if attr_node:
+										set_option_button_by_text(attr_node.get_node("AttributeType"), str(attr_type))
+										attr_node.get_node("AttributeWeight").text = str(data["split_permission_attributes"][attr_type])
+							if data.has("split_permission_outcomes"):
+								node.line_edits["split_permission_outcomes"]["crit_heat"].text = str(data["split_permission_outcomes"].get("crit_heat", ""))
+								node.line_edits["split_permission_outcomes"]["yes_heat"].text = str(data["split_permission_outcomes"].get("yes_heat", ""))
+								node.line_edits["split_permission_outcomes"]["crit_love"].text = str(data["split_permission_outcomes"].get("crit_love", ""))
+								node.line_edits["split_permission_outcomes"]["yes_love"].text = str(data["split_permission_outcomes"].get("yes_love", ""))
+								node.line_edits["split_permission_outcomes"]["crit_obey"].text = str(data["split_permission_outcomes"].get("crit_obey", ""))
+								node.line_edits["split_permission_outcomes"]["yes_obey"].text = str(data["split_permission_outcomes"].get("yes_obey", ""))
+								node.line_edits["split_permission_outcomes"]["objection"].text = str(data["split_permission_outcomes"].get("objection", ""))
+								node.line_edits["split_permission_outcomes"]["refusal"].text = str(data["split_permission_outcomes"].get("refusal", ""))
+						"ENTHUSIASM_CHECK":
+							if data.has("split_enthusiasm_target"):
+								set_option_button_by_text(node.enthusiasm_target_dropdown, str(data["split_enthusiasm_target"]))
+							node.line_edits["split_enthusiasm_diff_loves"].text = str(data.get("split_enthusiasm_diff_loves", ""))
+							node.line_edits["split_enthusiasm_diff_likes"].text = str(data.get("split_enthusiasm_diff_likes", ""))
+							if data.has("split_enthusiasm_attributes") and not data["split_enthusiasm_attributes"].is_empty():
+								for attr_type in data["split_enthusiasm_attributes"].keys():
+									node._on_add_attribute_button_pressed("enthusiasm")
+									var current_attr_count = node.attribute_enthusiasm_count
+									var attr_node_name = "WeightedAttributeEnthusiasm" + str(current_attr_count)
+									var attr_node = node.split_containers["ENTHUSIASM_CHECK"].get_node("RelatedAttributes").get_node(attr_node_name)
+									if attr_node:
+										set_option_button_by_text(attr_node.get_node("AttributeType"), str(attr_type))
+										attr_node.get_node("AttributeWeight").text = str(data["split_enthusiasm_attributes"][attr_type])
+							if data.has("split_enthusiasm_outcomes"):
+								node.line_edits["split_enthusiasm_outcomes"]["loves"].text = str(data["split_enthusiasm_outcomes"].get("loves", ""))
+								node.line_edits["split_enthusiasm_outcomes"]["likes"].text = str(data["split_enthusiasm_outcomes"].get("likes", ""))
+								node.line_edits["split_enthusiasm_outcomes"]["dislikes"].text = str(data["split_enthusiasm_outcomes"].get("dislikes", ""))
 						"ACTION_TEST":
 							node.line_edits["split_action_id"].text = str(data.get("split_action_id", ""))
 							if data.has("split_action_target"):
@@ -1541,6 +1085,41 @@ func _apply_node_data_to_node(node, data:Dictionary):
 					node.line_edits["menu_id"].text = str(data.get("menu_id", ""))
 				"LINE_ENTRY":
 					node.line_edits["line_entry_target_var"].text = str(data.get("line_entry_target_var", ""))
+				"REACTION":
+					if data.has("reaction_target"):
+						set_option_button_by_text(node.reaction_target_dropdown, str(data["reaction_target"]))
+					
+					node.line_edits["reaction_novelty_counter"].text = str(data.get("reaction_novelty_counter", ""))
+					
+					if data.has("reaction_girl_resources") and not data["reaction_girl_resources"].is_empty():
+						for resource_type in data["reaction_girl_resources"].keys():
+							node._on_add_girl_resource_button_pressed()
+							var current_count = node.girl_resource_reaction_count
+							var resource_node_name = "GirlResourceLine" + str(current_count)
+							var resource_node = node.event_containers["REACTION"].get_node("GirlResources").get_node(resource_node_name)
+							if resource_node:
+								set_option_button_by_text(resource_node.get_node("ResourceType"), str(resource_type))
+								resource_node.get_node("ResourceAmount").text = str(data["reaction_girl_resources"][resource_type])
+
+					if data.has("reaction_attributes") and not data["reaction_attributes"].is_empty():
+						for attr_type in data["reaction_attributes"].keys():
+							node._on_add_attribute_button_pressed("reaction")
+							var current_count = node.attribute_reaction_count
+							var attr_node_name = "WeightedAttributeReaction" + str(current_count)
+							var attr_node = node.event_containers["REACTION"].get_node("RelatedAttributes").get_node(attr_node_name)
+							if attr_node:
+								set_option_button_by_text(attr_node.get_node("AttributeType"), str(attr_type))
+								attr_node.get_node("AttributeWeight").text = str(data["reaction_attributes"][attr_type])
+
+					if data.has("reaction_player_resources") and not data["reaction_player_resources"].is_empty():
+						for resource_type in data["reaction_player_resources"].keys():
+							node._on_add_player_resource_button_pressed()
+							var current_count = node.player_resource_reaction_count
+							var resource_node_name = "PlayerResourceLine" + str(current_count)
+							var resource_node = node.event_containers["REACTION"].get_node("PlayerResources").get_node(resource_node_name)
+							if resource_node:
+								set_option_button_by_text(resource_node.get_node("ResourceType"), str(resource_type))
+								resource_node.get_node("ResourceAmount").text = str(data["reaction_player_resources"][resource_type])
 		"ONRAMP":
 			node.key_line.text = data.get("string_key", "")
 		"TRANSITION":

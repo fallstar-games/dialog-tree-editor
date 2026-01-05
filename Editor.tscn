@@ -280,7 +280,7 @@ libraries = {
 layout_mode = 0
 offset_left = 32.0
 offset_top = 175.0
-offset_right = 1054.0
+offset_right = 1036.0
 offset_bottom = 579.0
 mouse_filter = 1
 theme_override_styles/frame = SubResource("StyleBoxEmpty_7yco3")
@@ -320,7 +320,8 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_5ktmu")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 424.0
+offset_right = 17.0
+offset_bottom = 871.0
 grow_horizontal = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 25
@@ -333,13 +334,63 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 12
 
+[node name="PanelContainer4" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="Flags" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "FLAGS
+(Player)[color=teal]
+has_met_jill
+cafe_unlocked
+gym_unlocked
+[/color](Girls) [color=teal]
+has_seen_penis
+first_paizuri_act
+first_paizuri_success
+first_grope_ass_act
+first_cum_hands_act
+first_cum_chest_act
+first_kissed_lips_act
+first_undress_top_success
+first_undress_bra_success
+first_kiss_lips_success
+first_watch_mc_success
+first_go_private_success
+[/color](Jill) [color=teal]
+ps_01_stayed
+ps_01_warned
+ps_01_sniffed
+[/color](Jill Leverage)[color=teal]
+fixed_faucet
+gave_backrubs
+ps_01_yelled
+[/color]"
+fit_content = true
+
 [node name="PanelContainer" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 mouse_filter = 2
 
-[node name="IfBools" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer"]
+[node name="PanelContainer3" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3"]
+layout_mode = 2
+
+[node name="IfBools" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -363,7 +414,42 @@ girl_phase_flag:girl_id:flag_id
 girl_status_effect:girl_id:effect_key
 leverage_flag:girl_id:flag_id
 pledged_leverage_flag:girl_id:flag_id
-quest_flag:quest_id:flag_id"
+quest_flag:quest_id:flag_id
+check_first_success:action_id:girl_id:result"
+fit_content = true
+
+[node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "VARS [color=steel_blue]
+mc_name
+girl_name:girl_id
+p1_garment_name:slot_id
+action_difficulty:girl_id:action_id
+force_difficulty:girl_id
+heart_level:girl_id
+resistance:girl_id
+mc_arousal
+mc_vigor
+quest_stage:quest_id
+reaction_abs_change:reaction_id:target_id:resource_type
+reaction_strength_adjective:reaction_id:target_id:resource_type
+try_force:girl_id
+global_counter:counter_id"
+fit_content = true
+
+[node name="Prefabs" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "SPLIT PREFABS [color=gray]
+REACTION_STRENGTH: not_very, somewhat, very, super
+Outputs: end_split_subtree
+HEART_LEVEL: zero_hearts, one_heart, two_hearts, three_hearts, four_hearts, five_hearts, six_hearts
+Outputs: end_split_subtree"
 fit_content = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
@@ -402,50 +488,8 @@ plap_emitter:start/stop:emitter_id:(true/false)
 plap_emitter:stop_all:(true/false)
 paperdoll_overlay:girl_id:ADD:overlay_name:parent_layer
 paperdoll_overlay:girl_id:RMV:overlay_name
-paperdoll_overlay:girl_id:RMV_ALL"
-fit_content = true
-
-[node name="PanelContainer3" type="PanelContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-mouse_filter = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3"]
-layout_mode = 2
-
-[node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-bbcode_enabled = true
-text = "VARS [color=steel_blue]
-mc_name
-girl_name:girl_id
-p1_garment_name:slot_id
-action_difficulty:girl_id:action_id
-force_difficulty:girl_id
-heart_level:girl_id
-resistance:girl_id
-mc_arousal
-mc_vigor
-quest_stage:quest_id
-reaction_abs_change:reaction_id:target_id:resource_type
-reaction_strength_adjective:reaction_id:target_id:resource_type
-try_force:girl_id
-global_counter:counter_id"
-fit_content = true
-
-[node name="Prefabs" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-bbcode_enabled = true
-text = "SPLIT PREFABS [color=gray]
-REACTION_STRENGTH: not_very, somewhat, very, super
-Outputs: end_split_subtree
-HEART_LEVEL: zero_hearts, one_heart, two_hearts, three_hearts, four_hearts, five_hearts, six_hearts
-Outputs: end_split_subtree"
+paperdoll_overlay:girl_id:RMV_ALL
+get_dressed:girl_id"
 fit_content = true
 
 [node name="Tool" type="HBoxContainer" parent="."]

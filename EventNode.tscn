@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ccm7ijwj3w3ec"]
+[gd_scene load_steps=29 format=3 uid="uid://ccm7ijwj3w3ec"]
 
 [ext_resource type="Script" path="res://EventNode.gd" id="1_qey05"]
 [ext_resource type="Theme" uid="uid://bcfmo1cqbenmo" path="res://Themes/event_node_theme.tres" id="1_qulwx"]
@@ -26,6 +26,8 @@
 [ext_resource type="Texture2D" uid="uid://bgp83mal86r4l" path="res://Assets/UI/choice_icon/vagina.png" id="22_55v2f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_twcxw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lfk5k"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aw733"]
 content_margin_left = 4.0
@@ -139,6 +141,15 @@ slot/9/right_type = 0
 slot/9/right_color = Color(1, 1, 1, 1)
 slot/9/right_icon = null
 slot/9/draw_stylebox = true
+slot/10/left_enabled = false
+slot/10/left_type = 0
+slot/10/left_color = Color(1, 1, 1, 1)
+slot/10/left_icon = null
+slot/10/right_enabled = false
+slot/10/right_type = 0
+slot/10/right_color = Color(1, 1, 1, 1)
+slot/10/right_icon = null
+slot/10/draw_stylebox = true
 script = ExtResource("1_qey05")
 
 [node name="Label" type="Label" parent="."]
@@ -147,18 +158,20 @@ text = "Event Type"
 
 [node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 5
+item_count = 6
 selected = 0
 popup/item_0/text = "SPLIT"
 popup/item_0/id = 0
 popup/item_1/text = "SUBTREE"
 popup/item_1/id = 1
-popup/item_2/text = "WARDROBE"
+popup/item_2/text = "REACTION"
 popup/item_2/id = 4
-popup/item_3/text = "MENU"
+popup/item_3/text = "WARDROBE"
 popup/item_3/id = 5
 popup/item_4/text = "LINE_ENTRY"
 popup/item_4/id = 4
+popup/item_5/text = "MENU"
+popup/item_5/id = 5
 
 [node name="SplitInfo" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -166,22 +179,26 @@ theme_override_constants/separation = 8
 
 [node name="SplitType" type="OptionButton" parent="SplitInfo"]
 layout_mode = 2
-item_count = 7
+item_count = 9
 selected = 0
 popup/item_0/text = "BOOL"
 popup/item_0/id = 0
-popup/item_1/text = "ACTION_TEST"
+popup/item_1/text = "STRING"
 popup/item_1/id = 1
-popup/item_2/text = "RANDOM"
+popup/item_2/text = "INT"
 popup/item_2/id = 2
-popup/item_3/text = "INT"
+popup/item_3/text = "RANDOM"
 popup/item_3/id = 3
-popup/item_4/text = "STRING"
+popup/item_4/text = "PERMISSION_CHECK"
 popup/item_4/id = 4
-popup/item_5/text = "HEART_LEVEL"
+popup/item_5/text = "ENTHUSIASM_CHECK"
 popup/item_5/id = 5
-popup/item_6/text = "REACTION_STRENGTH"
+popup/item_6/text = "ACTION_TEST"
 popup/item_6/id = 6
+popup/item_7/text = "HEART_LEVEL"
+popup/item_7/id = 7
+popup/item_8/text = "REACTION_STRENGTH"
+popup/item_8/id = 8
 
 [node name="SplitBool" type="VBoxContainer" parent="SplitInfo"]
 layout_mode = 2
@@ -421,7 +438,7 @@ popup/item_6/id = 6
 popup/item_7/text = "resistance"
 popup/item_7/icon = ExtResource("10_ihyeb")
 popup/item_7/id = 7
-popup/item_8/text = "torpor"
+popup/item_8/text = "awareness"
 popup/item_8/icon = ExtResource("11_as3i1")
 popup/item_8/id = 8
 popup/item_9/text = "MC_TOUCH"
@@ -622,6 +639,271 @@ text = "ELSE onramp: "
 [node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitString/ElseOutcome"]
 layout_mode = 2
 size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="SplitPermission" type="VBoxContainer" parent="SplitInfo"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TargetPerson" type="HBoxContainer" parent="SplitInfo/SplitPermission"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitPermission/TargetPerson"]
+layout_mode = 2
+text = "target:"
+
+[node name="PermissionTarget" type="OptionButton" parent="SplitInfo/SplitPermission/TargetPerson"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "MAIN_PERSON"
+popup/item_0/id = 0
+popup/item_1/text = "SECOND_PERSON"
+popup/item_1/id = 1
+
+[node name="Difficulties" type="HBoxContainer" parent="SplitInfo/SplitPermission"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitPermission/Difficulties"]
+layout_mode = 2
+text = "crit:"
+
+[node name="Crit" type="LineEdit" parent="SplitInfo/SplitPermission/Difficulties"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+placeholder_text = "10"
+expand_to_text_length = true
+
+[node name="Label2" type="Label" parent="SplitInfo/SplitPermission/Difficulties"]
+layout_mode = 2
+text = "yes:"
+
+[node name="Success" type="LineEdit" parent="SplitInfo/SplitPermission/Difficulties"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+placeholder_text = "5.5"
+expand_to_text_length = true
+
+[node name="Label3" type="Label" parent="SplitInfo/SplitPermission/Difficulties"]
+layout_mode = 2
+text = "obj:"
+
+[node name="Objection" type="LineEdit" parent="SplitInfo/SplitPermission/Difficulties"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 2
+placeholder_text = "0.0"
+expand_to_text_length = true
+
+[node name="RelatedAttributes" type="VBoxContainer" parent="SplitInfo/SplitPermission"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AddAttribute" type="HBoxContainer" parent="SplitInfo/SplitPermission/RelatedAttributes"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitPermission/RelatedAttributes/AddAttribute"]
+layout_mode = 2
+text = "Add Related Attribute"
+
+[node name="AddAttributeButton" type="Button" parent="SplitInfo/SplitPermission/RelatedAttributes/AddAttribute"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lfk5k")
+icon = ExtResource("3_h7t40")
+
+[node name="OutputsHeat" type="HBoxContainer" parent="SplitInfo/SplitPermission"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitPermission/OutputsHeat"]
+layout_mode = 2
+text = "crit_heat"
+
+[node name="CritHeat" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsHeat"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="Label2" type="Label" parent="SplitInfo/SplitPermission/OutputsHeat"]
+layout_mode = 2
+text = "yes_heat"
+
+[node name="YesHeat" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsHeat"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="OutputsLove" type="HBoxContainer" parent="SplitInfo/SplitPermission"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitPermission/OutputsLove"]
+layout_mode = 2
+text = "crit_love"
+
+[node name="CritLove" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsLove"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="Label2" type="Label" parent="SplitInfo/SplitPermission/OutputsLove"]
+layout_mode = 2
+text = "yes_love"
+
+[node name="YesLove" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsLove"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="OutputsObey" type="HBoxContainer" parent="SplitInfo/SplitPermission"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitPermission/OutputsObey"]
+layout_mode = 2
+text = "crit_obey
+"
+
+[node name="CritObey" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsObey"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="Label2" type="Label" parent="SplitInfo/SplitPermission/OutputsObey"]
+layout_mode = 2
+text = "yes_obey"
+
+[node name="YesObey" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsObey"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="OutputsFail" type="HBoxContainer" parent="SplitInfo/SplitPermission"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitPermission/OutputsFail"]
+layout_mode = 2
+text = "objection"
+
+[node name="Objection" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsFail"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="Label2" type="Label" parent="SplitInfo/SplitPermission/OutputsFail"]
+layout_mode = 2
+text = "refusal"
+
+[node name="Refusal" type="LineEdit" parent="SplitInfo/SplitPermission/OutputsFail"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+expand_to_text_length = true
+
+[node name="SplitEnthusiasm" type="VBoxContainer" parent="SplitInfo"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TargetPerson" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/TargetPerson"]
+layout_mode = 2
+text = "target:"
+
+[node name="EnthusiasmTarget" type="OptionButton" parent="SplitInfo/SplitEnthusiasm/TargetPerson"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "MAIN_PERSON"
+popup/item_0/id = 0
+popup/item_1/text = "SECOND_PERSON"
+popup/item_1/id = 1
+
+[node name="Difficulties" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+layout_mode = 2
+text = "Loves:"
+
+[node name="Loves" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+placeholder_text = "10"
+expand_to_text_length = true
+
+[node name="Label2" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+layout_mode = 2
+text = "Likes:"
+
+[node name="Likes" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+placeholder_text = "5.5"
+expand_to_text_length = true
+
+[node name="RelatedAttributes" type="VBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AddAttribute" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm/RelatedAttributes"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute"]
+layout_mode = 2
+text = "Add Related Attribute"
+
+[node name="AddAttributeButton" type="Button" parent="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lfk5k")
+icon = ExtResource("3_h7t40")
+
+[node name="OutputLoves" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputLoves"]
+layout_mode = 2
+text = "loves ->"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputLoves"]
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="OutputLikes" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputLikes"]
+layout_mode = 2
+text = "likes ->"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputLikes"]
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="OutputDislikes" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputDislikes"]
+layout_mode = 2
+text = "dislikes ->"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputDislikes"]
+layout_mode = 2
 expand_to_text_length = true
 
 [node name="SubTreeInfo" type="VBoxContainer" parent="."]
@@ -988,6 +1270,95 @@ mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_twcxw")
 icon = ExtResource("3_h7t40")
 
+[node name="ReactionInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TargetPerson" type="HBoxContainer" parent="ReactionInfo"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="ReactionInfo/TargetPerson"]
+layout_mode = 2
+text = "target:"
+
+[node name="ReactionTarget" type="OptionButton" parent="ReactionInfo/TargetPerson"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "MAIN_PERSON"
+popup/item_0/id = 0
+popup/item_1/text = "SECOND_PERSON"
+popup/item_1/id = 1
+
+[node name="NoveltyCounter" type="HBoxContainer" parent="ReactionInfo"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="ReactionInfo/NoveltyCounter"]
+layout_mode = 2
+text = "novelty_counter:"
+
+[node name="LineEdit" type="LineEdit" parent="ReactionInfo/NoveltyCounter"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="GirlResources" type="VBoxContainer" parent="ReactionInfo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AddGirlResource" type="HBoxContainer" parent="ReactionInfo/GirlResources"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="ReactionInfo/GirlResources/AddGirlResource"]
+layout_mode = 2
+text = "Add Girl Resource"
+
+[node name="AddGirlResourceButton" type="Button" parent="ReactionInfo/GirlResources/AddGirlResource"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lfk5k")
+icon = ExtResource("3_h7t40")
+
+[node name="RelatedAttributes" type="VBoxContainer" parent="ReactionInfo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AddAttribute" type="HBoxContainer" parent="ReactionInfo/RelatedAttributes"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="ReactionInfo/RelatedAttributes/AddAttribute"]
+layout_mode = 2
+text = "Add Attribute XP"
+
+[node name="AddAttributeButton" type="Button" parent="ReactionInfo/RelatedAttributes/AddAttribute"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lfk5k")
+icon = ExtResource("3_h7t40")
+
+[node name="PlayerResources" type="VBoxContainer" parent="ReactionInfo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AddPlayerResource" type="HBoxContainer" parent="ReactionInfo/PlayerResources"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="ReactionInfo/PlayerResources/AddPlayerResource"]
+layout_mode = 2
+text = "Add Player Resource"
+
+[node name="AddPlayerResourceButton" type="Button" parent="ReactionInfo/PlayerResources/AddPlayerResource"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lfk5k")
+icon = ExtResource("3_h7t40")
+
 [node name="WardrobeInfo" type="VBoxContainer" parent="."]
 visible = false
 layout_mode = 2
@@ -1163,10 +1534,18 @@ text = "Sell
 [connection signal="pressed" from="SplitInfo/SplitInt/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["greater"]]
 [connection signal="pressed" from="SplitInfo/SplitRandom/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["random"]]
 [connection signal="pressed" from="SplitInfo/SplitString/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["string"]]
+[connection signal="item_selected" from="SplitInfo/SplitPermission/TargetPerson/PermissionTarget" to="." method="_on_permission_target_item_selected"]
+[connection signal="pressed" from="SplitInfo/SplitPermission/RelatedAttributes/AddAttribute/AddAttributeButton" to="." method="_on_add_attribute_button_pressed" binds= ["permission"]]
+[connection signal="item_selected" from="SplitInfo/SplitEnthusiasm/TargetPerson/EnthusiasmTarget" to="." method="_on_permission_target_item_selected"]
+[connection signal="pressed" from="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute/AddAttributeButton" to="." method="_on_add_attribute_button_pressed" binds= ["enthusiasm"]]
 [connection signal="item_selected" from="SubTreeInfo/SubTreeType" to="." method="_on_sub_tree_type_item_selected"]
 [connection signal="pressed" from="SubTreeInfo/StandardInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["subtree"]]
 [connection signal="item_selected" from="CheckInfo/CheckType" to="." method="_on_check_type_item_selected"]
 [connection signal="pressed" from="CyclerInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["cycler"]]
+[connection signal="item_selected" from="ReactionInfo/TargetPerson/ReactionTarget" to="." method="_on_reaction_target_item_selected"]
+[connection signal="pressed" from="ReactionInfo/GirlResources/AddGirlResource/AddGirlResourceButton" to="." method="_on_add_girl_resource_button_pressed"]
+[connection signal="pressed" from="ReactionInfo/RelatedAttributes/AddAttribute/AddAttributeButton" to="." method="_on_add_attribute_button_pressed" binds= ["reaction"]]
+[connection signal="pressed" from="ReactionInfo/PlayerResources/AddPlayerResource/AddPlayerResourceButton" to="." method="_on_add_player_resource_button_pressed"]
 [connection signal="item_selected" from="WardrobeInfo/WardrobeAction" to="." method="_on_wardrobe_action_item_selected"]
 [connection signal="item_selected" from="WardrobeInfo/SlotID/GarmentSlot" to="." method="_on_garment_slot_item_selected"]
 [connection signal="item_selected" from="LineEntryInfo/LineEntryType" to="." method="_on_line_entry_type_item_selected"]

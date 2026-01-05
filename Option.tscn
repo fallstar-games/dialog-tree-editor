@@ -138,6 +138,15 @@ slot/4/right_type = 0
 slot/4/right_color = Color(1, 1, 1, 1)
 slot/4/right_icon = null
 slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
 script = ExtResource("1_ojjra")
 ignore_color = Color(0.498039, 0.498039, 0.498039, 1)
 active_color = Color(0.929412, 0.603922, 0.494118, 1)
@@ -403,13 +412,14 @@ popup/item_12/id = 12
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 text = "target_room: "
 
 [node name="LeftSpacer" type="Control" parent="HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(4, 0)
 layout_mode = 2
 
@@ -423,6 +433,20 @@ expand_to_text_length = true
 visible = false
 custom_minimum_size = Vector2(14, 0)
 layout_mode = 2
+
+[node name="ReqsPresetID" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="ReqsPresetID"]
+layout_mode = 2
+text = "reqs_id: "
+
+[node name="LineEdit" type="LineEdit" parent="ReqsPresetID"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "(none)"
+expand_to_text_length = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2

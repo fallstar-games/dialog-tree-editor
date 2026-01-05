@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyl5gqtmq8vmh"]
+
+[ext_resource type="Script" path="res://resource_line.gd" id="1_vt0dt"]
+[ext_resource type="Texture2D" uid="uid://brptfdd5xlskb" path="res://Assets/UI/choice_icon/volcano.png" id="2_xtou3"]
+[ext_resource type="Texture2D" uid="uid://danyye32laut5" path="res://Assets/UI/choice_icon/bicep.png" id="3_yelta"]
+[ext_resource type="Texture2D" uid="uid://bygsxtccihjdr" path="res://Assets/UI/choice_icon/coin.png" id="4_5a7ri"]
+[ext_resource type="Texture2D" uid="uid://dm4ghusiklby0" path="res://Assets/UI/choice_icon/grasp.png" id="5_gkyu5"]
+[ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="8_ern8g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fpl5p"]
+
+[node name="PlayerResource" type="HBoxContainer" node_paths=PackedStringArray("resource_amount")]
+theme_override_constants/separation = 12
+script = ExtResource("1_vt0dt")
+resource_amount = NodePath("ResourceAmount")
+
+[node name="ResourceType" type="OptionButton" parent="."]
+layout_mode = 2
+item_count = 5
+selected = 0
+popup/item_0/text = "o_progress"
+popup/item_0/icon = ExtResource("2_xtou3")
+popup/item_0/id = 0
+popup/item_1/text = "vigor"
+popup/item_1/icon = ExtResource("3_yelta")
+popup/item_1/id = 1
+popup/item_2/text = "cash"
+popup/item_2/icon = ExtResource("4_5a7ri")
+popup/item_2/id = 2
+popup/item_3/text = "max_vigor"
+popup/item_3/icon = ExtResource("5_gkyu5")
+popup/item_3/id = 3
+popup/item_4/text = "gym_max_vigor"
+popup/item_4/icon = ExtResource("5_gkyu5")
+popup/item_4/id = 4
+
+[node name="ResourceAmount" type="LineEdit" parent="."]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 3
+placeholder_text = "0"
+expand_to_text_length = true
+
+[node name="CancelButton" type="Button" parent="."]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fpl5p")
+icon = ExtResource("8_ern8g")
+
+[connection signal="pressed" from="CancelButton" to="." method="_on_cancel_button_pressed"]

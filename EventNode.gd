@@ -6,9 +6,11 @@ extends GraphNode
 @onready var wardrobe_action_dropdown:OptionButton = $WardrobeInfo/WardrobeAction
 @onready var garment_slot_dropdown:OptionButton = $WardrobeInfo/SlotID/GarmentSlot
 @onready var action_target_dropdown:OptionButton = $SplitInfo/SplitAction/TargetPerson/ActionTarget
+@onready var permission_target_dropdown:OptionButton = $SplitInfo/SplitPermission/TargetPerson/PermissionTarget
+@onready var enthusiasm_target_dropdown:OptionButton = $SplitInfo/SplitEnthusiasm/TargetPerson/EnthusiasmTarget
 @onready var subtree_type_dropdown:OptionButton = $SubTreeInfo/SubTreeType
 @onready var line_entry_type_dropdown:OptionButton = $LineEntryInfo/LineEntryType
-@onready var reaction_target_dropdown:OptionButton = $SplitInfo/SplitReactionStrength/TargetPerson/ReactionTarget
+@onready var reaction_target_dropdown:OptionButton = $ReactionInfo/TargetPerson/ReactionTarget
 @onready var resource_type_dropdown:OptionButton = $SplitInfo/SplitReactionStrength/ResourceType/ResourceType
 @onready var reaction_should_trigger_checkbox:CheckBox = $SplitInfo/SplitReactionStrength/TriggerReaction/CheckBox
 @onready var heart_level_target_dropdown:OptionButton = $SplitInfo/SplitHeartLevel/TargetPerson/HeartLevelTarget
@@ -24,7 +26,8 @@ extends GraphNode
 	#"RANDOM": $RandomInfo,
 	"WARDROBE": $WardrobeInfo,
 	"MENU": $MenuInfo,
-	"LINE_ENTRY": $LineEntryInfo
+	"LINE_ENTRY": $LineEntryInfo,
+	"REACTION": $ReactionInfo
 }
 
 @onready var subtree_containers:Dictionary = {
@@ -47,6 +50,8 @@ extends GraphNode
 	"REACTION_STRENGTH": $SplitInfo/SplitReactionStrength,
 	"HEART_LEVEL": $SplitInfo/SplitHeartLevel,
 	"STRING": $SplitInfo/SplitString,
+	"PERMISSION_CHECK": $SplitInfo/SplitPermission,
+	"ENTHUSIASM_CHECK": $SplitInfo/SplitEnthusiasm,
 }
 
 @onready var wardrobe_containers:Dictionary = {
@@ -81,9 +86,30 @@ extends GraphNode
 	"split_action_fail": $SplitInfo/SplitAction/Fail/LineEdit,
 	"split_action_weak_fail": $SplitInfo/SplitAction/WeakFail/LineEdit,
 	"split_action_crit_fail": $SplitInfo/SplitAction/CritFail/LineEdit,
+	"split_permission_diff_crit": $SplitInfo/SplitPermission/Difficulties/Crit,
+	"split_permission_diff_success": $SplitInfo/SplitPermission/Difficulties/Success,
+	"split_permission_diff_objection": $SplitInfo/SplitPermission/Difficulties/Objection,
+	"split_permission_outcomes": {
+		"crit_heat": $SplitInfo/SplitPermission/OutputsHeat/CritHeat,
+		"yes_heat": $SplitInfo/SplitPermission/OutputsHeat/YesHeat,
+		"crit_love": $SplitInfo/SplitPermission/OutputsLove/CritLove,
+		"yes_love": $SplitInfo/SplitPermission/OutputsLove/YesLove,
+		"crit_obey": $SplitInfo/SplitPermission/OutputsObey/CritObey,
+		"yes_obey": $SplitInfo/SplitPermission/OutputsObey/YesObey,
+		"objection": $SplitInfo/SplitPermission/OutputsFail/Objection,
+		"refusal": $SplitInfo/SplitPermission/OutputsFail/Refusal
+	},
+	"split_enthusiasm_diff_loves": $SplitInfo/SplitEnthusiasm/Difficulties/Loves,
+	"split_enthusiasm_diff_likes": $SplitInfo/SplitEnthusiasm/Difficulties/Likes,
+	"split_enthusiasm_outcomes": {
+		"loves": $SplitInfo/SplitEnthusiasm/OutputLoves/LineEdit,
+		"likes": $SplitInfo/SplitEnthusiasm/OutputLikes/LineEdit,
+		"dislikes": $SplitInfo/SplitEnthusiasm/OutputDislikes/LineEdit,
+	},
 	"split_reaction_id": $SplitInfo/SplitReactionStrength/ReactionID/LineEdit,
 	"split_reaction_subtree": $SplitInfo/SplitReactionStrength/Subtree/LineEdit,
 	"split_heart_level_subtree": $SplitInfo/SplitHeartLevel/Subtree/LineEdit,
+	"reaction_novelty_counter": $ReactionInfo/NoveltyCounter/LineEdit,
 	"subtree_id": $SubTreeInfo/StandardInfo/TreeName/LineEdit,
 	"subtree_start": $SubTreeInfo/StandardInfo/NodeName/LineEdit,
 	"neg_action_id": $SubTreeInfo/NegotiationInfo/ActionID/LineEdit,
@@ -107,6 +133,9 @@ extends GraphNode
 @onready var output_random = load("res://output_random.tscn")
 @onready var output_greater = load("res://output_greater.tscn")
 @onready var output_split_string = load("res://output_split_string.tscn")
+@onready var weighted_attribute = load("res://weighted_attribute.tscn")
+@onready var girl_resource_line = load("res://girl_resource_line.tscn")
+@onready var player_resource_line = load("res://player_resource_line.tscn")
 
 signal _cancel_button_pressed(output_type)
 
@@ -115,6 +144,11 @@ var output_cycler_count: int = 0
 var output_random_count: int = 0
 var output_greater_count: int = 0
 var output_split_string_count: int = 0
+var attribute_permission_count: int = 0
+var attribute_enthusiasm_count: int = 0
+var attribute_reaction_count: int = 0
+var girl_resource_reaction_count: int = 0
+var player_resource_reaction_count: int = 0
 
 var node_data = {
 	"offset_x": 0,
@@ -134,6 +168,19 @@ var node_data = {
 	"split_action_id": "",
 	"split_action_target": "MAIN_PERSON",
 	"split_action_outcomes": {},
+	"split_permission_target": "MAIN_PERSON",
+	"split_permission_difficulties": {
+		"crit": "",
+		"success": "",
+		"objection": ""
+	},
+	"split_permission_attributes": {},
+	"split_permission_outcomes": {},
+	"split_enthusiasm_target": "MAIN_PERSON",
+	"split_enthusiasm_diff_loves": "",
+	"split_enthusiasm_diff_likes": "",
+	"split_enthusiasm_attributes": {},
+	"split_enthusiasm_outcomes": {},
 	"split_reaction_id": "",
 	"split_reaction_target": "MAIN_PERSON",
 	"split_reaction_should_trigger": true,
@@ -147,6 +194,11 @@ var node_data = {
 	#"outcome_pass": "",
 	#"outcome_fail": "",
 	#"outcome_unsure": "",
+	"reaction_target": "MAIN_PERSON",
+	"reaction_novelty_counter": "",
+	"reaction_girl_resources": {},
+	"reaction_player_resources": {},
+	"reaction_attributes": {},
 	"subtree_type": "STANDARD",
 	"subtree_id": "",
 	"subtree_start": "",
@@ -282,6 +334,44 @@ func update_data():
 							var target_weight = output.get_node("IntLine").text
 							var target_node = output.get_node("TargetLine").text
 							node_data["split_random_outcomes"][target_node] = target_weight
+				"PERMISSION_CHECK":
+					node_data["split_permission_target"] = permission_target_dropdown.get_item_text(permission_target_dropdown.selected)
+					node_data["split_permission_difficulties"] = {
+						"crit": line_edits["split_permission_diff_crit"].text,
+						"success": line_edits["split_permission_diff_success"].text,
+						"objection": line_edits["split_permission_diff_objection"].text
+					}
+					node_data["split_permission_attributes"] = {}
+					for attribute in split_containers["PERMISSION_CHECK"].get_node("RelatedAttributes").get_children():
+						if "WeightedAttributePermission" in attribute.name:
+							var attr_type = attribute.get_node("AttributeType").get_item_text(attribute.get_node("AttributeType").selected)
+							var attr_weight = attribute.get_node("AttributeWeight").text
+							node_data["split_permission_attributes"][attr_type] = attr_weight
+					node_data["split_permission_outcomes"] = {
+						"crit_heat": line_edits["split_permission_outcomes"]["crit_heat"].text,
+						"yes_heat": line_edits["split_permission_outcomes"]["yes_heat"].text,
+						"crit_love": line_edits["split_permission_outcomes"]["crit_love"].text,
+						"yes_love": line_edits["split_permission_outcomes"]["yes_love"].text,
+						"crit_obey": line_edits["split_permission_outcomes"]["crit_obey"].text,
+						"yes_obey": line_edits["split_permission_outcomes"]["yes_obey"].text,
+						"objection": line_edits["split_permission_outcomes"]["objection"].text,
+						"refusal": line_edits["split_permission_outcomes"]["refusal"].text
+					}
+				"ENTHUSIASM_CHECK":
+					node_data["split_enthusiasm_target"] = enthusiasm_target_dropdown.get_item_text(enthusiasm_target_dropdown.selected)
+					node_data["split_enthusiasm_diff_loves"] = line_edits["split_enthusiasm_diff_loves"].text
+					node_data["split_enthusiasm_diff_likes"] = line_edits["split_enthusiasm_diff_likes"].text
+					node_data["split_enthusiasm_attributes"] = {}
+					for attribute in split_containers["ENTHUSIASM_CHECK"].get_node("RelatedAttributes").get_children():
+						if "WeightedAttributeEnthusiasm" in attribute.name:
+							var attr_type = attribute.get_node("AttributeType").get_item_text(attribute.get_node("AttributeType").selected)
+							var attr_weight = attribute.get_node("AttributeWeight").text
+							node_data["split_enthusiasm_attributes"][attr_type] = attr_weight
+					node_data["split_enthusiasm_outcomes"] = {
+						"loves": line_edits["split_enthusiasm_outcomes"]["loves"].text,
+						"likes": line_edits["split_enthusiasm_outcomes"]["likes"].text,
+						"dislikes": line_edits["split_enthusiasm_outcomes"]["dislikes"].text,
+					}
 				"ACTION_TEST":
 					node_data["split_action_id"] = line_edits["split_action_id"].text
 					node_data["split_action_outcomes"] = {
@@ -298,6 +388,27 @@ func update_data():
 					node_data["split_reaction_subtree"] = line_edits["split_reaction_subtree"].text
 				"HEART_LEVEL":
 					node_data["split_heart_level_subtree"] = line_edits["split_heart_level_subtree"].text
+		"REACTION":
+			node_data["reaction_target"] = reaction_target_dropdown.get_item_text(reaction_target_dropdown.selected)
+			node_data["reaction_novelty_counter"] = line_edits["reaction_novelty_counter"].text
+			node_data["reaction_girl_resources"] = {}
+			node_data["reaction_attributes"] = {}
+			node_data["reaction_player_resources"] = {}
+			for girl_resource in event_containers["REACTION"].get_node("GirlResources").get_children():
+				if "GirlResourceLine" in girl_resource.name:
+					var resource_type = girl_resource.get_node("ResourceType").get_item_text(girl_resource.get_node("ResourceType").selected)
+					var resource_amount = girl_resource.get_node("ResourceAmount").text
+					node_data["reaction_girl_resources"][resource_type] = resource_amount
+			for attribute in event_containers["REACTION"].get_node("RelatedAttributes").get_children():
+				if "WeightedAttributeReaction" in attribute.name:
+					var attr_type = attribute.get_node("AttributeType").get_item_text(attribute.get_node("AttributeType").selected)
+					var attr_weight = attribute.get_node("AttributeWeight").text
+					node_data["reaction_attributes"][attr_type] = attr_weight
+			for player_resource in event_containers["REACTION"].get_node("PlayerResources").get_children():
+				if "PlayerResourceLine" in player_resource.name:
+					var resource_type = player_resource.get_node("ResourceType").get_item_text(player_resource.get_node("ResourceType").selected)
+					var resource_amount = player_resource.get_node("ResourceAmount").text
+					node_data["reaction_player_resources"][resource_type] = resource_amount
 		"SUBTREE":
 			match node_data["subtree_type"]:
 				"STANDARD":
@@ -436,7 +547,36 @@ func _on_add_output_button_pressed(output_type):
 	else:
 		push_error("Unknown output type: " + output_type)
 
-func _on_cancel_button_pressed(output_type):
+func _on_add_attribute_button_pressed(test_type):
+	if test_type == "permission":
+		attribute_permission_count += 1
+		var new_attribute = weighted_attribute.instantiate()
+		new_attribute.name = "WeightedAttributePermission" + str(attribute_permission_count)
+		split_containers["PERMISSION_CHECK"].get_node("RelatedAttributes").add_child(new_attribute)
+	elif test_type == "enthusiasm":
+		attribute_enthusiasm_count += 1
+		var new_attribute = weighted_attribute.instantiate()
+		new_attribute.name = "WeightedAttributeEnthusiasm" + str(attribute_enthusiasm_count)
+		split_containers["ENTHUSIASM_CHECK"].get_node("RelatedAttributes").add_child(new_attribute)
+	elif test_type == "reaction":
+		attribute_reaction_count += 1
+		var new_attribute = weighted_attribute.instantiate()
+		new_attribute.name = "WeightedAttributeReaction" + str(attribute_reaction_count)
+		event_containers["REACTION"].get_node("RelatedAttributes").add_child(new_attribute)
+
+func _on_add_girl_resource_button_pressed():
+	girl_resource_reaction_count += 1
+	var new_resource_line = girl_resource_line.instantiate()
+	new_resource_line.name = "GirlResourceLine" + str(girl_resource_reaction_count)
+	event_containers["REACTION"].get_node("GirlResources").add_child(new_resource_line)
+
+func _on_add_player_resource_button_pressed():
+	player_resource_reaction_count += 1
+	var new_resource_line = player_resource_line.instantiate()
+	new_resource_line.name = "PlayerResourceLine" + str(player_resource_reaction_count)
+	event_containers["REACTION"].get_node("PlayerResources").add_child(new_resource_line)
+
+func _on_cancel_button_pressed(output_type): #output type is the node's name lowercased
 	if "subtree" in output_type:
 		output_subtree_count -= 1
 	elif "cycler" in output_type:
@@ -447,6 +587,17 @@ func _on_cancel_button_pressed(output_type):
 		output_greater_count -= 1
 	elif "string" in output_type:
 		output_split_string_count -= 1
+	elif "permission" in output_type:
+		attribute_permission_count -= 1
+	elif "enthusiasm" in output_type:
+		attribute_enthusiasm_count -= 1
+	elif "attributereaction" in output_type:
+		attribute_reaction_count -= 1
+	elif "girlresource" in output_type:
+		girl_resource_reaction_count -= 1
+	elif "playerresource" in output_type:
+		player_resource_reaction_count -= 1
+	
 
 func _on_garment_slot_item_selected(index:int):
 	node_data["garment_slot_id"] = garment_slot_dropdown.get_item_text(index)
@@ -455,6 +606,8 @@ func _on_garment_slot_item_selected(index:int):
 func _on_action_target_item_selected(index:int):
 	node_data["split_action_target"] = action_target_dropdown.get_item_text(index)
 
+func _on_permission_target_item_selected(index:int):
+	node_data["split_permission_target"] = permission_target_dropdown.get_item_text(index)
 
 func _on_sub_tree_type_item_selected(index:int):
 	node_data["subtree_type"] = subtree_type_dropdown.get_item_text(index)
@@ -464,7 +617,7 @@ func _on_heart_level_target_item_selected(index:int):
 	node_data["split_heart_level_target"] = heart_level_target_dropdown.get_item_text(index)
 
 func _on_reaction_target_item_selected(index:int):
-	node_data["split_reaction_target"] = reaction_target_dropdown.get_item_text(index)
+	node_data["reaction_target"] = reaction_target_dropdown.get_item_text(index)
 
 func _on_resource_type_item_selected(index:int):
 	node_data["split_resource_type"] = resource_type_dropdown.get_item_text(index)
