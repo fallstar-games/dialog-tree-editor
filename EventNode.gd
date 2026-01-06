@@ -86,6 +86,7 @@ extends GraphNode
 	"split_action_fail": $SplitInfo/SplitAction/Fail/LineEdit,
 	"split_action_weak_fail": $SplitInfo/SplitAction/WeakFail/LineEdit,
 	"split_action_crit_fail": $SplitInfo/SplitAction/CritFail/LineEdit,
+	"split_permission_action_id": $SplitInfo/SplitPermission/ActionID/LineEdit,
 	"split_permission_diff_crit": $SplitInfo/SplitPermission/Difficulties/Crit,
 	"split_permission_diff_success": $SplitInfo/SplitPermission/Difficulties/Success,
 	"split_permission_diff_objection": $SplitInfo/SplitPermission/Difficulties/Objection,
@@ -99,6 +100,7 @@ extends GraphNode
 		"objection": $SplitInfo/SplitPermission/OutputsFail/Objection,
 		"refusal": $SplitInfo/SplitPermission/OutputsFail/Refusal
 	},
+	"split_enthusiasm_action_id": $SplitInfo/SplitEnthusiasm/ActionID/LineEdit,
 	"split_enthusiasm_diff_loves": $SplitInfo/SplitEnthusiasm/Difficulties/Loves,
 	"split_enthusiasm_diff_likes": $SplitInfo/SplitEnthusiasm/Difficulties/Likes,
 	"split_enthusiasm_outcomes": {
@@ -109,6 +111,7 @@ extends GraphNode
 	"split_reaction_id": $SplitInfo/SplitReactionStrength/ReactionID/LineEdit,
 	"split_reaction_subtree": $SplitInfo/SplitReactionStrength/Subtree/LineEdit,
 	"split_heart_level_subtree": $SplitInfo/SplitHeartLevel/Subtree/LineEdit,
+	"reaction_id": $ReactionInfo/ReactionID/LineEdit,
 	"reaction_novelty_counter": $ReactionInfo/NoveltyCounter/LineEdit,
 	"subtree_id": $SubTreeInfo/StandardInfo/TreeName/LineEdit,
 	"subtree_start": $SubTreeInfo/StandardInfo/NodeName/LineEdit,
@@ -169,6 +172,7 @@ var node_data = {
 	"split_action_target": "MAIN_PERSON",
 	"split_action_outcomes": {},
 	"split_permission_target": "MAIN_PERSON",
+	"split_permission_action_id": "",
 	"split_permission_difficulties": {
 		"crit": "",
 		"success": "",
@@ -177,6 +181,7 @@ var node_data = {
 	"split_permission_attributes": {},
 	"split_permission_outcomes": {},
 	"split_enthusiasm_target": "MAIN_PERSON",
+	"split_enthusiasm_action_id": "",
 	"split_enthusiasm_diff_loves": "",
 	"split_enthusiasm_diff_likes": "",
 	"split_enthusiasm_attributes": {},
@@ -195,6 +200,7 @@ var node_data = {
 	#"outcome_fail": "",
 	#"outcome_unsure": "",
 	"reaction_target": "MAIN_PERSON",
+	"reaction_id": "",
 	"reaction_novelty_counter": "",
 	"reaction_girl_resources": {},
 	"reaction_player_resources": {},
@@ -336,6 +342,7 @@ func update_data():
 							node_data["split_random_outcomes"][target_node] = target_weight
 				"PERMISSION_CHECK":
 					node_data["split_permission_target"] = permission_target_dropdown.get_item_text(permission_target_dropdown.selected)
+					node_data["split_permission_action_id"] = line_edits["split_permission_action_id"].text
 					node_data["split_permission_difficulties"] = {
 						"crit": line_edits["split_permission_diff_crit"].text,
 						"success": line_edits["split_permission_diff_success"].text,
@@ -359,6 +366,7 @@ func update_data():
 					}
 				"ENTHUSIASM_CHECK":
 					node_data["split_enthusiasm_target"] = enthusiasm_target_dropdown.get_item_text(enthusiasm_target_dropdown.selected)
+					node_data["split_enthusiasm_action_id"] = line_edits["split_enthusiasm_action_id"].text
 					node_data["split_enthusiasm_diff_loves"] = line_edits["split_enthusiasm_diff_loves"].text
 					node_data["split_enthusiasm_diff_likes"] = line_edits["split_enthusiasm_diff_likes"].text
 					node_data["split_enthusiasm_attributes"] = {}
@@ -390,6 +398,7 @@ func update_data():
 					node_data["split_heart_level_subtree"] = line_edits["split_heart_level_subtree"].text
 		"REACTION":
 			node_data["reaction_target"] = reaction_target_dropdown.get_item_text(reaction_target_dropdown.selected)
+			node_data["reaction_id"] = line_edits["reaction_id"].text
 			node_data["reaction_novelty_counter"] = line_edits["reaction_novelty_counter"].text
 			node_data["reaction_girl_resources"] = {}
 			node_data["reaction_attributes"] = {}

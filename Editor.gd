@@ -980,6 +980,8 @@ func _apply_node_data_to_node(node, data:Dictionary):
 						"PERMISSION_CHECK":
 							if data.has("split_permission_target"):
 								set_option_button_by_text(node.permission_target_dropdown, str(data["split_permission_target"]))
+							if data.has("split_permission_action_id"):
+								node.line_edits["split_permission_action_id"].text = str(data["split_permission_action_id"])
 							if data.has("split_permission_difficulties"):
 								node.line_edits["split_permission_diff_crit"].text = str(data["split_permission_difficulties"].get("crit", ""))
 								node.line_edits["split_permission_diff_success"].text = str(data["split_permission_difficulties"].get("success", ""))
@@ -1005,6 +1007,8 @@ func _apply_node_data_to_node(node, data:Dictionary):
 						"ENTHUSIASM_CHECK":
 							if data.has("split_enthusiasm_target"):
 								set_option_button_by_text(node.enthusiasm_target_dropdown, str(data["split_enthusiasm_target"]))
+							if data.has("split_enthusiasm_action_id"):
+								node.line_edits["split_enthusiasm_action_id"].text = str(data["split_enthusiasm_action_id"])
 							node.line_edits["split_enthusiasm_diff_loves"].text = str(data.get("split_enthusiasm_diff_loves", ""))
 							node.line_edits["split_enthusiasm_diff_likes"].text = str(data.get("split_enthusiasm_diff_likes", ""))
 							if data.has("split_enthusiasm_attributes") and not data["split_enthusiasm_attributes"].is_empty():
@@ -1088,7 +1092,8 @@ func _apply_node_data_to_node(node, data:Dictionary):
 				"REACTION":
 					if data.has("reaction_target"):
 						set_option_button_by_text(node.reaction_target_dropdown, str(data["reaction_target"]))
-					
+					if data.has("reaction_id"):
+						node.line_edits["reaction_id"].text = str(data["reaction_id"])
 					node.line_edits["reaction_novelty_counter"].text = str(data.get("reaction_novelty_counter", ""))
 					
 					if data.has("reaction_girl_resources") and not data["reaction_girl_resources"].is_empty():
