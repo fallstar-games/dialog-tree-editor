@@ -860,9 +860,10 @@ theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
 layout_mode = 2
-text = "Loves:"
+text = "Loves diff = 1.0"
 
 [node name="Loves" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+visible = false
 layout_mode = 2
 theme_override_constants/minimum_character_width = 3
 placeholder_text = "10"
@@ -870,9 +871,10 @@ expand_to_text_length = true
 
 [node name="Label2" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
 layout_mode = 2
-text = "Likes:"
+text = "Likes diff = 0.5"
 
 [node name="Likes" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+visible = false
 layout_mode = 2
 theme_override_constants/minimum_character_width = 3
 placeholder_text = "5.5"

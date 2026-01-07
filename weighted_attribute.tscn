@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://blxx8mssrjvtl"]
+[gd_scene load_steps=22 format=3 uid="uid://blxx8mssrjvtl"]
 
 [ext_resource type="Script" path="res://weighted_attribute.gd" id="1_cc42v"]
 [ext_resource type="Texture2D" uid="uid://dbyg5uaf8o8ie" path="res://Assets/UI/choice_icon/tongue.png" id="2_6h3fd"]
@@ -15,9 +15,11 @@
 [ext_resource type="Texture2D" uid="uid://dq6rcs4m7xtc8" path="res://Assets/UI/choice_icon/dress.png" id="13_5q5c7"]
 [ext_resource type="Texture2D" uid="uid://dl6o2gsolbvgg" path="res://Assets/UI/choice_icon/treasure_map.png" id="14_nm2ae"]
 [ext_resource type="Texture2D" uid="uid://cbeqyct5wtr25" path="res://Assets/UI/choice_icon/peach.png" id="15_yq60b"]
+[ext_resource type="Texture2D" uid="uid://cvdb8lwrhn8n1" path="res://Assets/UI/choice_icon/oil_bottle.png" id="16_d32jb"]
 [ext_resource type="Texture2D" uid="uid://pdy3eu2eo315" path="res://Assets/UI/choice_icon/eggplant.png" id="16_ofih2"]
 [ext_resource type="Texture2D" uid="uid://bvs4ekqrw2f18" path="res://Assets/UI/choice_icon/chain.png" id="17_mg2x5"]
 [ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="18_ikqli"]
+[ext_resource type="Texture2D" uid="uid://dyvmeyck456i3" path="res://Assets/UI/choice_icon/ring.png" id="19_n1nuw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fpl5p"]
 
@@ -27,7 +29,7 @@ script = ExtResource("1_cc42v")
 
 [node name="AttributeType" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 16
+item_count = 18
 selected = 0
 popup/item_0/text = "craving_tongue"
 popup/item_0/icon = ExtResource("2_6h3fd")
@@ -68,15 +70,21 @@ popup/item_11/id = 11
 popup/item_12/text = "opinion_public_sex"
 popup/item_12/icon = ExtResource("14_nm2ae")
 popup/item_12/id = 12
-popup/item_13/text = "sex_skill_anal"
+popup/item_13/text = "opinion_anal_sex"
 popup/item_13/icon = ExtResource("15_yq60b")
 popup/item_13/id = 13
-popup/item_14/text = "sex_skill_deepthroat"
-popup/item_14/icon = ExtResource("16_ofih2")
+popup/item_14/text = "sex_skill_anal"
+popup/item_14/icon = ExtResource("16_d32jb")
 popup/item_14/id = 14
-popup/item_15/text = "obedience"
-popup/item_15/icon = ExtResource("17_mg2x5")
+popup/item_15/text = "sex_skill_deepthroat"
+popup/item_15/icon = ExtResource("16_ofih2")
 popup/item_15/id = 15
+popup/item_16/text = "obedience"
+popup/item_16/icon = ExtResource("17_mg2x5")
+popup/item_16/id = 16
+popup/item_17/text = "flag_exclusive"
+popup/item_17/icon = ExtResource("19_n1nuw")
+popup/item_17/id = 17
 
 [node name="AttributeWeight" type="LineEdit" parent="."]
 layout_mode = 2

@@ -1009,8 +1009,8 @@ func _apply_node_data_to_node(node, data:Dictionary):
 								set_option_button_by_text(node.enthusiasm_target_dropdown, str(data["split_enthusiasm_target"]))
 							if data.has("split_enthusiasm_action_id"):
 								node.line_edits["split_enthusiasm_action_id"].text = str(data["split_enthusiasm_action_id"])
-							node.line_edits["split_enthusiasm_diff_loves"].text = str(data.get("split_enthusiasm_diff_loves", ""))
-							node.line_edits["split_enthusiasm_diff_likes"].text = str(data.get("split_enthusiasm_diff_likes", ""))
+							#node.line_edits["split_enthusiasm_diff_loves"].text = str(data.get("split_enthusiasm_diff_loves", ""))
+							#node.line_edits["split_enthusiasm_diff_likes"].text = str(data.get("split_enthusiasm_diff_likes", ""))
 							if data.has("split_enthusiasm_attributes") and not data["split_enthusiasm_attributes"].is_empty():
 								for attr_type in data["split_enthusiasm_attributes"].keys():
 									node._on_add_attribute_button_pressed("enthusiasm")

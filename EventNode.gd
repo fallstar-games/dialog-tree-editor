@@ -101,8 +101,8 @@ extends GraphNode
 		"refusal": $SplitInfo/SplitPermission/OutputsFail/Refusal
 	},
 	"split_enthusiasm_action_id": $SplitInfo/SplitEnthusiasm/ActionID/LineEdit,
-	"split_enthusiasm_diff_loves": $SplitInfo/SplitEnthusiasm/Difficulties/Loves,
-	"split_enthusiasm_diff_likes": $SplitInfo/SplitEnthusiasm/Difficulties/Likes,
+	#"split_enthusiasm_diff_loves": $SplitInfo/SplitEnthusiasm/Difficulties/Loves,
+	#"split_enthusiasm_diff_likes": $SplitInfo/SplitEnthusiasm/Difficulties/Likes,
 	"split_enthusiasm_outcomes": {
 		"loves": $SplitInfo/SplitEnthusiasm/OutputLoves/LineEdit,
 		"likes": $SplitInfo/SplitEnthusiasm/OutputLikes/LineEdit,
@@ -182,8 +182,8 @@ var node_data = {
 	"split_permission_outcomes": {},
 	"split_enthusiasm_target": "MAIN_PERSON",
 	"split_enthusiasm_action_id": "",
-	"split_enthusiasm_diff_loves": "",
-	"split_enthusiasm_diff_likes": "",
+	#"split_enthusiasm_diff_loves": "",
+	#"split_enthusiasm_diff_likes": "",
 	"split_enthusiasm_attributes": {},
 	"split_enthusiasm_outcomes": {},
 	"split_reaction_id": "",
@@ -367,8 +367,8 @@ func update_data():
 				"ENTHUSIASM_CHECK":
 					node_data["split_enthusiasm_target"] = enthusiasm_target_dropdown.get_item_text(enthusiasm_target_dropdown.selected)
 					node_data["split_enthusiasm_action_id"] = line_edits["split_enthusiasm_action_id"].text
-					node_data["split_enthusiasm_diff_loves"] = line_edits["split_enthusiasm_diff_loves"].text
-					node_data["split_enthusiasm_diff_likes"] = line_edits["split_enthusiasm_diff_likes"].text
+					#node_data["split_enthusiasm_diff_loves"] = line_edits["split_enthusiasm_diff_loves"].text
+					#node_data["split_enthusiasm_diff_likes"] = line_edits["split_enthusiasm_diff_likes"].text
 					node_data["split_enthusiasm_attributes"] = {}
 					for attribute in split_containers["ENTHUSIASM_CHECK"].get_node("RelatedAttributes").get_children():
 						if "WeightedAttributeEnthusiasm" in attribute.name:
