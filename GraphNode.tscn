@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_238cw"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_n0u16"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -214,7 +214,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 17
+item_count = 18
 selected = 0
 popup/item_0/text = "Eyes"
 popup/item_0/id = 0
@@ -250,6 +250,8 @@ popup/item_15/text = "PAIN"
 popup/item_15/id = 15
 popup/item_16/text = "SQUINT"
 popup/item_16/id = 16
+popup/item_17/text = "DOWNCAST"
+popup/item_17/id = 17
 
 [node name="LowerExpression" type="OptionButton" parent="PaperDollInfo/ExpressionHBox"]
 layout_mode = 2
@@ -436,7 +438,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_238cw")
+syntax_highlighter = SubResource("CodeHighlighter_n0u16")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 

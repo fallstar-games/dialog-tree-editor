@@ -400,6 +400,8 @@ is_raining
 is_phase:day_phase
 current_room_is:room_id
 room_is_public
+room_can_be_locked
+room_is_locked
 is_main_person:girl_id
 p1_slot_filled:slot_id
 p1_slot_pulled:slot_id
@@ -415,7 +417,8 @@ girl_status_effect:girl_id:effect_key
 leverage_flag:girl_id:flag_id
 pledged_leverage_flag:girl_id:flag_id
 quest_flag:quest_id:flag_id
-check_first_success:action_id:girl_id:result"
+check_first_success:action_id:girl_id:result
+has_h_move:move_id"
 fit_content = true
 
 [node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
@@ -477,6 +480,7 @@ set_girl_hearts:girl_id:hearts_value
 set_leverage_flag:girl_id:flag_id:true/false
 pledge_leverage:girl_id:flag_id
 finished_negotiation:girl_id:true/false
+started_negotiation:girl_id
 set_quest_stage:quest_id:int
 set_quest_flag:quest_id:flag_id
 delayed_quest_reset:quest_id:int
@@ -489,7 +493,11 @@ plap_emitter:stop_all:(true/false)
 paperdoll_overlay:girl_id:ADD:overlay_name:parent_layer
 paperdoll_overlay:girl_id:RMV:overlay_name
 paperdoll_overlay:girl_id:RMV_ALL
-get_dressed:girl_id"
+get_dressed:girl_id
+apply_anger_strike:girl_id
+advance_corruption_quest:girl_id:quest_stage
+play_h_moves
+h_moves:clear_all, clear_secondary, set_primary:move_id, set_secondary:move_id"
 fit_content = true
 
 [node name="Tool" type="HBoxContainer" parent="."]

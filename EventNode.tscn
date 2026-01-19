@@ -1313,12 +1313,14 @@ text = "target:"
 
 [node name="ReactionTarget" type="OptionButton" parent="ReactionInfo/TargetPerson"]
 layout_mode = 2
-item_count = 2
+item_count = 3
 selected = 0
 popup/item_0/text = "MAIN_PERSON"
 popup/item_0/id = 0
 popup/item_1/text = "SECOND_PERSON"
 popup/item_1/id = 1
+popup/item_2/text = "PLAYER"
+popup/item_2/id = 2
 
 [node name="ReactionID" type="HBoxContainer" parent="ReactionInfo"]
 layout_mode = 2

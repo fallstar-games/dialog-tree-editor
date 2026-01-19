@@ -60,6 +60,8 @@ func _ready():
 	_ensure_close_selected_action()
 	# Ensure we have a cut action (Ctrl/Cmd+X) that copies then deletes
 	_ensure_cut_nodes_action()
+	# Ensure arrow key pan actions exist
+	_ensure_pan_actions()
 
 ################## Shortcut Keys ####################################
 	
@@ -109,6 +111,17 @@ func _input(_event):
 		# Require modifier (handled by InputMap) and ignore if typing
 		if not _is_text_input_focused():
 			_close_selected_nodes()
+	# Arrow key panning (only when not typing in a text field)
+	if not _is_text_input_focused():
+		var pan_speed := 50.0
+		if Input.is_action_pressed("Pan Left"):
+			scroll_offset.x -= pan_speed
+		if Input.is_action_pressed("Pan Right"):
+			scroll_offset.x += pan_speed
+		if Input.is_action_pressed("Pan Up"):
+			scroll_offset.y -= pan_speed
+		if Input.is_action_pressed("Pan Down"):
+			scroll_offset.y += pan_speed
 
 
 func random_number():
@@ -283,6 +296,16 @@ func _on_new_event_pressed(open_save : bool = false):
 		if last_instanced_node_pos == Vector2(0,0):
 			last_instanced_node_pos = $Start.position_offset
 		new_option.position_offset = last_instanced_node_pos + new_nodes_position_offset
+
+		if new_option.node_data.has("reaction_girl_resources") and not new_option.node_data["reaction_girl_resources"].is_empty():
+			for resource_type in new_option.node_data["reaction_girl_resources"].keys():
+				new_option._on_add_girl_resource_button_pressed()
+				var current_count = new_option.girl_resource_reaction_count
+				var resource_node_name = "GirlResourceLine" + str(current_count)
+				var resource_node = new_option.event_containers["REACTION"].get_node("GirlResources").get_node(resource_node_name)
+				if resource_node:
+					set_option_button_by_text(resource_node.get_node("ResourceType"), str(resource_type))
+					resource_node.get_node("ResourceAmount").text = str(new_option.node_data["reaction_girl_resources"][resource_type])
 
 ################## Creating a new offramp ####################################
 func _on_new_offramp_pressed(open_save : bool = false):
@@ -579,6 +602,23 @@ func _ensure_cut_nodes_action():
 			cut_event2.command_or_control_autoremap = true
 			cut_event2.physical_keycode = KEY_X
 			InputMap.action_add_event(action, cut_event2)
+
+# Ensure arrow key pan actions exist
+func _ensure_pan_actions():
+	var pan_actions := {
+		"Pan Left": KEY_LEFT,
+		"Pan Right": KEY_RIGHT,
+		"Pan Up": KEY_UP,
+		"Pan Down": KEY_DOWN
+	}
+	for action_name in pan_actions.keys():
+		if not InputMap.has_action(action_name):
+			InputMap.add_action(action_name)
+		var events := InputMap.action_get_events(action_name)
+		if events.is_empty():
+			var key_event := InputEventKey.new()
+			key_event.physical_keycode = pan_actions[action_name]
+			InputMap.action_add_event(action_name, key_event)
 
 # Returns true if a LineEdit or TextEdit currently has keyboard focus.
 func _is_text_input_focused() -> bool:

@@ -202,7 +202,7 @@ var node_data = {
 	"reaction_target": "MAIN_PERSON",
 	"reaction_id": "",
 	"reaction_novelty_counter": "",
-	"reaction_girl_resources": {},
+	"reaction_girl_resources": {"love": "1.0:0.05", "heat":"low:10"},
 	"reaction_player_resources": {},
 	"reaction_attributes": {},
 	"subtree_type": "STANDARD",

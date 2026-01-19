@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5t3roakyo8pg"]
+[gd_scene load_steps=11 format=3 uid="uid://c5t3roakyo8pg"]
 
 [ext_resource type="Script" path="res://resource_line.gd" id="1_5snb8"]
 [ext_resource type="Texture2D" uid="uid://cbqfwgpk8fyom" path="res://Assets/UI/choice_icon/hearts.png" id="2_wbj2u"]
 [ext_resource type="Texture2D" uid="uid://nurek301ejjt" path="res://Assets/UI/choice_icon/fire.png" id="3_shksm"]
 [ext_resource type="Texture2D" uid="uid://baya0gye1ddk2" path="res://Assets/UI/choice_icon/stopwatch.png" id="4_ht505"]
 [ext_resource type="Texture2D" uid="uid://dm4ghusiklby0" path="res://Assets/UI/choice_icon/grasp.png" id="5_yxxg7"]
-[ext_resource type="Texture2D" uid="uid://bvnjbw2pe4pen" path="res://Assets/UI/choice_icon/sleep.png" id="6_bsf3y"]
+[ext_resource type="Texture2D" uid="uid://cieurve5d8nry" path="res://Assets/UI/choice_icon/alert_eye.png" id="6_sedbt"]
 [ext_resource type="Texture2D" uid="uid://b1yrdvsy4yyr7" path="res://Assets/UI/choice_icon/spiral.png" id="7_ovw6i"]
+[ext_resource type="Texture2D" uid="uid://b4ewjvl7rfoon" path="res://Assets/UI/choice_icon/brain.png" id="8_5iw6q"]
 [ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="18_0pwy5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fpl5p"]
@@ -18,7 +19,7 @@ resource_amount = NodePath("ResourceAmount")
 
 [node name="ResourceType" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 6
+item_count = 7
 selected = 0
 popup/item_0/text = "love"
 popup/item_0/icon = ExtResource("2_wbj2u")
@@ -33,11 +34,14 @@ popup/item_3/text = "resistance"
 popup/item_3/icon = ExtResource("5_yxxg7")
 popup/item_3/id = 3
 popup/item_4/text = "awareness"
-popup/item_4/icon = ExtResource("6_bsf3y")
+popup/item_4/icon = ExtResource("6_sedbt")
 popup/item_4/id = 4
 popup/item_5/text = "sanity"
 popup/item_5/icon = ExtResource("7_ovw6i")
 popup/item_5/id = 5
+popup/item_6/text = "willpower"
+popup/item_6/icon = ExtResource("8_5iw6q")
+popup/item_6/id = 6
 
 [node name="ResourceAmount" type="LineEdit" parent="."]
 layout_mode = 2

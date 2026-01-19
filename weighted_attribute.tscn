@@ -11,12 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://dis2h5gjoju87" path="res://Assets/UI/choice_icon/boobs.png" id="9_1r2yf"]
 [ext_resource type="Texture2D" uid="uid://b0d26va2645af" path="res://Assets/UI/choice_icon/butt.png" id="10_whr01"]
 [ext_resource type="Texture2D" uid="uid://bgp83mal86r4l" path="res://Assets/UI/choice_icon/vagina.png" id="11_86omk"]
-[ext_resource type="Texture2D" uid="uid://danyye32laut5" path="res://Assets/UI/choice_icon/bicep.png" id="12_yjej2"]
-[ext_resource type="Texture2D" uid="uid://dq6rcs4m7xtc8" path="res://Assets/UI/choice_icon/dress.png" id="13_5q5c7"]
-[ext_resource type="Texture2D" uid="uid://dl6o2gsolbvgg" path="res://Assets/UI/choice_icon/treasure_map.png" id="14_nm2ae"]
-[ext_resource type="Texture2D" uid="uid://cbeqyct5wtr25" path="res://Assets/UI/choice_icon/peach.png" id="15_yq60b"]
+[ext_resource type="Texture2D" uid="uid://c2k803thhxojn" path="res://Assets/UI/choice_icon/angry_fist.png" id="12_2kki6"]
+[ext_resource type="Texture2D" uid="uid://ce65ca0njs1ha" path="res://Assets/UI/choice_icon/lesbian.png" id="13_xmwiw"]
+[ext_resource type="Texture2D" uid="uid://dbk1ep3h7otec" path="res://Assets/UI/choice_icon/camera.png" id="14_rvse4"]
+[ext_resource type="Texture2D" uid="uid://be1juey2nmaph" path="res://Assets/UI/choice_icon/donut.png" id="15_heb5n"]
 [ext_resource type="Texture2D" uid="uid://cvdb8lwrhn8n1" path="res://Assets/UI/choice_icon/oil_bottle.png" id="16_d32jb"]
-[ext_resource type="Texture2D" uid="uid://pdy3eu2eo315" path="res://Assets/UI/choice_icon/eggplant.png" id="16_ofih2"]
+[ext_resource type="Texture2D" uid="uid://b5qqcyv2b2pc8" path="res://Assets/UI/choice_icon/popsicle.png" id="17_6r73k"]
 [ext_resource type="Texture2D" uid="uid://bvs4ekqrw2f18" path="res://Assets/UI/choice_icon/chain.png" id="17_mg2x5"]
 [ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="18_ikqli"]
 [ext_resource type="Texture2D" uid="uid://dyvmeyck456i3" path="res://Assets/UI/choice_icon/ring.png" id="19_n1nuw"]
@@ -62,22 +62,22 @@ popup/item_9/text = "sensitivity_pussy"
 popup/item_9/icon = ExtResource("11_86omk")
 popup/item_9/id = 9
 popup/item_10/text = "opinion_rough_sex"
-popup/item_10/icon = ExtResource("12_yjej2")
+popup/item_10/icon = ExtResource("12_2kki6")
 popup/item_10/id = 10
 popup/item_11/text = "opinion_lesbian_sex"
-popup/item_11/icon = ExtResource("13_5q5c7")
+popup/item_11/icon = ExtResource("13_xmwiw")
 popup/item_11/id = 11
 popup/item_12/text = "opinion_public_sex"
-popup/item_12/icon = ExtResource("14_nm2ae")
+popup/item_12/icon = ExtResource("14_rvse4")
 popup/item_12/id = 12
 popup/item_13/text = "opinion_anal_sex"
-popup/item_13/icon = ExtResource("15_yq60b")
+popup/item_13/icon = ExtResource("15_heb5n")
 popup/item_13/id = 13
 popup/item_14/text = "sex_skill_anal"
 popup/item_14/icon = ExtResource("16_d32jb")
 popup/item_14/id = 14
 popup/item_15/text = "sex_skill_deepthroat"
-popup/item_15/icon = ExtResource("16_ofih2")
+popup/item_15/icon = ExtResource("17_6r73k")
 popup/item_15/id = 15
 popup/item_16/text = "obedience"
 popup/item_16/icon = ExtResource("17_mg2x5")

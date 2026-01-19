@@ -176,7 +176,7 @@ theme_override_constants/separation = 18
 [node name="EyesDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 17
+item_count = 18
 selected = 0
 popup/item_0/text = "Eyes"
 popup/item_0/id = 0
@@ -212,6 +212,8 @@ popup/item_15/text = "PAIN"
 popup/item_15/id = 15
 popup/item_16/text = "SQUINT"
 popup/item_16/id = 16
+popup/item_17/text = "DOWNCAST"
+popup/item_17/id = 17
 
 [node name="MouthDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/ExpressionHBox"]
 layout_mode = 2
