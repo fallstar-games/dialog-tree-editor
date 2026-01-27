@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=71 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -63,6 +63,10 @@
 [ext_resource type="Texture2D" uid="uid://dq6rcs4m7xtc8" path="res://Assets/UI/choice_icon/dress.png" id="58_vc2nq"]
 [ext_resource type="Texture2D" uid="uid://cf23r2nkko4jm" path="res://Assets/UI/choice_icon/collar.png" id="59_28g1k"]
 [ext_resource type="Texture2D" uid="uid://dboxcuwmdlei0" path="res://Assets/UI/choice_icon/shears.png" id="60_1doda"]
+[ext_resource type="Texture2D" uid="uid://cab8w3vvnfdrc" path="res://Assets/UI/choice_icon/fast_forward.png" id="61_bqcj1"]
+[ext_resource type="Texture2D" uid="uid://bdb312jkbtfso" path="res://Assets/UI/choice_icon/play.png" id="62_i6gy4"]
+[ext_resource type="Texture2D" uid="uid://bu13p31pvycqd" path="res://Assets/UI/choice_icon/emergency_exit.png" id="63_8pivj"]
+[ext_resource type="Texture2D" uid="uid://buqcfpycb7oqn" path="res://Assets/UI/choice_icon/lightning_bolt.png" id="64_1e7w5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -153,7 +157,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 59
+item_count = 63
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -331,6 +335,18 @@ popup/item_57/id = 57
 popup/item_58/text = "shears"
 popup/item_58/icon = ExtResource("60_1doda")
 popup/item_58/id = 58
+popup/item_59/text = "fast_forward"
+popup/item_59/icon = ExtResource("61_bqcj1")
+popup/item_59/id = 59
+popup/item_60/text = "play"
+popup/item_60/icon = ExtResource("62_i6gy4")
+popup/item_60/id = 60
+popup/item_61/text = "emergency_exit"
+popup/item_61/icon = ExtResource("63_8pivj")
+popup/item_61/id = 61
+popup/item_62/text = "lightning_bolt"
+popup/item_62/icon = ExtResource("64_1e7w5")
+popup/item_62/id = 62
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2

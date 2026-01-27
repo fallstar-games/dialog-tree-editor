@@ -674,6 +674,7 @@ func _on_open_utilities_pressed():
 # ====================== Duplication Support ========================
 # Duplicate currently selected GraphNodes by instantiating new nodes
 # of the same type and copying node_data, offsetting position.
+# Preserves connections between selected nodes (but not to external nodes).
 func _duplicate_selected_nodes():
 	var sel = _get_selected_nodes()
 	if sel.is_empty():
@@ -684,7 +685,17 @@ func _duplicate_selected_nodes():
 			src.update_data()
 	spawn_sound.pitch_scale = random_number()
 	spawn_sound.play()
+
+	# Build set of selected node names for filtering connections
+	var selected_names:Dictionary = {}
+	for src in sel:
+		selected_names[str(src.name)] = true
+
+	# First pass: create all nodes and build name mapping (old_name -> new_name)
+	var name_mapping:Dictionary = {}
 	var created:Array = []
+	var node_connections:Array = []  # Store {from_old, to_old} for remapping later
+
 	for src in sel:
 		if typeof(src) != TYPE_OBJECT:
 			continue
@@ -692,13 +703,27 @@ func _duplicate_selected_nodes():
 		var type_prefix = str(src.name).split("_")[0]
 		if not node_stack.has(type_prefix):
 			continue
+		var original_name = str(src.name)
+
 		# Create new node of same type
 		var dst = get_new_node(type_prefix)
+
+		# Build name mapping
+		name_mapping[original_name] = str(dst.name)
+
 		# Deep copy node_data and apply
 		var data_any = src.get("node_data")
 		if typeof(data_any) != TYPE_DICTIONARY:
 			continue
 		var data:Dictionary = (data_any as Dictionary).duplicate(true)
+
+		# Capture internal connections before clearing
+		if data.has("go to"):
+			for target in data["go to"]:
+				if selected_names.has(str(target)):
+					node_connections.append({"from": original_name, "to": str(target)})
+			data["go to"] = []
+
 		# Ensure a fresh title/name for the duplicate when applicable
 		if data.has("node title"):
 			data["node title"] = dst.name
@@ -706,12 +731,27 @@ func _duplicate_selected_nodes():
 		if data.has("offset_x") and data.has("offset_y"):
 			data["offset_x"] = src.position_offset.x + 60
 			data["offset_y"] = src.position_offset.y + 40
-		# Do not carry over connections
-		if data.has("go to"):
-			data["go to"] = []
+
 		_apply_node_data_to_node(dst, data)
 		created.append(dst)
-	# Optionally select newly created nodes
+
+	# Second pass: restore internal connections using name mapping
+	for conn in node_connections:
+		var old_from = conn["from"]
+		var old_to = conn["to"]
+		if name_mapping.has(old_from) and name_mapping.has(old_to):
+			var new_from = name_mapping[old_from]
+			var new_to = name_mapping[old_to]
+			# Create visual connection
+			connect_node(new_from, 0, new_to, 0)
+			# Update node_data "go to"
+			if has_node(new_from):
+				var from_node = get_node(new_from)
+				if "node_data" in from_node and from_node.node_data.has("go to"):
+					if not from_node.node_data["go to"].has(new_to):
+						from_node.node_data["go to"].append(new_to)
+
+	# Select newly created nodes
 	if created.size() > 0:
 		# Deselect previously selected
 		for gn in sel:
@@ -881,6 +921,8 @@ func _apply_node_data_to_node(node, data:Dictionary):
 				node.room_line.text = str(data["room_id"])
 			if data.has("reqs_id"):
 				node.reqs_preset_line.text = str(data["reqs_id"])
+			if data.has("disabled"):
+				node.disabled_checkbox.button_pressed = bool(data["disabled"])
 			if data.has("icon_id"):
 				if str(data["icon_id"]) == "":
 					node.icon_dropdown.select(0)
@@ -1203,7 +1245,7 @@ func _get_selected_nodes() -> Array:
 	return result
 
 # ================== Copy/Paste Support ==================
-# Copy selected nodes into clipboard as JSON string
+# Copy selected nodes into clipboard as JSON string, preserving internal connections
 func _copy_selected_nodes_to_clipboard():
 	var sel = _get_selected_nodes()
 	if sel.is_empty():
@@ -1212,6 +1254,10 @@ func _copy_selected_nodes_to_clipboard():
 	for n in sel:
 		if n.has_method("update_data"):
 			n.update_data()
+	# Build set of selected node names for filtering connections
+	var selected_names:Dictionary = {}
+	for n in sel:
+		selected_names[str(n.name)] = true
 	# Determine anchor (top-left most selected) to store relative positions
 	var min_x = INF
 	var min_y = INF
@@ -1221,33 +1267,38 @@ func _copy_selected_nodes_to_clipboard():
 		if n.position_offset.y < min_y:
 			min_y = n.position_offset.y
 	var payload = {
-		"version": 1,
+		"version": 2,
 		"nodes": []
 	}
 	for n in sel:
 		var type_prefix = str(n.name).split("_")[0]
+		var original_name = str(n.name)
 		var data_any = n.get("node_data")
 		if typeof(data_any) != TYPE_DICTIONARY:
 			continue
 		var data:Dictionary = (data_any as Dictionary).duplicate(true)
-		# normalize to relative positions and clear connections
+		# normalize to relative positions
 		if data.has("offset_x") and data.has("offset_y"):
 			data["offset_x"] = n.position_offset.x - min_x
 			data["offset_y"] = n.position_offset.y - min_y
+		# Filter "go to" to only include connections to other selected nodes
+		var internal_connections:Array = []
 		if data.has("go to"):
-			data["go to"] = []
-		# clear name/title; will be assigned on paste
-		if data.has("node title"):
-			data["node title"] = ""
+			for target in data["go to"]:
+				if selected_names.has(str(target)):
+					internal_connections.append(str(target))
+			data["go to"] = internal_connections
+		# Store original name for remapping; will be assigned fresh name on paste
 		payload["nodes"].append({
 			"type": type_prefix,
+			"original_name": original_name,
 			"data": data
 		})
 	var json_text = JSON.stringify(payload)
 	# Godot 4.x clipboard API
 	DisplayServer.clipboard_set(json_text)
 
-# Paste nodes from clipboard JSON at target canvas position
+# Paste nodes from clipboard JSON at target canvas position, restoring internal connections
 func _paste_nodes_from_clipboard(target_canvas_pos:Vector2):
 	var clip = DisplayServer.clipboard_get()
 	if clip == null or str(clip) == "":
@@ -1260,8 +1311,12 @@ func _paste_nodes_from_clipboard(target_canvas_pos:Vector2):
 	# spawn sound
 	spawn_sound.pitch_scale = random_number()
 	spawn_sound.play()
-	# Use target as anchor, offset slightly so it doesn't overlap selection origin
+
+	# First pass: create all nodes and build name mapping (old_name -> new_name)
+	var name_mapping:Dictionary = {}
 	var created:Array = []
+	var node_connections:Array = []  # Store {from_old, to_old} for remapping later
+
 	for node_def in parsed["nodes"]:
 		if typeof(node_def) != TYPE_DICTIONARY:
 			continue
@@ -1272,20 +1327,56 @@ func _paste_nodes_from_clipboard(target_canvas_pos:Vector2):
 		if typeof(data_any) != TYPE_DICTIONARY:
 			continue
 		var data:Dictionary = (data_any as Dictionary).duplicate(true)
+		var original_name = node_def.get("original_name", "")
+
+		# Store connections for later (version 2 format preserves internal connections)
+		var go_to_targets:Array = []
+		if data.has("go to") and typeof(data["go to"]) == TYPE_ARRAY:
+			go_to_targets = data["go to"].duplicate()
+
 		# Create node
 		var dst = get_new_node(type_prefix)
+
+		# Build name mapping
+		if original_name != "":
+			name_mapping[original_name] = str(dst.name)
+
 		# Rebuild absolute position from relative offsets
 		if data.has("offset_x") and data.has("offset_y"):
 			data["offset_x"] = int(target_canvas_pos.x) + int(data["offset_x"]) + 20
 			data["offset_y"] = int(target_canvas_pos.y) + int(data["offset_y"]) + 15
+
 		# Fresh name/title
 		if data.has("node title"):
 			data["node title"] = dst.name
-		# Ensure no connections
+
+		# Clear connections for now; will restore after all nodes created
 		if data.has("go to"):
 			data["go to"] = []
+
 		_apply_node_data_to_node(dst, data)
 		created.append(dst)
+
+		# Store connection info for second pass
+		for target in go_to_targets:
+			node_connections.append({"from": original_name, "to": str(target)})
+
+	# Second pass: restore internal connections using name mapping
+	for conn in node_connections:
+		var old_from = conn["from"]
+		var old_to = conn["to"]
+		if name_mapping.has(old_from) and name_mapping.has(old_to):
+			var new_from = name_mapping[old_from]
+			var new_to = name_mapping[old_to]
+			# Create visual connection
+			connect_node(new_from, 0, new_to, 0)
+			# Update node_data "go to"
+			if has_node(new_from):
+				var from_node = get_node(new_from)
+				if "node_data" in from_node and from_node.node_data.has("go to"):
+					if not from_node.node_data["go to"].has(new_to):
+						from_node.node_data["go to"].append(new_to)
+
 	# Update selection to the newly created nodes
 	if created.size() > 0:
 		# Deselect anything currently selected

@@ -418,7 +418,12 @@ leverage_flag:girl_id:flag_id
 pledged_leverage_flag:girl_id:flag_id
 quest_flag:quest_id:flag_id
 check_first_success:action_id:girl_id:result
-has_h_move:move_id"
+has_h_move:move_id
+primary_h_move_is_assigned
+can_afford_item:item_id
+has_perk_level:girl_id:perk_id:level
+has_used_attack:girl_id:attack_id
+has_full_awareness:girl_id"
 fit_content = true
 
 [node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
@@ -440,7 +445,9 @@ quest_stage:quest_id
 reaction_abs_change:reaction_id:target_id:resource_type
 reaction_strength_adjective:reaction_id:target_id:resource_type
 try_force:girl_id
-global_counter:counter_id"
+global_counter:counter_id
+item_price:item_id
+attack_vigor_cost:attack_id"
 fit_content = true
 
 [node name="Prefabs" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
@@ -497,7 +504,10 @@ get_dressed:girl_id
 apply_anger_strike:girl_id
 advance_corruption_quest:girl_id:quest_stage
 play_h_moves
-h_moves:clear_all, clear_secondary, set_primary:move_id, set_secondary:move_id"
+h_moves:clear_all, clear_secondary, set_primary:move_id, set_secondary:move_id
+pay_for_item:item_id
+started_unaware_event:girl_id
+finished_unaware_event:girl_id:was_caught"
 fit_content = true
 
 [node name="Tool" type="HBoxContainer" parent="."]
