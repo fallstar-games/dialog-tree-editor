@@ -1017,6 +1017,9 @@ func _apply_node_data_to_node(node, data:Dictionary):
 			if data.has("wardrobe_action"):
 				set_option_button_by_text(node.wardrobe_action_dropdown, str(data["wardrobe_action"]))
 				node.change_wardrobe_mode(node.wardrobe_action_dropdown.selected)
+			if data.has("menu_type"):
+				set_option_button_by_text(node.menu_type_dropdown, str(data["menu_type"]))
+				node.outfitter_info_container.visible = str(data["menu_type"]) == "OUTFITTER"
 
 			match str(data.get("event_type", "SPLIT")):
 				"SPLIT":
@@ -1168,7 +1171,14 @@ func _apply_node_data_to_node(node, data:Dictionary):
 						"SAVE_OUTFIT":
 							node.line_edits["outfit_id"].text = str(data.get("outfit_id", ""))
 				"MENU":
-					node.line_edits["menu_id"].text = str(data.get("menu_id", ""))
+					match str(data.get("menu_type", "OUTFITTER")):
+						"OUTFITTER":
+							node.line_edits["outfitter_outfit_id"].text = str(data.get("outfitter_outfit_id", ""))
+							node.line_edits["outfitter_output_yes_love"].text = str(data.get("outfitter_output_yes_love", ""))
+							node.line_edits["outfitter_output_yes_obey"].text = str(data.get("outfitter_output_yes_obey", ""))
+							node.line_edits["outfitter_output_object"].text = str(data.get("outfitter_output_object", ""))
+							node.line_edits["outfitter_output_refuse"].text = str(data.get("outfitter_output_refuse", ""))
+							node.line_edits["outfitter_output_abort"].text = str(data.get("outfitter_output_abort", ""))
 				"LINE_ENTRY":
 					node.line_edits["line_entry_target_var"].text = str(data.get("line_entry_target_var", ""))
 				"REACTION":

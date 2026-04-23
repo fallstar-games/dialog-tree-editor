@@ -10,12 +10,14 @@ extends GraphNode
 @onready var enthusiasm_target_dropdown:OptionButton = $SplitInfo/SplitEnthusiasm/TargetPerson/EnthusiasmTarget
 @onready var subtree_type_dropdown:OptionButton = $SubTreeInfo/SubTreeType
 @onready var line_entry_type_dropdown:OptionButton = $LineEntryInfo/LineEntryType
+@onready var menu_type_dropdown:OptionButton = $MenuInfo/MenuSelect/MenuType
+@onready var outfitter_info_container:VBoxContainer = $MenuInfo/OutfitterInfo
 @onready var reaction_target_dropdown:OptionButton = $ReactionInfo/TargetPerson/ReactionTarget
 @onready var resource_type_dropdown:OptionButton = $SplitInfo/SplitReactionStrength/ResourceType/ResourceType
 @onready var reaction_should_trigger_checkbox:CheckBox = $SplitInfo/SplitReactionStrength/TriggerReaction/CheckBox
 @onready var heart_level_target_dropdown:OptionButton = $SplitInfo/SplitHeartLevel/TargetPerson/HeartLevelTarget
 #@onready var buy_sell_container = $ShopMode
-@onready var menu_line:LineEdit = $MenuInfo/LineEdit
+#@onready var menu_line:LineEdit = $MenuInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
 #@onready var sell_btn:CheckBox = $ShopMode/Sell
 @onready var event_containers:Dictionary = {
@@ -127,7 +129,13 @@ extends GraphNode
 	"outfit_id": $WardrobeInfo/OutfitID/LineEdit,
 	"garment_id": $WardrobeInfo/GarmentID/LineEdit,
 	"garment_slot_id": $WardrobeInfo/SlotID/LineEdit,
-	"menu_id": $MenuInfo/LineEdit,
+	#"menu_id": $MenuInfo/LineEdit,
+	"outfitter_outfit_id": $MenuInfo/OutfitterInfo/OutfitID/LineEdit,
+	"outfitter_output_yes_love": $MenuInfo/OutfitterInfo/YesLove/LineEdit,
+	"outfitter_output_yes_obey": $MenuInfo/OutfitterInfo/YesObey/LineEdit,
+	"outfitter_output_object": $MenuInfo/OutfitterInfo/Object/LineEdit,
+	"outfitter_output_refuse": $MenuInfo/OutfitterInfo/Refuse/LineEdit,
+	"outfitter_output_abort": $MenuInfo/OutfitterInfo/Abort/LineEdit,
 	"line_entry_target_var": $LineEntryInfo/HBoxContainer/LineEdit
 }
 
@@ -202,7 +210,7 @@ var node_data = {
 	"reaction_target": "MAIN_PERSON",
 	"reaction_id": "",
 	"reaction_novelty_counter": "",
-	"reaction_girl_resources": {"love": "1.0:0.05", "heat":"low:10"},
+	"reaction_girl_resources": {"love": "15", "heat":"low:10"},
 	"reaction_player_resources": {},
 	"reaction_attributes": {},
 	"subtree_type": "STANDARD",
@@ -223,7 +231,14 @@ var node_data = {
 	"outfit_id": "",
 	"garment_id": "",
 	"garment_slot_id": "PANTIES",
-	"menu_id":"",
+	#"menu_id":"",
+	"menu_type": "OUTFITTER",
+	"outfitter_outfit_id": "",
+	"outfitter_output_yes_love": "",
+	"outfitter_output_yes_obey": "",
+	"outfitter_output_object": "",
+	"outfitter_output_refuse": "",
+	"outfitter_output_abort": "",
 	#"letter_id":"",
 	"line_entry_type":"PLAYER_NAME",
 	"line_entry_target_var":"",
@@ -293,6 +308,11 @@ func update_data():
 	idx = line_entry_type_dropdown.selected
 	if idx >= 0:
 		node_data["line_entry_type"] = line_entry_type_dropdown.get_item_text(idx)
+
+	# Capture menu type
+	idx = menu_type_dropdown.selected
+	if idx >= 0:
+		node_data["menu_type"] = menu_type_dropdown.get_item_text(idx)
 	
 	match node_data["event_type"]:
 		#"CHECK":
@@ -467,7 +487,14 @@ func update_data():
 				"SAVE_OUTFIT":
 					node_data["outfit_id"] = line_edits["outfit_id"].text
 		"MENU":
-			node_data["menu_id"] = line_edits["menu_id"].text
+			match node_data["menu_type"]:
+				"OUTFITTER":
+					node_data["outfitter_outfit_id"] = line_edits["outfitter_outfit_id"].text
+					node_data["outfitter_output_yes_love"] = line_edits["outfitter_output_yes_love"].text
+					node_data["outfitter_output_yes_obey"] = line_edits["outfitter_output_yes_obey"].text
+					node_data["outfitter_output_object"] = line_edits["outfitter_output_object"].text
+					node_data["outfitter_output_refuse"] = line_edits["outfitter_output_refuse"].text
+					node_data["outfitter_output_abort"] = line_edits["outfitter_output_abort"].text
 		"LINE_ENTRY":
 			node_data["line_entry_target_var"] = line_edits["line_entry_target_var"].text
 
@@ -525,6 +552,10 @@ func _on_wardrobe_action_item_selected(index:int):
 
 func _on_line_entry_type_item_selected(index:int):
 	node_data["line_entry_type"] = line_entry_type_dropdown.get_item_text(index)
+
+func _on_menu_type_item_selected(index:int):
+	node_data["menu_type"] = menu_type_dropdown.get_item_text(index)
+	outfitter_info_container.visible = menu_type_dropdown.get_item_text(index) == "OUTFITTER"
 
 func _on_add_output_button_pressed(output_type):
 	if output_type == "subtree":

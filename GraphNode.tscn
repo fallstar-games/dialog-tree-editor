@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_t5axh"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_5ujya"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -315,7 +315,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 5
+item_count = 6
 selected = 0
 popup/item_0/text = "Framing"
 popup/item_0/id = 0
@@ -327,6 +327,8 @@ popup/item_3/text = "BUST"
 popup/item_3/id = 3
 popup/item_4/text = "FULL"
 popup/item_4/id = 4
+popup/item_5/text = "FAR"
+popup/item_5/id = 5
 
 [node name="OverlayHBox" type="HBoxContainer" parent="PaperDollInfo"]
 layout_mode = 2
@@ -438,7 +440,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_t5axh")
+syntax_highlighter = SubResource("CodeHighlighter_5ujya")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 

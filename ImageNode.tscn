@@ -270,7 +270,7 @@ popup/item_3/id = 3
 [node name="FramingDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo/PoseFramingHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 5
+item_count = 6
 selected = 0
 popup/item_0/text = "Framing"
 popup/item_0/id = 0
@@ -282,6 +282,8 @@ popup/item_3/text = "BUST"
 popup/item_3/id = 3
 popup/item_4/text = "FULL"
 popup/item_4/id = 4
+popup/item_5/text = "FAR"
+popup/item_5/id = 5
 
 [node name="OverlayHBox" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig/PaperdollInfo"]
 layout_mode = 2

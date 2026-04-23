@@ -405,6 +405,7 @@ room_is_locked
 is_main_person:girl_id
 p1_slot_filled:slot_id
 p1_slot_pulled:slot_id
+p1_breasts_exposed
 solo_is_showing
 talkie_is_showing
 has_patience:p1/p2/girl_id
@@ -423,7 +424,8 @@ primary_h_move_is_assigned
 can_afford_item:item_id
 has_perk_level:girl_id:perk_id:level
 has_used_attack:girl_id:attack_id
-has_full_awareness:girl_id"
+has_full_awareness:girl_id
+favor_chose_unlocked"
 fit_content = true
 
 [node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
@@ -439,6 +441,7 @@ action_difficulty:girl_id:action_id
 force_difficulty:girl_id
 heart_level:girl_id
 resistance:girl_id
+awareness:girl_id
 mc_arousal
 mc_vigor
 quest_stage:quest_id
@@ -483,7 +486,8 @@ set_mc_flag:flag_id:true/false
 set_girl_flag:girl_id:flag_id:true/false
 set_girl_phase_flag:girl_id:flag_id:true/false
 set_girl_name:girl_id:new_name
-set_girl_hearts:girl_id:hearts_value
+set_heart_level:girl_id:hearts_value
+set_obedience_stage:girl_id:stage_value
 set_leverage_flag:girl_id:flag_id:true/false
 pledge_leverage:girl_id:flag_id
 finished_negotiation:girl_id:true/false
@@ -500,14 +504,17 @@ plap_emitter:stop_all:(true/false)
 paperdoll_overlay:girl_id:ADD:overlay_name:parent_layer
 paperdoll_overlay:girl_id:RMV:overlay_name
 paperdoll_overlay:girl_id:RMV_ALL
-get_dressed:girl_id
+get_dressed:girl_id:slot_id(optional)
 apply_anger_strike:girl_id
 advance_corruption_quest:girl_id:quest_stage
 play_h_moves
-h_moves:clear_all, clear_secondary, set_primary:move_id, set_secondary:move_id
+h_moves:clear_all, clear_secondary, remove_secondary:move_id, set_primary:move_id, set_secondary:move_id
 pay_for_item:item_id
 started_unaware_event:girl_id
-finished_unaware_event:girl_id:was_caught"
+finished_unaware_event:girl_id:was_caught
+set_aware_state:girl_id:aware_state
+move_event_tree_sub_anchor:tree_id
+recover_from_anger:girl_id"
 fit_content = true
 
 [node name="Tool" type="HBoxContainer" parent="."]

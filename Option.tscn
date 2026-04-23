@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=79 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -67,6 +67,14 @@
 [ext_resource type="Texture2D" uid="uid://bdb312jkbtfso" path="res://Assets/UI/choice_icon/play.png" id="62_i6gy4"]
 [ext_resource type="Texture2D" uid="uid://bu13p31pvycqd" path="res://Assets/UI/choice_icon/emergency_exit.png" id="63_8pivj"]
 [ext_resource type="Texture2D" uid="uid://buqcfpycb7oqn" path="res://Assets/UI/choice_icon/lightning_bolt.png" id="64_1e7w5"]
+[ext_resource type="Texture2D" uid="uid://br4fjj547mydg" path="res://Assets/UI/choice_icon/bansai.png" id="65_q11j5"]
+[ext_resource type="Texture2D" uid="uid://c6vw7wkyx5hds" path="res://Assets/UI/choice_icon/crystal_ball.png" id="66_cllli"]
+[ext_resource type="Texture2D" uid="uid://c4q6n2axtamxg" path="res://Assets/UI/choice_icon/cupped_hands.png" id="67_d5wk8"]
+[ext_resource type="Texture2D" uid="uid://cdybo3voaqq1u" path="res://Assets/UI/choice_icon/genie_lamp.png" id="68_6cei5"]
+[ext_resource type="Texture2D" uid="uid://deuxxk85g0vd6" path="res://Assets/UI/choice_icon/magic_wand.png" id="69_bngse"]
+[ext_resource type="Texture2D" uid="uid://k3xluyew13on" path="res://Assets/UI/choice_icon/upturned_face.png" id="70_i17dt"]
+[ext_resource type="Texture2D" uid="uid://c4vfwxt8flmx3" path="res://Assets/UI/choice_icon/wizard_hat.png" id="71_oo8hw"]
+[ext_resource type="Texture2D" uid="uid://uk1cu3ecdjj6" path="res://Assets/UI/choice_icon/purple_heart_up.png" id="72_tkrfq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -157,7 +165,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 63
+item_count = 71
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -188,7 +196,7 @@ popup/item_8/id = 8
 popup/item_9/text = "bicep"
 popup/item_9/icon = ExtResource("4_xyad4")
 popup/item_9/id = 9
-popup/item_10/text = "exclamation"
+popup/item_10/text = "yellow_exclamation"
 popup/item_10/icon = ExtResource("12_3aftm")
 popup/item_10/id = 10
 popup/item_11/text = "speech_bubble"
@@ -347,6 +355,30 @@ popup/item_61/id = 61
 popup/item_62/text = "lightning_bolt"
 popup/item_62/icon = ExtResource("64_1e7w5")
 popup/item_62/id = 62
+popup/item_63/text = "bansai"
+popup/item_63/icon = ExtResource("65_q11j5")
+popup/item_63/id = 63
+popup/item_64/text = "crystal_ball"
+popup/item_64/icon = ExtResource("66_cllli")
+popup/item_64/id = 64
+popup/item_65/text = "cupped_hands"
+popup/item_65/icon = ExtResource("67_d5wk8")
+popup/item_65/id = 65
+popup/item_66/text = "genie_lamp"
+popup/item_66/icon = ExtResource("68_6cei5")
+popup/item_66/id = 66
+popup/item_67/text = "magic_wand"
+popup/item_67/icon = ExtResource("69_bngse")
+popup/item_67/id = 67
+popup/item_68/text = "upturned_face"
+popup/item_68/icon = ExtResource("70_i17dt")
+popup/item_68/id = 68
+popup/item_69/text = "wizard_hat"
+popup/item_69/icon = ExtResource("71_oo8hw")
+popup/item_69/id = 69
+popup/item_70/text = "purple_heart_up"
+popup/item_70/icon = ExtResource("72_tkrfq")
+popup/item_70/id = 70
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2

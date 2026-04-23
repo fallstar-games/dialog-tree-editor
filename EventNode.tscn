@@ -1496,16 +1496,106 @@ popup/item_6/id = 6
 popup/item_7/text = "OUTERWEAR"
 popup/item_7/id = 7
 
-[node name="MenuInfo" type="HBoxContainer" parent="."]
+[node name="MenuInfo" type="VBoxContainer" parent="."]
 visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MenuSelect" type="HBoxContainer" parent="MenuInfo"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Label" type="Label" parent="MenuInfo"]
+[node name="Label" type="Label" parent="MenuInfo/MenuSelect"]
 layout_mode = 2
-text = "Menu_ID:"
+text = "Menu Type:"
 
-[node name="LineEdit" type="LineEdit" parent="MenuInfo"]
+[node name="MenuType" type="OptionButton" parent="MenuInfo/MenuSelect"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "OUTFITTER"
+popup/item_0/id = 0
+popup/item_1/text = "SHOP"
+popup/item_1/id = 1
+
+[node name="OutfitterInfo" type="VBoxContainer" parent="MenuInfo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="OutfitID" type="HBoxContainer" parent="MenuInfo/OutfitterInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/OutfitterInfo/OutfitID"]
+layout_mode = 2
+text = "Outfit ID: "
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/OutfitterInfo/OutfitID"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="YesLove" type="HBoxContainer" parent="MenuInfo/OutfitterInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/OutfitterInfo/YesLove"]
+layout_mode = 2
+text = "yes_love ->"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/OutfitterInfo/YesLove"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="YesObey" type="HBoxContainer" parent="MenuInfo/OutfitterInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/OutfitterInfo/YesObey"]
+layout_mode = 2
+text = "yes_obey ->"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/OutfitterInfo/YesObey"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="Object" type="HBoxContainer" parent="MenuInfo/OutfitterInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/OutfitterInfo/Object"]
+layout_mode = 2
+text = "object ->"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/OutfitterInfo/Object"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="Refuse" type="HBoxContainer" parent="MenuInfo/OutfitterInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/OutfitterInfo/Refuse"]
+layout_mode = 2
+text = "refuse ->"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/OutfitterInfo/Refuse"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="Abort" type="HBoxContainer" parent="MenuInfo/OutfitterInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/OutfitterInfo/Abort"]
+layout_mode = 2
+text = "abort ->"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/OutfitterInfo/Abort"]
 layout_mode = 2
 size_flags_horizontal = 3
 expand_to_text_length = true
@@ -1591,4 +1681,5 @@ text = "Sell
 [connection signal="pressed" from="ReactionInfo/PlayerResources/AddPlayerResource/AddPlayerResourceButton" to="." method="_on_add_player_resource_button_pressed"]
 [connection signal="item_selected" from="WardrobeInfo/WardrobeAction" to="." method="_on_wardrobe_action_item_selected"]
 [connection signal="item_selected" from="WardrobeInfo/SlotID/GarmentSlot" to="." method="_on_garment_slot_item_selected"]
+[connection signal="item_selected" from="MenuInfo/MenuSelect/MenuType" to="." method="_on_menu_type_item_selected"]
 [connection signal="item_selected" from="LineEntryInfo/LineEntryType" to="." method="_on_line_entry_type_item_selected"]
