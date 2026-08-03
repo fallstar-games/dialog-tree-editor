@@ -860,7 +860,7 @@ theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
 layout_mode = 2
-text = "Loves diff = 1.0"
+text = "1x thresh.=lokes, 2x=loves"
 
 [node name="Loves" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
 visible = false
@@ -870,6 +870,7 @@ placeholder_text = "10"
 expand_to_text_length = true
 
 [node name="Label2" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+visible = false
 layout_mode = 2
 text = "Likes diff = 0.5"
 
@@ -890,7 +891,7 @@ theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute"]
 layout_mode = 2
-text = "Add Related Attribute"
+text = "Add Attribute Threshold"
 
 [node name="AddAttributeButton" type="Button" parent="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute"]
 layout_mode = 2

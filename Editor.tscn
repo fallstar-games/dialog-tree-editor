@@ -425,7 +425,8 @@ can_afford_item:item_id
 has_perk_level:girl_id:perk_id:level
 has_used_attack:girl_id:attack_id
 has_full_awareness:girl_id
-favor_chose_unlocked"
+favor_chose_unlocked
+heat_state:girl_id:normal"
 fit_content = true
 
 [node name="Vars" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
@@ -450,7 +451,8 @@ reaction_strength_adjective:reaction_id:target_id:resource_type
 try_force:girl_id
 global_counter:counter_id
 item_price:item_id
-attack_vigor_cost:attack_id"
+attack_vigor_cost:attack_id
+can_orgasm:girl_id"
 fit_content = true
 
 [node name="Prefabs" type="RichTextLabel" parent="CheatSheetNode/cheat_sheet/MarginContainer/HBoxContainer/PanelContainer3/VBoxContainer"]
@@ -505,7 +507,8 @@ paperdoll_overlay:girl_id:ADD:overlay_name:parent_layer
 paperdoll_overlay:girl_id:RMV:overlay_name
 paperdoll_overlay:girl_id:RMV_ALL
 get_dressed:girl_id:slot_id(optional)
-apply_anger_strike:girl_id
+apply_anger_strike:girl_id:(number)
+begin_replay
 advance_corruption_quest:girl_id:quest_stage
 play_h_moves
 h_moves:clear_all, clear_secondary, remove_secondary:move_id, set_primary:move_id, set_secondary:move_id
@@ -514,7 +517,8 @@ started_unaware_event:girl_id
 finished_unaware_event:girl_id:was_caught
 set_aware_state:girl_id:aware_state
 move_event_tree_sub_anchor:tree_id
-recover_from_anger:girl_id"
+recover_from_anger:girl_id
+trigger_orgasm:girl_id:attribute_1etc"
 fit_content = true
 
 [node name="Tool" type="HBoxContainer" parent="."]

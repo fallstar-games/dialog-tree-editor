@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=84 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -75,6 +75,11 @@
 [ext_resource type="Texture2D" uid="uid://k3xluyew13on" path="res://Assets/UI/choice_icon/upturned_face.png" id="70_i17dt"]
 [ext_resource type="Texture2D" uid="uid://c4vfwxt8flmx3" path="res://Assets/UI/choice_icon/wizard_hat.png" id="71_oo8hw"]
 [ext_resource type="Texture2D" uid="uid://uk1cu3ecdjj6" path="res://Assets/UI/choice_icon/purple_heart_up.png" id="72_tkrfq"]
+[ext_resource type="Texture2D" uid="uid://b3jf8ouis4bib" path="res://Assets/UI/choice_icon/hide.png" id="73_ru7e6"]
+[ext_resource type="Texture2D" uid="uid://bfcldc5fotxur" path="res://Assets/UI/choice_icon/ice_cube.png" id="74_1gymr"]
+[ext_resource type="Texture2D" uid="uid://e0sdbqxyhm8v" path="res://Assets/UI/choice_icon/film_strip.png" id="75_qmqsk"]
+[ext_resource type="Texture2D" uid="uid://c0a2dq1djysg1" path="res://Assets/UI/choice_icon/shackles.png" id="76_spkih"]
+[ext_resource type="Texture2D" uid="uid://cojksm0qme4dw" path="res://Assets/UI/choice_icon/fashion_mag.png" id="77_a8dma"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -165,7 +170,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 71
+item_count = 76
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -379,6 +384,21 @@ popup/item_69/id = 69
 popup/item_70/text = "purple_heart_up"
 popup/item_70/icon = ExtResource("72_tkrfq")
 popup/item_70/id = 70
+popup/item_71/text = "hide"
+popup/item_71/icon = ExtResource("73_ru7e6")
+popup/item_71/id = 71
+popup/item_72/text = "ice_cube"
+popup/item_72/icon = ExtResource("74_1gymr")
+popup/item_72/id = 72
+popup/item_73/text = "film_strip"
+popup/item_73/icon = ExtResource("75_qmqsk")
+popup/item_73/id = 73
+popup/item_74/text = "shackles"
+popup/item_74/icon = ExtResource("76_spkih")
+popup/item_74/id = 74
+popup/item_75/text = "fashion_mag"
+popup/item_75/icon = ExtResource("77_a8dma")
+popup/item_75/id = 75
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2
