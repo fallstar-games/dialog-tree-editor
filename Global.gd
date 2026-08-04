@@ -19,6 +19,9 @@ extends Node
 @export var font_size : int = 0
 
 signal close_menu
+# Emitted after a save is successfully written to disk. Used by the editor to
+# resume a pending action (quit/open) that was interrupted by a Save As.
+signal file_saved
 
 func get_save_dir() -> String:
 	var exe_dir = OS.get_executable_path().get_base_dir()
