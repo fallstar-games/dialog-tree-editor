@@ -51,6 +51,8 @@ func _on_cancel_pressed():
 		you_will_lose.hide()
 	confirm_file_overwrite = 0
 	confirm_lose_unsaved = 0
+	# Backing out of a Save As abandons any quit/open that was waiting on it
+	get_tree().current_scene._action_after_save = ""
 	#erase any text in the lineEdit
 	file_name.text = ""
 	self.hide()
@@ -84,10 +86,13 @@ func _on_save_pressed(skip_confirm:bool = false):
 			
 		# Get compiled data
 		var dialog = get_tree().current_scene.compile_nodes_into_json()
-	
+
+		# This is now the saved state of the graph
+		get_tree().current_scene._mark_clean(dialog)
+
 		# Change window title
 		get_window().title = file_path
-		
+
 		# Convert to Json
 		dialog = JSON.stringify(dialog)
 		
@@ -120,7 +125,10 @@ func _on_save_pressed(skip_confirm:bool = false):
 		# Play notification sound
 		if not notification_sound.playing:
 			notification_sound.play()
-		
+
+		# Let the editor resume anything that was waiting on this save
+		Global.emit_signal("file_saved")
+
 	else:
 		error_message.show()
 		#Animation Effects
@@ -140,8 +148,8 @@ func _on_create_pressed():
 		error_sound.play()
 		return
 
-	#if the current node count is greater than 0
-	if get_tree().current_scene.total_node_count > 0 && confirm_lose_unsaved == 0:
+	#if the current graph has changes that aren't on disk
+	if get_tree().current_scene.has_unsaved_changes() && confirm_lose_unsaved == 0:
 		confirm_lose_unsaved += 1
 		file_exists.hide()
 		you_will_lose.show()
@@ -154,8 +162,8 @@ func _on_create_pressed():
 	# Reset File exists error
 	confirm_lose_unsaved = 0
 
-	#clear everything first
-	get_tree().current_scene.clear_all()
+	#clear everything first - await, as clear_all() defers the actual teardown
+	await get_tree().current_scene.clear_all()
 
 	#do a save of a blank file (supporting subfolders)
 	if file_path and file_path != "":
@@ -170,6 +178,10 @@ func _on_create_pressed():
 			DirAccess.make_dir_recursive_absolute(abs_dir)
 		var file = FileAccess.open(abs_path, FileAccess.WRITE)
 		file.store_string(dialog)
+
+		# The blank graph is now the saved state
+		get_tree().current_scene._mark_clean()
+
 		self.hide()
 		Global.emit_signal("close_menu")
 		
