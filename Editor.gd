@@ -34,6 +34,17 @@ signal node_closed
 
 var selected_file_path:String
 
+# Unsaved changes tracking
+# Snapshot of the graph as it was at the last save/load/new. Compared against a
+# fresh compile to decide whether the user has anything to lose.
+var _clean_snapshot:String = ""
+# Action waiting on the unsaved-changes prompt: "" | "quit" | "open"
+var _pending_action:String = ""
+# Action waiting on a Save As to finish (same values as _pending_action)
+var _action_after_save:String = ""
+# Set once quitting is committed, so the close notification isn't re-prompted
+var _quitting:bool = false
+
 # Helper function to set option button selection by matching text
 func set_option_button_by_text(option_button: OptionButton, target_value: String, error_prefix: String = "Option") -> bool:
 	var found = false
@@ -56,12 +67,23 @@ func _ready():
 	get_node("CanvasLayer/OpenFileDialog").access = FileDialog.ACCESS_FILESYSTEM
 	get_node("CanvasLayer/OpenFileDialog").current_dir = Global.get_save_dir()
 	Global.connect("close_menu", _close_menu)
+	Global.connect("file_saved", _on_global_file_saved)
+	# Handle the window's X button ourselves so unsaved work can be defended
+	get_tree().auto_accept_quit = false
 	# Ensure we have an action to close all selected nodes at once
 	_ensure_close_selected_action()
 	# Ensure we have a cut action (Ctrl/Cmd+X) that copies then deletes
 	_ensure_cut_nodes_action()
 	# Ensure arrow key pan actions exist
 	_ensure_pan_actions()
+	# Baseline an empty editor as "clean"
+	_mark_clean()
+
+# Fired by the window manager when the user clicks the X button. Only reaches us
+# because _ready() disabled auto_accept_quit.
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		request_quit()
 
 ################## Shortcut Keys ####################################
 	
@@ -87,7 +109,7 @@ func _input(_event):
 		last_mouse_pos = mouse_position_in_canvas - new_nodes_position_offset
 		_on_new_feature_pressed()
 	elif Input.is_action_just_released("Open"):
-		$CanvasLayer/OpenFileDialog.show()
+		request_open()
 	elif Input.is_action_just_released("Save"):
 		if Global.if_file_exists(get_window().title) == false:
 			_on_save_as_pressed()
@@ -438,8 +460,12 @@ func _on_file_dialog_load_file_async():
 	#finally, connect the first dialog node to start
 	#if first_dialog_node != "":
 		#auto_connect_start(first_dialog_node)
-		
-	
+
+	# Let any deferred UI work settle, then baseline the freshly loaded graph
+	await get_tree().process_frame
+	_mark_clean()
+
+
 ################## Save a file ####################################
 
 # Compile data to be saved
@@ -502,7 +528,7 @@ func _on_save_as_pressed():
 	save_file_dialog.show()
 
 func _on_open_pressed():
-	open_file_dialog.show()
+	request_open()
 
 func _on_options_pressed():
 	menu_list.hide()
@@ -537,8 +563,95 @@ func _on_new_pressed():
 	new_file_dialog.show()
 
 func _on_quit_pressed():
-	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	request_quit()
+
+
+################## Unsaved changes ####################################
+
+# Get nodes
+@onready var unsaved_dialog = $CanvasLayer/UnsavedChangesDialog
+@onready var unsaved_message = $CanvasLayer/UnsavedChangesDialog/Message
+@onready var unsaved_save_button = $CanvasLayer/UnsavedChangesDialog/Buttons/SaveAndContinue
+@onready var unsaved_discard_button = $CanvasLayer/UnsavedChangesDialog/Buttons/Discard
+
+# Record the current graph as the saved state. Callers that have just compiled
+# can pass their dict to avoid a second pass over every node.
+func _mark_clean(snapshot:Dictionary = {}):
+	if snapshot.is_empty():
+		snapshot = compile_nodes_into_json()
+	_clean_snapshot = JSON.stringify(snapshot)
+
+# True when the graph differs from the last save/load/new.
+func has_unsaved_changes() -> bool:
+	return JSON.stringify(compile_nodes_into_json()) != _clean_snapshot
+
+# Show the confirmation panel for an action that would discard the graph
+func _prompt_unsaved(action:String):
+	_pending_action = action
+	menu_panel.hide()
+	if action == "open":
+		unsaved_message.text = "You have unsaved changes in the current node graph.\n\nOpening another file will lose them."
+		unsaved_save_button.text = "SAVE & OPEN"
+		unsaved_discard_button.text = "OPEN ANYWAY"
+	else:
+		unsaved_message.text = "You have unsaved changes in the current node graph.\n\nIf you quit now, you will lose them."
+		unsaved_save_button.text = "SAVE & QUIT"
+		unsaved_discard_button.text = "QUIT ANYWAY"
+	unsaved_dialog.show()
+
+func _perform_pending_action():
+	var action = _pending_action
+	_pending_action = ""
+	unsaved_dialog.hide()
+	match action:
+		"quit":
+			_do_quit()
+		"open":
+			open_file_dialog.show()
+
+func request_quit():
+	if _quitting or not has_unsaved_changes():
+		_do_quit()
+	else:
+		_prompt_unsaved("quit")
+
+func _do_quit():
+	_quitting = true
 	get_tree().quit()
+
+func request_open():
+	if has_unsaved_changes():
+		_prompt_unsaved("open")
+	else:
+		open_file_dialog.show()
+
+func _on_unsaved_cancel_pressed():
+	_pending_action = ""
+	unsaved_dialog.hide()
+
+func _on_unsaved_discard_pressed():
+	_perform_pending_action()
+
+func _on_unsaved_save_pressed():
+	if Global.if_file_exists(get_window().title):
+		# Known file - save straight over it and carry on
+		save_file_dialog.file_path = get_window().title
+		save_file_dialog._on_save_pressed(true)
+		_perform_pending_action()
+	else:
+		# Never saved, so the user has to name it first. Resume once the save lands.
+		_action_after_save = _pending_action
+		_pending_action = ""
+		unsaved_dialog.hide()
+		save_file_dialog.show()
+
+# Resume a quit/open that was waiting on a Save As to complete
+func _on_global_file_saved():
+	if _action_after_save == "":
+		return
+	_pending_action = _action_after_save
+	_action_after_save = ""
+	_perform_pending_action()
 
 
 
