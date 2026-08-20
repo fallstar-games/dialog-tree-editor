@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ccm7ijwj3w3ec"]
+[gd_scene load_steps=30 format=3 uid="uid://ccm7ijwj3w3ec"]
 
 [ext_resource type="Script" path="res://EventNode.gd" id="1_qey05"]
 [ext_resource type="Theme" uid="uid://bcfmo1cqbenmo" path="res://Themes/event_node_theme.tres" id="1_qulwx"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dis2h5gjoju87" path="res://Assets/UI/choice_icon/boobs.png" id="20_bxp2r"]
 [ext_resource type="Texture2D" uid="uid://b0d26va2645af" path="res://Assets/UI/choice_icon/butt.png" id="21_c0cyw"]
 [ext_resource type="Texture2D" uid="uid://bgp83mal86r4l" path="res://Assets/UI/choice_icon/vagina.png" id="22_55v2f"]
+[ext_resource type="PackedScene" uid="uid://blxx8mssrjvtl" path="res://weighted_attribute.tscn" id="24_023vs"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_twcxw"]
 
@@ -179,7 +180,7 @@ theme_override_constants/separation = 8
 
 [node name="SplitType" type="OptionButton" parent="SplitInfo"]
 layout_mode = 2
-item_count = 9
+item_count = 10
 selected = 0
 popup/item_0/text = "BOOL"
 popup/item_0/id = 0
@@ -199,6 +200,8 @@ popup/item_7/text = "HEART_LEVEL"
 popup/item_7/id = 7
 popup/item_8/text = "REACTION_STRENGTH"
 popup/item_8/id = 8
+popup/item_9/text = "SINGLE_STAT"
+popup/item_9/id = 9
 
 [node name="SplitBool" type="VBoxContainer" parent="SplitInfo"]
 layout_mode = 2
@@ -853,33 +856,35 @@ layout_mode = 2
 size_flags_horizontal = 3
 expand_to_text_length = true
 
-[node name="Difficulties" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+[node name="BaseBreakpoints" type="VBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 12
 
-[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/BaseBreakpoints"]
 layout_mode = 2
-text = "1x thresh.=lokes, 2x=loves"
+text = "Base Heat Breakpoints:"
 
-[node name="Loves" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
-visible = false
+[node name="HBoxContainer" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm/BaseBreakpoints"]
 layout_mode = 2
-theme_override_constants/minimum_character_width = 3
-placeholder_text = "10"
-expand_to_text_length = true
 
-[node name="Label2" type="Label" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
-visible = false
+[node name="LabelLow" type="Label" parent="SplitInfo/SplitEnthusiasm/BaseBreakpoints/HBoxContainer"]
 layout_mode = 2
-text = "Likes diff = 0.5"
+text = "Low: "
 
-[node name="Likes" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/Difficulties"]
-visible = false
+[node name="LowBreakpoint" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/BaseBreakpoints/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/minimum_character_width = 3
-placeholder_text = "5.5"
-expand_to_text_length = true
+text = "25"
+
+[node name="Spacer" type="Control" parent="SplitInfo/SplitEnthusiasm/BaseBreakpoints/HBoxContainer"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+
+[node name="LabelHigh" type="Label" parent="SplitInfo/SplitEnthusiasm/BaseBreakpoints/HBoxContainer"]
+layout_mode = 2
+text = "High: "
+
+[node name="HighBreakpoint" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/BaseBreakpoints/HBoxContainer"]
+layout_mode = 2
+text = "125"
 
 [node name="RelatedAttributes" type="VBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
 layout_mode = 2
@@ -891,7 +896,7 @@ theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute"]
 layout_mode = 2
-text = "Add Attribute Threshold"
+text = "Add Weighted Attribute"
 
 [node name="AddAttributeButton" type="Button" parent="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute"]
 layout_mode = 2
@@ -899,39 +904,121 @@ mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_lfk5k")
 icon = ExtResource("3_h7t40")
 
-[node name="OutputLoves" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+[node name="Explainer" type="Label" parent="SplitInfo/SplitEnthusiasm"]
+layout_mode = 2
+text = "(main stat = 1.0, others 0.3-ish)"
+
+[node name="OutputHigh" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputLoves"]
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputHigh"]
 layout_mode = 2
-text = "loves ->"
+text = "high ->"
 
-[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputLoves"]
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputHigh"]
 layout_mode = 2
 expand_to_text_length = true
 
-[node name="OutputLikes" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+[node name="OutputMedium" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputLikes"]
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputMedium"]
 layout_mode = 2
-text = "likes ->"
+text = "medium ->"
 
-[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputLikes"]
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputMedium"]
 layout_mode = 2
 expand_to_text_length = true
 
-[node name="OutputDislikes" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
+[node name="OutputLow" type="HBoxContainer" parent="SplitInfo/SplitEnthusiasm"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputDislikes"]
+[node name="Label" type="Label" parent="SplitInfo/SplitEnthusiasm/OutputLow"]
 layout_mode = 2
-text = "dislikes ->"
+text = "low ->"
 
-[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputDislikes"]
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitEnthusiasm/OutputLow"]
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="SplitSingleStat" type="VBoxContainer" parent="SplitInfo"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TargetPerson" type="HBoxContainer" parent="SplitInfo/SplitSingleStat"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitSingleStat/TargetPerson"]
+layout_mode = 2
+text = "target:"
+
+[node name="SingleStatTarget" type="OptionButton" parent="SplitInfo/SplitSingleStat/TargetPerson"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "MAIN_PERSON"
+popup/item_0/id = 0
+popup/item_1/text = "SECOND_PERSON"
+popup/item_1/id = 1
+
+[node name="ActionID" type="HBoxContainer" parent="SplitInfo/SplitSingleStat"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitSingleStat/ActionID"]
+layout_mode = 2
+text = "action_id: "
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitSingleStat/ActionID"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="Label" type="Label" parent="SplitInfo/SplitSingleStat"]
+layout_mode = 2
+text = "1x thresh.=pass, 2x=crit"
+
+[node name="WeightedAttribute" parent="SplitInfo/SplitSingleStat" instance=ExtResource("24_023vs")]
+layout_mode = 2
+
+[node name="OutputLoves" type="HBoxContainer" parent="SplitInfo/SplitSingleStat"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitSingleStat/OutputLoves"]
+layout_mode = 2
+text = "crit ->"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitSingleStat/OutputLoves"]
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="OutputLikes" type="HBoxContainer" parent="SplitInfo/SplitSingleStat"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitSingleStat/OutputLikes"]
+layout_mode = 2
+text = "pass ->"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitSingleStat/OutputLikes"]
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="OutputDislikes" type="HBoxContainer" parent="SplitInfo/SplitSingleStat"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="SplitInfo/SplitSingleStat/OutputDislikes"]
+layout_mode = 2
+text = "fail ->"
+
+[node name="LineEdit" type="LineEdit" parent="SplitInfo/SplitSingleStat/OutputDislikes"]
 layout_mode = 2
 expand_to_text_length = true
 
@@ -1670,8 +1757,9 @@ text = "Sell
 [connection signal="pressed" from="SplitInfo/SplitString/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["string"]]
 [connection signal="item_selected" from="SplitInfo/SplitPermission/TargetPerson/PermissionTarget" to="." method="_on_permission_target_item_selected"]
 [connection signal="pressed" from="SplitInfo/SplitPermission/RelatedAttributes/AddAttribute/AddAttributeButton" to="." method="_on_add_attribute_button_pressed" binds= ["permission"]]
-[connection signal="item_selected" from="SplitInfo/SplitEnthusiasm/TargetPerson/EnthusiasmTarget" to="." method="_on_permission_target_item_selected"]
+[connection signal="item_selected" from="SplitInfo/SplitEnthusiasm/TargetPerson/EnthusiasmTarget" to="." method="_on_enthusiasm_target_item_selected"]
 [connection signal="pressed" from="SplitInfo/SplitEnthusiasm/RelatedAttributes/AddAttribute/AddAttributeButton" to="." method="_on_add_attribute_button_pressed" binds= ["enthusiasm"]]
+[connection signal="item_selected" from="SplitInfo/SplitSingleStat/TargetPerson/SingleStatTarget" to="." method="_on_single_stat_target_item_selected"]
 [connection signal="item_selected" from="SubTreeInfo/SubTreeType" to="." method="_on_sub_tree_type_item_selected"]
 [connection signal="pressed" from="SubTreeInfo/StandardInfo/Outcomes/AddOutputButton" to="." method="_on_add_output_button_pressed" binds= ["subtree"]]
 [connection signal="item_selected" from="CheckInfo/CheckType" to="." method="_on_check_type_item_selected"]

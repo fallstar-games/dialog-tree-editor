@@ -518,7 +518,7 @@ finished_unaware_event:girl_id:was_caught
 set_aware_state:girl_id:aware_state
 move_event_tree_sub_anchor:tree_id
 recover_from_anger:girl_id
-trigger_orgasm:girl_id:attribute_1etc"
+trigger_orgasm:girl_id:intensity"
 fit_content = true
 
 [node name="Tool" type="HBoxContainer" parent="."]

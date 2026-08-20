@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://nyi26curqqr1"]
+[gd_scene load_steps=91 format=3 uid="uid://nyi26curqqr1"]
 
 [ext_resource type="Theme" uid="uid://dhstdcnd4x62y" path="res://Themes/dialog_node_theme.tres" id="1_cfc8n"]
 [ext_resource type="Script" path="res://Option.gd" id="1_ojjra"]
@@ -86,6 +86,7 @@
 [ext_resource type="Texture2D" uid="uid://b0sk3ykhd0hhe" path="res://Assets/UI/choice_icon/cum_face.png" id="81_leyrr"]
 [ext_resource type="Texture2D" uid="uid://cs50a7s7p1mp3" path="res://Assets/UI/choice_icon/cum_mouth.png" id="82_ejh8x"]
 [ext_resource type="Texture2D" uid="uid://dbk1ep3h7otec" path="res://Assets/UI/choice_icon/camera.png" id="83_8m0t7"]
+[ext_resource type="Texture2D" uid="uid://da4ckaod54jyi" path="res://Assets/UI/choice_icon/danger_symbol.png" id="84_6inai"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb8gg"]
 
@@ -176,7 +177,7 @@ active_color = Color(0.929412, 0.603922, 0.494118, 1)
 
 [node name="IconDropdown" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 82
+item_count = 83
 selected = 0
 popup/item_0/text = "no_icon"
 popup/item_0/id = 1
@@ -423,6 +424,9 @@ popup/item_80/id = 80
 popup/item_81/text = "camera"
 popup/item_81/icon = ExtResource("83_8m0t7")
 popup/item_81/id = 81
+popup/item_82/text = "danger_symbol"
+popup/item_82/icon = ExtResource("84_6inai")
+popup/item_82/id = 82
 
 [node name="Text" type="VBoxContainer" parent="."]
 layout_mode = 2

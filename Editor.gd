@@ -1207,8 +1207,10 @@ func _apply_node_data_to_node(node, data:Dictionary):
 								set_option_button_by_text(node.enthusiasm_target_dropdown, str(data["split_enthusiasm_target"]))
 							if data.has("split_enthusiasm_action_id"):
 								node.line_edits["split_enthusiasm_action_id"].text = str(data["split_enthusiasm_action_id"])
-							#node.line_edits["split_enthusiasm_diff_loves"].text = str(data.get("split_enthusiasm_diff_loves", ""))
-							#node.line_edits["split_enthusiasm_diff_likes"].text = str(data.get("split_enthusiasm_diff_likes", ""))
+							# files authored before the breakpoint fields existed fall back to the defaults
+							var breakpoints = data.get("split_enthusiasm_breakpoints", {})
+							node.line_edits["split_enthusiasm_breakpoints"]["low"].text = str(breakpoints.get("low", "25"))
+							node.line_edits["split_enthusiasm_breakpoints"]["high"].text = str(breakpoints.get("high", "125"))
 							if data.has("split_enthusiasm_attributes") and not data["split_enthusiasm_attributes"].is_empty():
 								for attr_type in data["split_enthusiasm_attributes"].keys():
 									node._on_add_attribute_button_pressed("enthusiasm")
@@ -1219,9 +1221,24 @@ func _apply_node_data_to_node(node, data:Dictionary):
 										set_option_button_by_text(attr_node.get_node("AttributeType"), str(attr_type))
 										attr_node.get_node("AttributeWeight").text = str(data["split_enthusiasm_attributes"][attr_type])
 							if data.has("split_enthusiasm_outcomes"):
-								node.line_edits["split_enthusiasm_outcomes"]["loves"].text = str(data["split_enthusiasm_outcomes"].get("loves", ""))
-								node.line_edits["split_enthusiasm_outcomes"]["likes"].text = str(data["split_enthusiasm_outcomes"].get("likes", ""))
-								node.line_edits["split_enthusiasm_outcomes"]["dislikes"].text = str(data["split_enthusiasm_outcomes"].get("dislikes", ""))
+								node.line_edits["split_enthusiasm_outcomes"]["high"].text = str(data["split_enthusiasm_outcomes"].get("high", ""))
+								node.line_edits["split_enthusiasm_outcomes"]["medium"].text = str(data["split_enthusiasm_outcomes"].get("medium", ""))
+								node.line_edits["split_enthusiasm_outcomes"]["low"].text = str(data["split_enthusiasm_outcomes"].get("low", ""))
+						"SINGLE_STAT":
+							if data.has("split_single_stat_target"):
+								set_option_button_by_text(node.single_stat_target_dropdown, str(data["split_single_stat_target"]))
+							if data.has("split_single_stat_action_id"):
+								node.line_edits["split_single_stat_action_id"].text = str(data["split_single_stat_action_id"])
+							if data.has("split_single_stat_attribute") and not data["split_single_stat_attribute"].is_empty():
+								var stat_row = node.split_containers["SINGLE_STAT"].get_node("WeightedAttribute")
+								if stat_row:
+									for attr_type in data["split_single_stat_attribute"].keys():
+										set_option_button_by_text(stat_row.get_node("AttributeType"), str(attr_type))
+										stat_row.get_node("AttributeWeight").text = str(data["split_single_stat_attribute"][attr_type])
+							if data.has("split_single_stat_outcomes"):
+								node.line_edits["split_single_stat_outcomes"]["crit"].text = str(data["split_single_stat_outcomes"].get("crit", ""))
+								node.line_edits["split_single_stat_outcomes"]["pass"].text = str(data["split_single_stat_outcomes"].get("pass", ""))
+								node.line_edits["split_single_stat_outcomes"]["fail"].text = str(data["split_single_stat_outcomes"].get("fail", ""))
 						"ACTION_TEST":
 							node.line_edits["split_action_id"].text = str(data.get("split_action_id", ""))
 							if data.has("split_action_target"):

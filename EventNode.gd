@@ -8,6 +8,7 @@ extends GraphNode
 @onready var action_target_dropdown:OptionButton = $SplitInfo/SplitAction/TargetPerson/ActionTarget
 @onready var permission_target_dropdown:OptionButton = $SplitInfo/SplitPermission/TargetPerson/PermissionTarget
 @onready var enthusiasm_target_dropdown:OptionButton = $SplitInfo/SplitEnthusiasm/TargetPerson/EnthusiasmTarget
+@onready var single_stat_target_dropdown:OptionButton = $SplitInfo/SplitSingleStat/TargetPerson/SingleStatTarget
 @onready var subtree_type_dropdown:OptionButton = $SubTreeInfo/SubTreeType
 @onready var line_entry_type_dropdown:OptionButton = $LineEntryInfo/LineEntryType
 @onready var menu_type_dropdown:OptionButton = $MenuInfo/MenuSelect/MenuType
@@ -54,6 +55,7 @@ extends GraphNode
 	"STRING": $SplitInfo/SplitString,
 	"PERMISSION_CHECK": $SplitInfo/SplitPermission,
 	"ENTHUSIASM_CHECK": $SplitInfo/SplitEnthusiasm,
+	"SINGLE_STAT": $SplitInfo/SplitSingleStat,
 }
 
 @onready var wardrobe_containers:Dictionary = {
@@ -103,12 +105,20 @@ extends GraphNode
 		"refusal": $SplitInfo/SplitPermission/OutputsFail/Refusal
 	},
 	"split_enthusiasm_action_id": $SplitInfo/SplitEnthusiasm/ActionID/LineEdit,
-	#"split_enthusiasm_diff_loves": $SplitInfo/SplitEnthusiasm/Difficulties/Loves,
-	#"split_enthusiasm_diff_likes": $SplitInfo/SplitEnthusiasm/Difficulties/Likes,
+	"split_enthusiasm_breakpoints": {
+		"low": $SplitInfo/SplitEnthusiasm/BaseBreakpoints/HBoxContainer/LowBreakpoint,
+		"high": $SplitInfo/SplitEnthusiasm/BaseBreakpoints/HBoxContainer/HighBreakpoint,
+	},
 	"split_enthusiasm_outcomes": {
-		"loves": $SplitInfo/SplitEnthusiasm/OutputLoves/LineEdit,
-		"likes": $SplitInfo/SplitEnthusiasm/OutputLikes/LineEdit,
-		"dislikes": $SplitInfo/SplitEnthusiasm/OutputDislikes/LineEdit,
+		"high": $SplitInfo/SplitEnthusiasm/OutputHigh/LineEdit,
+		"medium": $SplitInfo/SplitEnthusiasm/OutputMedium/LineEdit,
+		"low": $SplitInfo/SplitEnthusiasm/OutputLow/LineEdit,
+	},
+	"split_single_stat_action_id": $SplitInfo/SplitSingleStat/ActionID/LineEdit,
+	"split_single_stat_outcomes": {
+		"crit": $SplitInfo/SplitSingleStat/OutputLoves/LineEdit,
+		"pass": $SplitInfo/SplitSingleStat/OutputLikes/LineEdit,
+		"fail": $SplitInfo/SplitSingleStat/OutputDislikes/LineEdit,
 	},
 	"split_reaction_id": $SplitInfo/SplitReactionStrength/ReactionID/LineEdit,
 	"split_reaction_subtree": $SplitInfo/SplitReactionStrength/Subtree/LineEdit,
@@ -190,10 +200,13 @@ var node_data = {
 	"split_permission_outcomes": {},
 	"split_enthusiasm_target": "MAIN_PERSON",
 	"split_enthusiasm_action_id": "",
-	#"split_enthusiasm_diff_loves": "",
-	#"split_enthusiasm_diff_likes": "",
+	"split_enthusiasm_breakpoints": {"low": "25", "high": "125"},
 	"split_enthusiasm_attributes": {},
 	"split_enthusiasm_outcomes": {},
+	"split_single_stat_target": "MAIN_PERSON",
+	"split_single_stat_action_id": "",
+	"split_single_stat_attribute": {},
+	"split_single_stat_outcomes": {},
 	"split_reaction_id": "",
 	"split_reaction_target": "MAIN_PERSON",
 	"split_reaction_should_trigger": true,
@@ -244,6 +257,11 @@ var node_data = {
 	"line_entry_target_var":"",
 	"go to": []
 }
+
+func _ready():
+	# SINGLE_STAT has exactly one attribute row and no way to add another, so hide its
+	# remove button - freeing that row would leave the node with no stat to test.
+	split_containers["SINGLE_STAT"].get_node("WeightedAttribute").get_node("CancelButton").hide()
 
 func _on_close_request():
 	get_parent().remove_node(self)
@@ -387,8 +405,11 @@ func update_data():
 				"ENTHUSIASM_CHECK":
 					node_data["split_enthusiasm_target"] = enthusiasm_target_dropdown.get_item_text(enthusiasm_target_dropdown.selected)
 					node_data["split_enthusiasm_action_id"] = line_edits["split_enthusiasm_action_id"].text
-					#node_data["split_enthusiasm_diff_loves"] = line_edits["split_enthusiasm_diff_loves"].text
-					#node_data["split_enthusiasm_diff_likes"] = line_edits["split_enthusiasm_diff_likes"].text
+					node_data["split_enthusiasm_breakpoints"] = {
+						"low": line_edits["split_enthusiasm_breakpoints"]["low"].text,
+						"high": line_edits["split_enthusiasm_breakpoints"]["high"].text,
+					}
+					# values here are weights (weight x attribute level), not thresholds
 					node_data["split_enthusiasm_attributes"] = {}
 					for attribute in split_containers["ENTHUSIASM_CHECK"].get_node("RelatedAttributes").get_children():
 						if "WeightedAttributeEnthusiasm" in attribute.name:
@@ -396,9 +417,21 @@ func update_data():
 							var attr_weight = attribute.get_node("AttributeWeight").text
 							node_data["split_enthusiasm_attributes"][attr_type] = attr_weight
 					node_data["split_enthusiasm_outcomes"] = {
-						"loves": line_edits["split_enthusiasm_outcomes"]["loves"].text,
-						"likes": line_edits["split_enthusiasm_outcomes"]["likes"].text,
-						"dislikes": line_edits["split_enthusiasm_outcomes"]["dislikes"].text,
+						"high": line_edits["split_enthusiasm_outcomes"]["high"].text,
+						"medium": line_edits["split_enthusiasm_outcomes"]["medium"].text,
+						"low": line_edits["split_enthusiasm_outcomes"]["low"].text,
+					}
+				"SINGLE_STAT":
+					node_data["split_single_stat_target"] = single_stat_target_dropdown.get_item_text(single_stat_target_dropdown.selected)
+					node_data["split_single_stat_action_id"] = line_edits["split_single_stat_action_id"].text
+					# exactly one stat, so the attribute row is a fixed child rather than an add/remove list
+					var stat_row = split_containers["SINGLE_STAT"].get_node("WeightedAttribute")
+					var stat_type = stat_row.get_node("AttributeType").get_item_text(stat_row.get_node("AttributeType").selected)
+					node_data["split_single_stat_attribute"] = {stat_type: stat_row.get_node("AttributeWeight").text}
+					node_data["split_single_stat_outcomes"] = {
+						"crit": line_edits["split_single_stat_outcomes"]["crit"].text,
+						"pass": line_edits["split_single_stat_outcomes"]["pass"].text,
+						"fail": line_edits["split_single_stat_outcomes"]["fail"].text,
 					}
 				"ACTION_TEST":
 					node_data["split_action_id"] = line_edits["split_action_id"].text
@@ -648,6 +681,12 @@ func _on_action_target_item_selected(index:int):
 
 func _on_permission_target_item_selected(index:int):
 	node_data["split_permission_target"] = permission_target_dropdown.get_item_text(index)
+
+func _on_single_stat_target_item_selected(index:int):
+	node_data["split_single_stat_target"] = single_stat_target_dropdown.get_item_text(index)
+
+func _on_enthusiasm_target_item_selected(index:int):
+	node_data["split_enthusiasm_target"] = enthusiasm_target_dropdown.get_item_text(index)
 
 func _on_sub_tree_type_item_selected(index:int):
 	node_data["subtree_type"] = subtree_type_dropdown.get_item_text(index)
