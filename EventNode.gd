@@ -17,6 +17,8 @@ extends GraphNode
 @onready var resource_type_dropdown:OptionButton = $SplitInfo/SplitReactionStrength/ResourceType/ResourceType
 @onready var reaction_should_trigger_checkbox:CheckBox = $SplitInfo/SplitReactionStrength/TriggerReaction/CheckBox
 @onready var heart_level_target_dropdown:OptionButton = $SplitInfo/SplitHeartLevel/TargetPerson/HeartLevelTarget
+@onready var negotiation_target_dropdown:OptionButton = $NegotiationInfo/TargetType
+@onready var npc_info_container:HBoxContainer = $NegotiationInfo/NPCInfo
 #@onready var buy_sell_container = $ShopMode
 #@onready var menu_line:LineEdit = $MenuInfo/LineEdit
 #@onready var buy_btn:CheckBox = $ShopMode/Buy
@@ -30,12 +32,12 @@ extends GraphNode
 	"WARDROBE": $WardrobeInfo,
 	"MENU": $MenuInfo,
 	"LINE_ENTRY": $LineEntryInfo,
-	"REACTION": $ReactionInfo
+	"REACTION": $ReactionInfo,
+	"NEGOTIATION": $NegotiationInfo
 }
 
 @onready var subtree_containers:Dictionary = {
-	"STANDARD": $SubTreeInfo/StandardInfo,
-	"NEGOTIATION": $SubTreeInfo/NegotiationInfo
+	"STANDARD": $SubTreeInfo/StandardInfo
 }
 
 @onready var check_containers:Dictionary = {
@@ -127,12 +129,10 @@ extends GraphNode
 	"reaction_novelty_counter": $ReactionInfo/NoveltyCounter/LineEdit,
 	"subtree_id": $SubTreeInfo/StandardInfo/TreeName/LineEdit,
 	"subtree_start": $SubTreeInfo/StandardInfo/NodeName/LineEdit,
-	"neg_action_id": $SubTreeInfo/NegotiationInfo/ActionID/LineEdit,
-	"neg_subtree_id": $SubTreeInfo/NegotiationInfo/TreeName/LineEdit,
-	"neg_subtree_start": $SubTreeInfo/NegotiationInfo/NodeName/LineEdit,
-	"neg_subtree_success": $SubTreeInfo/NegotiationInfo/OutcomeSuccess/LineEdit,
-	"neg_subtree_no_patience": $SubTreeInfo/NegotiationInfo/OutcomeNoPatience/LineEdit,
-	"neg_subtree_aborted": $SubTreeInfo/NegotiationInfo/OutcomeAborted/LineEdit,
+	"negotiation_npc": $NegotiationInfo/NPCInfo/LineEdit,
+	"negotiation_success": $NegotiationInfo/OutcomeSuccess/LineEdit,
+	"negotiation_failure": $NegotiationInfo/OutcomeFailure/LineEdit,
+	"negotiation_starting_resistance": $NegotiationInfo/StartingResistance/LineEdit,
 	#"letter_id": $LetterInfo/LineEdit,
 	#"cycle_id": $CyclerInfo/CycleID/LineEdit,
 	"wardrobe_girl_id": $WardrobeInfo/GirlID/LineEdit,
@@ -230,12 +230,6 @@ var node_data = {
 	"subtree_id": "",
 	"subtree_start": "",
 	"subtree_outputs": {},
-	"neg_subtree_id": "",
-	"neg_subtree_start": "",
-	"neg_action_id": "",
-	"neg_subtree_success": "",
-	"neg_subtree_no_patience": "",
-	"neg_subtree_aborted": "",
 	#"cycle_id": "",
 	#"cycler_outputs": [],
 	#"random_outputs": {},
@@ -255,6 +249,11 @@ var node_data = {
 	#"letter_id":"",
 	"line_entry_type":"PLAYER_NAME",
 	"line_entry_target_var":"",
+	"negotiation_target": "MAIN_PERSON",
+	"negotiation_npc": "",
+	"negotiation_success": "",
+	"negotiation_failure": "",
+	"negotiation_starting_resistance": "",
 	"go to": []
 }
 
@@ -331,6 +330,11 @@ func update_data():
 	idx = menu_type_dropdown.selected
 	if idx >= 0:
 		node_data["menu_type"] = menu_type_dropdown.get_item_text(idx)
+
+	# Capture negotiation target
+	idx = negotiation_target_dropdown.selected
+	if idx >= 0:
+		node_data["negotiation_target"] = negotiation_target_dropdown.get_item_text(idx)
 	
 	match node_data["event_type"]:
 		#"CHECK":
@@ -483,13 +487,6 @@ func update_data():
 								var outcome_name = output.get_node("OutcomeLine").text
 								var target_node = output.get_node("TargetLine").text
 								node_data["subtree_outputs"][outcome_name] = target_node
-				"NEGOTIATION":
-					node_data["neg_action_id"] = line_edits["neg_action_id"].text
-					node_data["neg_subtree_id"] = line_edits["neg_subtree_id"].text
-					node_data["neg_subtree_start"] = line_edits["neg_subtree_start"].text
-					node_data["neg_subtree_success"] = line_edits["neg_subtree_success"].text
-					node_data["neg_subtree_no_patience"] = line_edits["neg_subtree_no_patience"].text
-					node_data["neg_subtree_aborted"] = line_edits["neg_subtree_aborted"].text
 		#"CYCLER":
 		#	node_data["cycle_id"] = line_edits["cycle_id"].text
 		#	if output_cycler_count > 0:
@@ -530,6 +527,12 @@ func update_data():
 					node_data["outfitter_output_abort"] = line_edits["outfitter_output_abort"].text
 		"LINE_ENTRY":
 			node_data["line_entry_target_var"] = line_edits["line_entry_target_var"].text
+		"NEGOTIATION":
+			node_data["negotiation_npc"] = line_edits["negotiation_npc"].text
+			node_data["negotiation_success"] = line_edits["negotiation_success"].text
+			node_data["negotiation_failure"] = line_edits["negotiation_failure"].text
+			# optional: blank leaves the girl's own starting resistance in place
+			node_data["negotiation_starting_resistance"] = line_edits["negotiation_starting_resistance"].text
 
 
 func change_mode(idx:int = 0):
@@ -559,6 +562,10 @@ func change_wardrobe_mode(idx:int = 0):
 		container.hide()
 
 	wardrobe_containers[wardrobe_action_dropdown.get_item_text(idx)].show()
+
+func change_negotiation_target_mode(idx:int = 0):
+	# the NPC id field is only meaningful when the negotiation targets an NPC
+	npc_info_container.visible = negotiation_target_dropdown.get_item_text(idx) == "NPC"
 
 func change_subtree_mode(idx:int = 0):
 	# Hide all subtree containers first
@@ -697,6 +704,10 @@ func _on_heart_level_target_item_selected(index:int):
 
 func _on_reaction_target_item_selected(index:int):
 	node_data["reaction_target"] = reaction_target_dropdown.get_item_text(index)
+
+func _on_negotiation_target_item_selected(index:int):
+	node_data["negotiation_target"] = negotiation_target_dropdown.get_item_text(index)
+	change_negotiation_target_mode(index)
 
 func _on_resource_type_item_selected(index:int):
 	node_data["split_resource_type"] = resource_type_dropdown.get_item_text(index)

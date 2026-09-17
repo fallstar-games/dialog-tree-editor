@@ -151,6 +151,15 @@ slot/10/right_type = 0
 slot/10/right_color = Color(1, 1, 1, 1)
 slot/10/right_icon = null
 slot/10/draw_stylebox = true
+slot/11/left_enabled = false
+slot/11/left_type = 0
+slot/11/left_color = Color(1, 1, 1, 1)
+slot/11/left_icon = null
+slot/11/right_enabled = false
+slot/11/right_type = 0
+slot/11/right_color = Color(1, 1, 1, 1)
+slot/11/right_icon = null
+slot/11/draw_stylebox = true
 script = ExtResource("1_qey05")
 
 [node name="Label" type="Label" parent="."]
@@ -159,7 +168,7 @@ text = "Event Type"
 
 [node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 6
+item_count = 7
 selected = 0
 popup/item_0/text = "SPLIT"
 popup/item_0/id = 0
@@ -173,6 +182,8 @@ popup/item_4/text = "LINE_ENTRY"
 popup/item_4/id = 4
 popup/item_5/text = "MENU"
 popup/item_5/id = 5
+popup/item_6/text = "NEGOTIATION"
+popup/item_6/id = 6
 
 [node name="SplitInfo" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -1029,12 +1040,10 @@ theme_override_constants/separation = 8
 
 [node name="SubTreeType" type="OptionButton" parent="SubTreeInfo"]
 layout_mode = 2
-item_count = 2
+item_count = 1
 selected = 0
 popup/item_0/text = "STANDARD"
 popup/item_0/id = 0
-popup/item_1/text = "NEGOTIATION"
-popup/item_1/id = 1
 
 [node name="StandardInfo" type="VBoxContainer" parent="SubTreeInfo"]
 layout_mode = 2
@@ -1079,89 +1088,6 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_twcxw")
 icon = ExtResource("3_h7t40")
-
-[node name="NegotiationInfo" type="VBoxContainer" parent="SubTreeInfo"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="ActionID" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/ActionID"]
-layout_mode = 2
-text = "action_id:"
-
-[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/ActionID"]
-layout_mode = 2
-size_flags_horizontal = 3
-expand_to_text_length = true
-
-[node name="TreeName" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/TreeName"]
-layout_mode = 2
-text = "subtree_id:"
-
-[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/TreeName"]
-layout_mode = 2
-size_flags_horizontal = 3
-expand_to_text_length = true
-
-[node name="NodeName" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/NodeName"]
-layout_mode = 2
-text = "subtree_start:"
-
-[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/NodeName"]
-layout_mode = 2
-size_flags_horizontal = 3
-expand_to_text_length = true
-
-[node name="OutcomeSuccess" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/OutcomeSuccess"]
-layout_mode = 2
-text = "(success) ->"
-
-[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeSuccess"]
-layout_mode = 2
-size_flags_horizontal = 3
-expand_to_text_length = true
-
-[node name="OutcomeNoPatience" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/OutcomeNoPatience"]
-layout_mode = 2
-text = "(no_patience) ->"
-
-[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeNoPatience"]
-layout_mode = 2
-size_flags_horizontal = 3
-expand_to_text_length = true
-
-[node name="OutcomeAborted" type="HBoxContainer" parent="SubTreeInfo/NegotiationInfo"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Label" type="Label" parent="SubTreeInfo/NegotiationInfo/OutcomeAborted"]
-layout_mode = 2
-text = "(aborted) ->"
-
-[node name="LineEdit" type="LineEdit" parent="SubTreeInfo/NegotiationInfo/OutcomeAborted"]
-layout_mode = 2
-size_flags_horizontal = 3
-expand_to_text_length = true
 
 [node name="CheckInfo" type="VBoxContainer" parent="."]
 visible = false
@@ -1742,6 +1668,72 @@ button_group = ExtResource("2_c3aul")
 text = "Sell
 "
 
+[node name="NegotiationInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="TargetType" type="OptionButton" parent="NegotiationInfo"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "MAIN_PERSON"
+popup/item_0/id = 0
+popup/item_1/text = "NPC"
+popup/item_1/id = 1
+
+[node name="NPCInfo" type="HBoxContainer" parent="NegotiationInfo"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="NegotiationInfo/NPCInfo"]
+layout_mode = 2
+text = "NPC_id:"
+
+[node name="LineEdit" type="LineEdit" parent="NegotiationInfo/NPCInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="OutcomeSuccess" type="HBoxContainer" parent="NegotiationInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="NegotiationInfo/OutcomeSuccess"]
+layout_mode = 2
+text = "success ->"
+
+[node name="LineEdit" type="LineEdit" parent="NegotiationInfo/OutcomeSuccess"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="OutcomeFailure" type="HBoxContainer" parent="NegotiationInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="NegotiationInfo/OutcomeFailure"]
+layout_mode = 2
+text = "failure ->"
+
+[node name="LineEdit" type="LineEdit" parent="NegotiationInfo/OutcomeFailure"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="StartingResistance" type="HBoxContainer" parent="NegotiationInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="NegotiationInfo/StartingResistance"]
+layout_mode = 2
+text = "Resistance (optional)"
+
+[node name="LineEdit" type="LineEdit" parent="NegotiationInfo/StartingResistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
 [connection signal="close_request" from="." to="." method="_on_close_request"]
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_resize_request"]
@@ -1772,3 +1764,4 @@ text = "Sell
 [connection signal="item_selected" from="WardrobeInfo/SlotID/GarmentSlot" to="." method="_on_garment_slot_item_selected"]
 [connection signal="item_selected" from="MenuInfo/MenuSelect/MenuType" to="." method="_on_menu_type_item_selected"]
 [connection signal="item_selected" from="LineEntryInfo/LineEntryType" to="." method="_on_line_entry_type_item_selected"]
+[connection signal="item_selected" from="NegotiationInfo/TargetType" to="." method="_on_negotiation_target_item_selected"]

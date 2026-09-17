@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cyl5gqtmq8vmh"]
+[gd_scene load_steps=9 format=3 uid="uid://cyl5gqtmq8vmh"]
 
 [ext_resource type="Script" path="res://resource_line.gd" id="1_vt0dt"]
 [ext_resource type="Texture2D" uid="uid://brptfdd5xlskb" path="res://Assets/UI/choice_icon/volcano.png" id="2_xtou3"]
 [ext_resource type="Texture2D" uid="uid://danyye32laut5" path="res://Assets/UI/choice_icon/bicep.png" id="3_yelta"]
 [ext_resource type="Texture2D" uid="uid://bygsxtccihjdr" path="res://Assets/UI/choice_icon/coin.png" id="4_5a7ri"]
 [ext_resource type="Texture2D" uid="uid://dm4ghusiklby0" path="res://Assets/UI/choice_icon/grasp.png" id="5_gkyu5"]
+[ext_resource type="Texture2D" uid="uid://da4ckaod54jyi" path="res://Assets/UI/choice_icon/danger_symbol.png" id="6_4cmak"]
 [ext_resource type="Texture2D" uid="uid://erwrcu060m31" path="res://Assets/UI/CancelIcon.svg" id="8_ern8g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fpl5p"]
@@ -16,7 +17,7 @@ resource_amount = NodePath("ResourceAmount")
 
 [node name="ResourceType" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 5
+item_count = 6
 selected = 0
 popup/item_0/text = "o_progress"
 popup/item_0/icon = ExtResource("2_xtou3")
@@ -33,6 +34,9 @@ popup/item_3/id = 3
 popup/item_4/text = "gym_max_vigor"
 popup/item_4/icon = ExtResource("5_gkyu5")
 popup/item_4/id = 4
+popup/item_5/text = "notoriety"
+popup/item_5/icon = ExtResource("6_4cmak")
+popup/item_5/id = 5
 
 [node name="ResourceAmount" type="LineEdit" parent="."]
 layout_mode = 2

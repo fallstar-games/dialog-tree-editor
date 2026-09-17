@@ -1133,6 +1133,9 @@ func _apply_node_data_to_node(node, data:Dictionary):
 			if data.has("menu_type"):
 				set_option_button_by_text(node.menu_type_dropdown, str(data["menu_type"]))
 				node.outfitter_info_container.visible = str(data["menu_type"]) == "OUTFITTER"
+			if data.has("negotiation_target"):
+				set_option_button_by_text(node.negotiation_target_dropdown, str(data["negotiation_target"]))
+				node.change_negotiation_target_mode(node.negotiation_target_dropdown.selected)
 
 			match str(data.get("event_type", "SPLIT")):
 				"SPLIT":
@@ -1281,13 +1284,6 @@ func _apply_node_data_to_node(node, data:Dictionary):
 									if output_node:
 										output_node.outcome_name.text = str(data["subtree_outputs"].keys()[current_output_count - 1])
 										output_node.target_node.text = str(data["subtree_outputs"].values()[current_output_count - 1])
-						"NEGOTIATION":
-							node.line_edits["neg_action_id"].text = str(data.get("neg_action_id", ""))
-							node.line_edits["neg_subtree_id"].text = str(data.get("neg_subtree_id", ""))
-							node.line_edits["neg_subtree_start"].text = str(data.get("neg_subtree_start", ""))
-							node.line_edits["neg_subtree_success"].text = str(data.get("neg_subtree_success", ""))
-							node.line_edits["neg_subtree_no_patience"].text = str(data.get("neg_subtree_no_patience", ""))
-							node.line_edits["neg_subtree_aborted"].text = str(data.get("neg_subtree_aborted", ""))
 				"WARDROBE":
 					if data.has("wardrobe_girl_id"):
 						node.line_edits["wardrobe_girl_id"].text = str(data.get("wardrobe_girl_id", ""))
@@ -1311,6 +1307,11 @@ func _apply_node_data_to_node(node, data:Dictionary):
 							node.line_edits["outfitter_output_abort"].text = str(data.get("outfitter_output_abort", ""))
 				"LINE_ENTRY":
 					node.line_edits["line_entry_target_var"].text = str(data.get("line_entry_target_var", ""))
+				"NEGOTIATION":
+					node.line_edits["negotiation_npc"].text = str(data.get("negotiation_npc", ""))
+					node.line_edits["negotiation_success"].text = str(data.get("negotiation_success", ""))
+					node.line_edits["negotiation_failure"].text = str(data.get("negotiation_failure", ""))
+					node.line_edits["negotiation_starting_resistance"].text = str(data.get("negotiation_starting_resistance", ""))
 				"REACTION":
 					if data.has("reaction_target"):
 						set_option_button_by_text(node.reaction_target_dropdown, str(data["reaction_target"]))
