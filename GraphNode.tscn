@@ -366,7 +366,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.498039, 0.498039, 0.498039, 1)
 theme_override_colors/font_focus_color = Color(0.498039, 0.498039, 0.498039, 1)
-item_count = 14
+item_count = 15
 selected = 0
 popup/item_0/text = "FROM_BEHIND"
 popup/item_0/id = 0
@@ -396,6 +396,8 @@ popup/item_12/text = "PAIZURI"
 popup/item_12/id = 12
 popup/item_13/text = "PILEDRIVER"
 popup/item_13/id = 13
+popup/item_14/text = "PEEPING"
+popup/item_14/id = 14
 
 [node name="DuoInfo" type="HBoxContainer" parent="."]
 visible = false

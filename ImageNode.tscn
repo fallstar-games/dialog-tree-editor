@@ -315,7 +315,7 @@ text = "P1 Pose: "
 
 [node name="SoloDropdown" type="OptionButton" parent="SetImageInfo/SetPerson/SetPersonBig/SoloInfo"]
 layout_mode = 2
-item_count = 14
+item_count = 15
 selected = 0
 popup/item_0/text = "FROM_BEHIND"
 popup/item_0/id = 0
@@ -345,6 +345,8 @@ popup/item_12/text = "PAIZURI"
 popup/item_12/id = 12
 popup/item_13/text = "PILEDRIVER"
 popup/item_13/id = 13
+popup/item_14/text = "PEEPING"
+popup/item_14/id = 14
 
 [node name="DuoInfo" type="HBoxContainer" parent="SetImageInfo/SetPerson/SetPersonBig"]
 visible = false
