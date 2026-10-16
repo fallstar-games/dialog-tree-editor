@@ -26,12 +26,17 @@ extends GraphNode
 @onready var image_type_parent = $ImageTypeHBox
 @onready var room_designator_parent = $RoomDesignator
 @onready var room_line = $RoomDesignator/LineEdit
+@onready var npc_parent = $NPCInfo
+@onready var npc_nametag_line = $NPCInfo/NPCName/LineEdit
+@onready var npc_image_id_line = $NPCInfo/NPCImage/LineEdit
 
 
 var node_data = {
 	"offset_x": 0,
 	"offset_y": 0,
-	"speaker": 0, #0 = narrator, 1 = main person, 2 = other person, 3 = SMS, 4 = App
+	"speaker": 0, #0 = narrator, 1 = main person, 2 = other person, 3 = SMS, 4 = App, 5 = NPC
+	"NPC_nametag": "",
+	"NPC_image_id": "",
 	"image_type": "no_change", #"" = no image, "PAPERDOLL", "SOLO", "DUO"
 	"expression_eyes": "no_change", #0 = none
 	"expression_mouth": "no_change", #0 = none
@@ -65,6 +70,7 @@ func _on_option_button_item_selected(index):
 	change_speaker_mode(index)
 
 func change_speaker_mode(index):
+	npc_parent.visible = index == 5
 	match index:
 		0: # Narrator
 			image_type_parent.hide()
@@ -72,7 +78,7 @@ func change_speaker_mode(index):
 		1, 2: # Main person or other person
 			image_type_parent.show()
 			room_designator_parent.hide()
-		_: # SMS or App
+		_: # SMS, App or NPC
 			image_type_parent.hide()
 			room_designator_parent.hide()
 
@@ -136,6 +142,8 @@ func update_data():
 		node_data["duo_pose"] = duo_dropdown.get_item_text(duo_dropdown.selected)
 
 	node_data["room_id"] = room_line.text
+	node_data["NPC_nametag"] = npc_nametag_line.text
+	node_data["NPC_image_id"] = npc_image_id_line.text
 	node_data["text"] = text.text
 
 func _on_image_type_item_selected(index:int):

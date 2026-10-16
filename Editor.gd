@@ -889,6 +889,8 @@ func _apply_node_data_to_node(node, data:Dictionary):
 		"DIALOG":
 			# GraphNode.gd mapping
 			node.text.text = data.get("text", "")
+			node.npc_nametag_line.text = str(data.get("NPC_nametag", ""))
+			node.npc_image_id_line.text = str(data.get("NPC_image_id", ""))
 			node.character_opt.select(int(data.get("speaker", 0)))
 			node.change_speaker_mode(int(data.get("speaker", 0)))
 			if data.has("image_type"):
@@ -1096,6 +1098,14 @@ func _apply_node_data_to_node(node, data:Dictionary):
 				node.person_image_id_line.text = str(data["person_image_id"])
 			if data.has("other_image_id"):
 				node.other_image_id_line.text = str(data["other_image_id"])
+			node.reveal_checkbox.button_pressed = bool(data.get("is_reveal", false))
+			node.change_reveal_mode(node.reveal_checkbox.button_pressed)
+			var viewport_aspect = data.get("viewport_aspect", {})
+			if viewport_aspect is Dictionary and viewport_aspect.has("x") and viewport_aspect.has("y"):
+				node.viewport_aspect_x_line.text = str(viewport_aspect["x"])
+				node.viewport_aspect_y_line.text = str(viewport_aspect["y"])
+			var pan_speed:float = float(data.get("pan_speed", 0))
+			node.pan_speed_line.text = str(pan_speed) if pan_speed > 0.0 else ""
 			if data.has("effect"):
 				set_option_button_by_text(node.effect_dropdown, str(data["effect"]))
 		"OFFRAMP":
@@ -1132,7 +1142,7 @@ func _apply_node_data_to_node(node, data:Dictionary):
 				node.change_wardrobe_mode(node.wardrobe_action_dropdown.selected)
 			if data.has("menu_type"):
 				set_option_button_by_text(node.menu_type_dropdown, str(data["menu_type"]))
-				node.outfitter_info_container.visible = str(data["menu_type"]) == "OUTFITTER"
+			node.change_menu_mode(node.menu_type_dropdown.selected)
 			if data.has("negotiation_target"):
 				set_option_button_by_text(node.negotiation_target_dropdown, str(data["negotiation_target"]))
 				node.change_negotiation_target_mode(node.negotiation_target_dropdown.selected)
@@ -1305,6 +1315,10 @@ func _apply_node_data_to_node(node, data:Dictionary):
 							node.line_edits["outfitter_output_object"].text = str(data.get("outfitter_output_object", ""))
 							node.line_edits["outfitter_output_refuse"].text = str(data.get("outfitter_output_refuse", ""))
 							node.line_edits["outfitter_output_abort"].text = str(data.get("outfitter_output_abort", ""))
+						"CHARGEN":
+							node.chargen_allow_start_over_checkbox.button_pressed = bool(data.get("chargen_allow_start_over", false))
+							node.line_edits["chargen_confirm"].text = str(data.get("chargen_confirm", ""))
+							node.line_edits["chargen_start_over"].text = str(data.get("chargen_start_over", ""))
 				"LINE_ENTRY":
 					node.line_edits["line_entry_target_var"].text = str(data.get("line_entry_target_var", ""))
 				"NEGOTIATION":

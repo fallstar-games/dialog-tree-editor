@@ -13,6 +13,8 @@ extends GraphNode
 @onready var line_entry_type_dropdown:OptionButton = $LineEntryInfo/LineEntryType
 @onready var menu_type_dropdown:OptionButton = $MenuInfo/MenuSelect/MenuType
 @onready var outfitter_info_container:VBoxContainer = $MenuInfo/OutfitterInfo
+@onready var chargen_info_container:VBoxContainer = $MenuInfo/ChargenInfo
+@onready var chargen_allow_start_over_checkbox:CheckBox = $MenuInfo/ChargenInfo/AllowStartOver/CheckBox
 @onready var reaction_target_dropdown:OptionButton = $ReactionInfo/TargetPerson/ReactionTarget
 @onready var resource_type_dropdown:OptionButton = $SplitInfo/SplitReactionStrength/ResourceType/ResourceType
 @onready var reaction_should_trigger_checkbox:CheckBox = $SplitInfo/SplitReactionStrength/TriggerReaction/CheckBox
@@ -146,6 +148,8 @@ extends GraphNode
 	"outfitter_output_object": $MenuInfo/OutfitterInfo/Object/LineEdit,
 	"outfitter_output_refuse": $MenuInfo/OutfitterInfo/Refuse/LineEdit,
 	"outfitter_output_abort": $MenuInfo/OutfitterInfo/Abort/LineEdit,
+	"chargen_confirm": $MenuInfo/ChargenInfo/OutcomeConfirm/LineEdit,
+	"chargen_start_over": $MenuInfo/ChargenInfo/OutcomeStartOver/LineEdit,
 	"line_entry_target_var": $LineEntryInfo/HBoxContainer/LineEdit
 }
 
@@ -246,6 +250,9 @@ var node_data = {
 	"outfitter_output_object": "",
 	"outfitter_output_refuse": "",
 	"outfitter_output_abort": "",
+	"chargen_allow_start_over": false,
+	"chargen_confirm": "",
+	"chargen_start_over": "",
 	#"letter_id":"",
 	"line_entry_type":"PLAYER_NAME",
 	"line_entry_target_var":"",
@@ -258,6 +265,7 @@ var node_data = {
 }
 
 func _ready():
+	change_menu_mode(menu_type_dropdown.selected)
 	# SINGLE_STAT has exactly one attribute row and no way to add another, so hide its
 	# remove button - freeing that row would leave the node with no stat to test.
 	split_containers["SINGLE_STAT"].get_node("WeightedAttribute").get_node("CancelButton").hide()
@@ -525,6 +533,10 @@ func update_data():
 					node_data["outfitter_output_object"] = line_edits["outfitter_output_object"].text
 					node_data["outfitter_output_refuse"] = line_edits["outfitter_output_refuse"].text
 					node_data["outfitter_output_abort"] = line_edits["outfitter_output_abort"].text
+				"CHARGEN":
+					node_data["chargen_allow_start_over"] = chargen_allow_start_over_checkbox.button_pressed
+					node_data["chargen_confirm"] = line_edits["chargen_confirm"].text
+					node_data["chargen_start_over"] = line_edits["chargen_start_over"].text
 		"LINE_ENTRY":
 			node_data["line_entry_target_var"] = line_edits["line_entry_target_var"].text
 		"NEGOTIATION":
@@ -595,7 +607,12 @@ func _on_line_entry_type_item_selected(index:int):
 
 func _on_menu_type_item_selected(index:int):
 	node_data["menu_type"] = menu_type_dropdown.get_item_text(index)
-	outfitter_info_container.visible = menu_type_dropdown.get_item_text(index) == "OUTFITTER"
+	change_menu_mode(index)
+
+func change_menu_mode(idx:int = 0):
+	var menu_type = menu_type_dropdown.get_item_text(idx)
+	outfitter_info_container.visible = menu_type == "OUTFITTER"
+	chargen_info_container.visible = menu_type == "CHARGEN"
 
 func _on_add_output_button_pressed(output_type):
 	if output_type == "subtree":

@@ -1525,14 +1525,17 @@ text = "Menu Type:"
 
 [node name="MenuType" type="OptionButton" parent="MenuInfo/MenuSelect"]
 layout_mode = 2
-item_count = 2
+item_count = 3
 selected = 0
 popup/item_0/text = "OUTFITTER"
 popup/item_0/id = 0
 popup/item_1/text = "SHOP"
 popup/item_1/id = 1
+popup/item_2/text = "CHARGEN"
+popup/item_2/id = 2
 
 [node name="OutfitterInfo" type="VBoxContainer" parent="MenuInfo"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 
@@ -1610,6 +1613,47 @@ layout_mode = 2
 text = "abort ->"
 
 [node name="LineEdit" type="LineEdit" parent="MenuInfo/OutfitterInfo/Abort"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="ChargenInfo" type="VBoxContainer" parent="MenuInfo"]
+visible = false
+layout_mode = 2
+
+[node name="AllowStartOver" type="HBoxContainer" parent="MenuInfo/ChargenInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/ChargenInfo/AllowStartOver"]
+layout_mode = 2
+text = "Allow Start Over"
+
+[node name="CheckBox" type="CheckBox" parent="MenuInfo/ChargenInfo/AllowStartOver"]
+layout_mode = 2
+
+[node name="OutcomeConfirm" type="HBoxContainer" parent="MenuInfo/ChargenInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/ChargenInfo/OutcomeConfirm"]
+layout_mode = 2
+text = "confirm ->"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/ChargenInfo/OutcomeConfirm"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="OutcomeStartOver" type="HBoxContainer" parent="MenuInfo/ChargenInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MenuInfo/ChargenInfo/OutcomeStartOver"]
+layout_mode = 2
+text = "start_over ->"
+
+[node name="LineEdit" type="LineEdit" parent="MenuInfo/ChargenInfo/OutcomeStartOver"]
 layout_mode = 2
 size_flags_horizontal = 3
 expand_to_text_length = true

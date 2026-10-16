@@ -27,6 +27,12 @@ extends GraphNode
 @onready var set_other_container:Node = $SetImageInfo/SetOther
 @onready var person_image_id_line:LineEdit = $SetImageInfo/SetPerson/SetPersonSmall/PersonImageInfo/LineEdit
 @onready var other_image_id_line:LineEdit = $SetImageInfo/SetOther/OtherImageInfo/LineEdit
+@onready var reveal_container:Node = $SetImageInfo/SetOther/RevealInfo
+@onready var reveal_checkbox:CheckBox = $SetImageInfo/SetOther/RevealInfo/RevealCheckBox
+@onready var reveal_options_container:Node = $SetImageInfo/SetOther/RevealInfo/RevealOptions
+@onready var viewport_aspect_x_line:LineEdit = $SetImageInfo/SetOther/RevealInfo/RevealOptions/ViewportAspectInfo/XLine
+@onready var viewport_aspect_y_line:LineEdit = $SetImageInfo/SetOther/RevealInfo/RevealOptions/ViewportAspectInfo/YLine
+@onready var pan_speed_line:LineEdit = $SetImageInfo/SetOther/RevealInfo/RevealOptions/PanSpeedInfo/LineEdit
 @onready var effect_container:Node = $SetImageInfo/EffectInfo
 @onready var effect_dropdown:OptionButton = $SetImageInfo/EffectInfo/EffectDropdown
 
@@ -47,6 +53,9 @@ var node_data = {
 	"framing": "no_change",
 	"person_image_id": "",
 	"other_image_id": "",
+	"is_reveal": false,
+	"viewport_aspect": {"x": 896, "y": 1152},
+	"pan_speed": 0, # 0 = use the game's default
 	"effect": "NONE",
 	"go to": []
 }
@@ -67,6 +76,13 @@ func update_data():
 
 	node_data["person_image_id"] = person_image_id_line.text
 	node_data["other_image_id"] = other_image_id_line.text
+
+	node_data["is_reveal"] = reveal_checkbox.button_pressed
+	node_data["viewport_aspect"] = {
+		"x": viewport_aspect_x_line.text.to_float(),
+		"y": viewport_aspect_y_line.text.to_float()
+	}
+	node_data["pan_speed"] = pan_speed_line.text.to_float()
 
 	# Persist dropdown-driven state even if selection signals didn't fire (duplicate/paste)
 	if slot_dropdown:
@@ -145,6 +161,7 @@ func change_slot_mode(index:int):
 			set_person_big_container.show()
 			set_person_small_container.hide()
 			effect_container.hide()
+			reveal_container.show()
 		1: #Small
 			set_hide_big_dropdown.hide()
 			change_set_hide_small_mode(set_hide_small_dropdown.selected)
@@ -152,6 +169,7 @@ func change_slot_mode(index:int):
 			set_person_big_container.hide()
 			set_person_small_container.show()
 			effect_container.show()
+			reveal_container.hide() #reveals are big-image only
 
 func _on_set_hide_big_dropdown_item_selected(index:int):
 	node_data["big_image_action"] = set_hide_big_dropdown.get_item_text(index)
@@ -210,6 +228,13 @@ func hide_big_person_main_containers():
 	solo_container.hide()
 	duo_container.hide()
 	#set_other_container.hide()
+
+func _on_reveal_check_box_toggled(button_pressed:bool):
+	node_data["is_reveal"] = button_pressed
+	change_reveal_mode(button_pressed)
+
+func change_reveal_mode(is_reveal:bool):
+	reveal_options_container.visible = is_reveal
 
 func _on_eyes_dropdown_item_selected(index:int):
 	if index != 0:

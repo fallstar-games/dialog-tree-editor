@@ -29,7 +29,7 @@ script = ExtResource("1_cc42v")
 
 [node name="AttributeType" type="OptionButton" parent="."]
 layout_mode = 2
-item_count = 18
+item_count = 21
 selected = 0
 popup/item_0/text = "craving_tongue"
 popup/item_0/icon = ExtResource("2_6h3fd")
@@ -85,6 +85,15 @@ popup/item_16/id = 16
 popup/item_17/text = "flag_exclusive"
 popup/item_17/icon = ExtResource("19_n1nuw")
 popup/item_17/id = 17
+popup/item_18/text = "opinion_threesome_jill"
+popup/item_18/icon = ExtResource("13_xmwiw")
+popup/item_18/id = 18
+popup/item_19/text = "opinion_threesome_eden"
+popup/item_19/icon = ExtResource("13_xmwiw")
+popup/item_19/id = 19
+popup/item_20/text = "opinion_threesome_vivi"
+popup/item_20/icon = ExtResource("13_xmwiw")
+popup/item_20/id = 20
 
 [node name="AttributeWeight" type="LineEdit" parent="."]
 layout_mode = 2

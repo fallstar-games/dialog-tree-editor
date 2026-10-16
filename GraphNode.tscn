@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03hav"]
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_w5u15"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_cm3uo"]
 resource_local_to_scene = true
 number_color = Color(1, 1, 1, 1)
 symbol_color = Color(1, 1, 1, 1)
@@ -119,6 +119,15 @@ slot/8/right_type = 0
 slot/8/right_color = Color(1, 1, 1, 1)
 slot/8/right_icon = null
 slot/8/draw_stylebox = true
+slot/9/left_enabled = false
+slot/9/left_type = 0
+slot/9/left_color = Color(1, 1, 1, 1)
+slot/9/left_icon = null
+slot/9/right_enabled = false
+slot/9/right_type = 0
+slot/9/right_color = Color(1, 1, 1, 1)
+slot/9/right_icon = null
+slot/9/draw_stylebox = true
 script = ExtResource("2_5cqbw")
 metadata/_edit_use_anchors_ = true
 
@@ -143,7 +152,7 @@ tooltip_text = "You can add or change character names
 by going to the inspector in GraphNode.tscn 
 (Character > Character > OptionButton).
 "
-item_count = 5
+item_count = 6
 selected = 0
 popup/item_0/text = "Narrator"
 popup/item_0/id = 0
@@ -155,6 +164,8 @@ popup/item_3/text = "SMS"
 popup/item_3/id = 3
 popup/item_4/text = "App"
 popup/item_4/id = 4
+popup/item_5/text = "NPC"
+popup/item_5/id = 5
 
 [node name="Divider" type="TextureRect" parent="."]
 visible = false
@@ -199,6 +210,36 @@ popup/item_2/text = "SOLO"
 popup/item_2/id = 2
 popup/item_3/text = "DUO"
 popup/item_3/id = 3
+
+[node name="NPCInfo" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="NPCName" type="HBoxContainer" parent="NPCInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="NPCInfo/NPCName"]
+layout_mode = 2
+text = "NPC_nametag:"
+
+[node name="LineEdit" type="LineEdit" parent="NPCInfo/NPCName"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+placeholder_text = "(none)"
+
+[node name="NPCImage" type="HBoxContainer" parent="NPCInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="NPCInfo/NPCImage"]
+layout_mode = 2
+text = "NPC_image_id:"
+
+[node name="LineEdit" type="LineEdit" parent="NPCInfo/NPCImage"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+placeholder_text = "(none)"
 
 [node name="PaperDollInfo" type="VBoxContainer" parent="."]
 visible = false
@@ -442,7 +483,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = ""
 placeholder_text = "Character dialog goes here... 
 "
-syntax_highlighter = SubResource("CodeHighlighter_w5u15")
+syntax_highlighter = SubResource("CodeHighlighter_cm3uo")
 scroll_v_scroll_speed = 90.0
 scroll_fit_content_height = true
 
