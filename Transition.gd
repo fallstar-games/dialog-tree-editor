@@ -38,6 +38,9 @@ func update_data():
 	
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
+	# Laid-out bounds, read by the headless layout tool (LayoutTool.gd)
+	node_data["size_x"] = ceili(size.x)
+	node_data["size_y"] = ceili(size.y)
 	node_data["room_id"] = locale_line.text
 	node_data["fade_time"] = fade_line.text.to_float()
 	node_data["wait_time"] = wait_line.text.to_float()

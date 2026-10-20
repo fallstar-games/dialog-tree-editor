@@ -45,6 +45,9 @@ func clear_dicts_and_arrays():
 func update_data():
 	node_data["offset_x"] = self.position_offset.x
 	node_data["offset_y"] = self.position_offset.y
+	# Laid-out bounds, read by the headless layout tool (LayoutTool.gd)
+	node_data["size_x"] = ceili(size.x)
+	node_data["size_y"] = ceili(size.y)
 
 	# Persist dropdown-driven state even if selection signals didn't fire (duplicate/paste)
 	node_data["opt_index"] = int(option_button.selected)

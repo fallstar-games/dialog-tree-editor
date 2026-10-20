@@ -76,6 +76,22 @@ These patterns are highlighted in dialog text:
 - **UI themes:** `Assets/UI/*.tres`
 - **Choice icons:** `Assets/UI/choice_icon/` (100+ emoji icons)
 
+## Headless Layout Tool (LayoutTool.gd)
+
+Lets dialog trees be written as JSON outside the editor without their nodes overlapping. `layout.bat` runs this project headless with the 4.1 console build from the sibling `harem-heaven/executable/`. It loads the tree through the editor's normal load path, so node sizes come from the real scenes and follow any future change to them.
+
+```
+layout.bat --layout=act/eden/my_tree --place --check
+```
+
+- `--layout=` takes a path relative to `DialogEditSaves` (`.json` optional), or an absolute path.
+- `--place` positions every node that has no `offset_x`/`offset_y`. A node goes right of the node that leads into it (left of the node it leads to if nothing leads in, or below everything if neither). Positions snap to the 20px grid, with at least `--gap` (default 40px, two snaps) to every other node. Nodes that already have a position are never moved. It writes the offsets, plus `size_x`/`size_y` for every node, back to the file, and to the `XLUtilities/inbox/` copy when the file is under `DialogEditSaves`. `--dry-run` skips the write.
+- `--check` lists node pairs closer than `--gap` (negative means overlapping) and exits 1 if there are any. Its scope is the nodes placed in this run, else the nodes named in `--nodes=A,B`, else every node.
+- Look for output lines starting `[layout]`; the editor's own `print(dialog)` adds a lot of noise around them.
+- Headless runs in a 64x64 window, which under the project's `canvas_items` stretch skews font oversampling and inflates text heights about 2x. `Editor._enter_tree()` turns off content scaling in layout mode, after which measured sizes match the windowed editor exactly.
+
+Every node's `update_data()` saves its laid-out `size_x`/`size_y`. On load they are restored once the first layout pass has settled. Control sizes never go below their content's minimum, so a node whose content has since grown still fits. This also keeps nodes the user resized at their resized size after reopening the file.
+
 ## Known Bugs
 
 - Connections sometimes don't link properly when opening old files

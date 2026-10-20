@@ -27,5 +27,8 @@ func _on_resize_request(new_minsize):
 func update_data():
 	node_data["offset_x"] = position_offset.x
 	node_data["offset_y"] = position_offset.y
+	# Laid-out bounds, read by the headless layout tool (LayoutTool.gd)
+	node_data["size_x"] = ceili(size.x)
+	node_data["size_y"] = ceili(size.y)
 	
 	node_data["text"] = text.text

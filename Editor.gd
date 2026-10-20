@@ -7,6 +7,8 @@ var last_mouse_pos = Vector2(0,0)
 @onready var spawn_sound = $SpawnSound
 var rng = RandomNumberGenerator.new()
 
+# Headless node measurement/placement, run via layout.bat (see LayoutTool.gd)
+const LayoutTool = preload("res://LayoutTool.gd")
 
 # Keep Count
 var total_node_count = 0
@@ -30,6 +32,8 @@ var node_stack:Dictionary = {
 
 # Signals
 signal graph_cleared
+# Emitted once a file has finished loading and its node sizes have settled
+signal graph_loaded
 signal node_closed
 
 var selected_file_path:String
@@ -59,6 +63,14 @@ func set_option_button_by_text(option_button: OptionButton, target_value: String
 		option_button.select(0)
 	return found
 
+# Runs before any child enters the tree, so before any font gets measured
+func _enter_tree():
+	if LayoutTool.is_requested():
+		# Headless runs in a 64x64 window, which against the stretched 1920x1080 viewport
+		# sets font oversampling to 64/1920 and inflates every text height ~2x. Unscaled,
+		# measured sizes match the windowed editor exactly.
+		get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
+
 func _ready():
 	if get_node("CanvasLayer/OpenFileDialog").is_connected("file_selected", _on_file_dialog_file_selected):
 #		get_node("CanvasLayer/OpenFileDialog").disconnect("file_selected", _on_file_dialog_file_selected)
@@ -78,6 +90,8 @@ func _ready():
 	_ensure_pan_actions()
 	# Baseline an empty editor as "clean"
 	_mark_clean()
+	if LayoutTool.is_requested():
+		LayoutTool.new().run(self)
 
 # Fired by the window manager when the user clicks the X button. Only reaches us
 # because _ready() disabled auto_accept_quit.
@@ -461,9 +475,22 @@ func _on_file_dialog_load_file_async():
 	#if first_dialog_node != "":
 		#auto_connect_start(first_dialog_node)
 
-	# Let any deferred UI work settle, then baseline the freshly loaded graph
+	# Let any deferred UI work settle, then restore saved bounds (after the settle, so a
+	# stale scene-default minimum can't pin a node larger than its content needs)
+	await get_tree().process_frame
+	for node_name in dialog:
+		if dialog[node_name] is Dictionary and dialog[node_name].has("res"):
+			_restore_node_size(dialog[node_name].res, dialog[node_name])
+	# Baseline the freshly loaded graph once the restored sizes have laid out
 	await get_tree().process_frame
 	_mark_clean()
+	graph_loaded.emit()
+
+# Restore a node's saved size. Control.size never drops below the content's
+# minimum, so a node whose content has grown since the save still fits it.
+func _restore_node_size(node, data:Dictionary):
+	if data.has("size_x") and data.has("size_y"):
+		node.size = Vector2(data["size_x"], data["size_y"])
 
 
 ################## Save a file ####################################
