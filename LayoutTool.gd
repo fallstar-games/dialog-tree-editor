@@ -12,8 +12,10 @@ extends RefCounted
 #            a position are never moved. Writes offsets plus size_x/size_y for all
 #            nodes back to the file, and to the XLUtilities/inbox mirror when the file
 #            is under DialogEditSaves. --dry-run reports without writing.
-# --check    Lists node pairs closer than --gap (negative = overlapping). Scope: the
-#            nodes placed this run, else --nodes, else every node. Exits 1 if any.
+# --check    Lists node pairs closer than --gap (negative = overlapping), and menus
+#            whose choices don't run top to bottom in "go to" order (the game orders
+#            a menu by offset_y). Scope: the nodes placed this run, else --nodes, else
+#            every node. Exits 1 if anything is found.
 #
 # Output lines are prefixed "[layout]"; the editor's own prints are noise.
 
@@ -30,7 +32,8 @@ var editor: GraphEdit
 var args := {}
 var gap := DEFAULT_GAP
 var raw := {} # the tree exactly as read from disk; only offsets/sizes get written back
-var rects := {} # node name -> Rect2 in canvas space
+var rects := {} # node name -> Rect2 in canvas space, as drawn (see _drawn_rect)
+var node_sizes := {} # node name -> the node's own size, which is what gets saved
 var placed: Array[String] = []
 
 static func get_args() -> Dictionary:
@@ -95,7 +98,21 @@ func _resolve_path(p: String) -> String:
 func _measure() -> void:
 	for child in editor.get_children():
 		if child is GraphNode and child.visible and not String(child.name) in IGNORED_NODES:
-			rects[String(child.name)] = Rect2(child.position_offset, child.size)
+			rects[String(child.name)] = _drawn_rect(child)
+			node_sizes[String(child.name)] = child.size
+
+# A node's own rect grown to cover any visible content drawn outside it. Tree nodes
+# fit their content, but the editor's cheat sheet draws its text far below its frame.
+func _drawn_rect(node: GraphNode) -> Rect2:
+	var r := Rect2(node.position_offset, node.size)
+	var stack: Array = node.get_children()
+	while not stack.is_empty():
+		var d = stack.pop_back()
+		stack.append_array(d.get_children())
+		if d is Control and d.is_visible_in_tree():
+			var offset: Vector2 = (d.global_position - node.global_position) / editor.zoom
+			r = r.merge(Rect2(node.position_offset + offset, d.size))
+	return r
 
 func _is_unplaced(n: String) -> bool:
 	return raw.has(n) and raw[n] is Dictionary and not (raw[n].has("offset_x") and raw[n].has("offset_y"))
@@ -120,7 +137,9 @@ func _place() -> void:
 
 	# Walk forward from positioned nodes, so a chain fans out left to right. A node's
 	# first new target goes in the nearest free spot level with it; later ones stack
-	# below that, so siblings read top to bottom in "go to" order
+	# below that, so siblings read top to bottom in "go to" order. A gate (LOGIC
+	# leading to a CHOICE) gets its choice placed straight away and the next sibling
+	# goes below both, since the game orders a menu by each CHOICE's offset_y
 	var queue: Array[String] = []
 	for n in raw.keys():
 		if rects.has(n):
@@ -141,6 +160,12 @@ func _place() -> void:
 					below = rects[to].end.y
 					pending.erase(to)
 					queue.append(to)
+					for n in _gate_chain(to, pending):
+						var g: Rect2 = rects[queue.back()]
+						_put(n, sizes[n], _snap_up(g.end.x + COLUMN_GAP), g.position.y, true)
+						below = max(below, rects[n].end.y)
+						pending.erase(n)
+						queue.append(n)
 		if pending.is_empty():
 			break
 		# Nothing positioned leads into what's left: anchor on a positioned node it
@@ -159,6 +184,21 @@ func _place() -> void:
 			_put(n, sizes[n], _snap_down(bounds.position.x), bounds.end.y + COLUMN_GAP, true)
 		pending.erase(n)
 		queue.append(n)
+
+# The unplaced LOGIC gates and CHOICE that follow `from`, when its single-target
+# chain ends in a CHOICE; empty otherwise
+func _gate_chain(from: String, pending: Array[String]) -> Array[String]:
+	var chain: Array[String] = []
+	var cur := from
+	while cur.begins_with("LOGIC_") and _targets(cur).size() == 1:
+		var next: String = _targets(cur)[0]
+		if not next in pending or next in chain:
+			return []
+		chain.append(next)
+		if next.begins_with("CHOICE_"):
+			return chain
+		cur = next
+	return []
 
 func _pick_root(pending: Array[String]) -> String:
 	for n in pending:
@@ -237,7 +277,46 @@ func _check() -> int:
 				_log("TOO CLOSE %s <-> %s gap=%dpx" % [a, b, g])
 	var what := "all nodes" if scope.is_empty() else "%d node(s)" % scope.size()
 	_log("check: %d pair(s) under %dpx, scope %s" % [bad, gap, what])
+	var misordered := _check_menu_order(scope)
+	_log("check: %d menu(s) out of order" % misordered)
+	bad += misordered
 	return 1 if bad > 0 else 0
+
+# The game sorts a menu by each CHOICE's offset_y. A menu's choices, in its DIALOG's
+# "go to" order (through LOGIC gates and ONRAMPs, as choice discovery walks them),
+# must therefore sit strictly top to bottom. Only menus touching the scope are checked:
+# hand-laid trees often list "go to" in some other order than their menus show.
+func _check_menu_order(scope: Array) -> int:
+	var bad := 0
+	var names := raw.keys()
+	names.sort()
+	for d in names:
+		if not d.begins_with("DIALOG_"):
+			continue
+		var choices: Array[String] = []
+		_collect_choices(d, choices, {})
+		if choices.size() < 2:
+			continue
+		if not scope.is_empty() and not choices.any(func(c): return c in scope):
+			continue
+		for i in range(1, choices.size()):
+			var a: String = choices[i - 1]
+			var b: String = choices[i]
+			if rects.has(a) and rects.has(b) and rects[b].position.y <= rects[a].position.y:
+				bad += 1
+				_log("MENU ORDER %s: %s (y=%d) shows above %s (y=%d)" % [d, b, rects[b].position.y, a, rects[a].position.y])
+				break
+	return bad
+
+func _collect_choices(n: String, out: Array[String], seen: Dictionary) -> void:
+	for t in _targets(n):
+		if seen.has(t):
+			continue
+		seen[t] = true
+		if t.begins_with("CHOICE_"):
+			out.append(t)
+		elif t.begins_with("LOGIC_") or t.begins_with("ONRAMP_"):
+			_collect_choices(t, out, seen)
 
 ######## Write ########
 
@@ -251,8 +330,9 @@ func _write(path: String) -> void:
 		if n in placed:
 			d["offset_x"] = int(r.position.x)
 			d["offset_y"] = int(r.position.y)
-		var sx := ceili(r.size.x)
-		var sy := ceili(r.size.y)
+		var size: Vector2 = node_sizes.get(n, r.size)
+		var sx := ceili(size.x)
+		var sy := ceili(size.y)
 		if d.get("size_x") != sx or d.get("size_y") != sy:
 			d["size_x"] = sx
 			d["size_y"] = sy
